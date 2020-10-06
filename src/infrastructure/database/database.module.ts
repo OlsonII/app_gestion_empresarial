@@ -1,13 +1,15 @@
 import {Module} from "@nestjs/common";
-import {brandProviders} from "./migrations/entities.provider";
+import {brandProviders, categoryProviders} from "./migrations/entities.provider";
 
 @Module(
     {
         providers: [
-            ...brandProviders
+            ...brandProviders,
+            ...categoryProviders
         ],
         exports: [
-            ...brandProviders
+            ...brandProviders,
+            ...categoryProviders
         ]
     }
 )

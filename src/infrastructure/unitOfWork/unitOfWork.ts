@@ -3,6 +3,7 @@ import {IUnitOfWork} from "../contracts/unitOfWork.interface";
 import {Connection, EntityManager, QueryRunner} from "typeorm";
 import {BrandRepository} from "../repositories/brand.repository";
 import {BrandOrm} from "../database/entity/brand.orm";
+import {CategoryRepository} from "../repositories/category.repository";
 
 
 @Injectable()
@@ -12,11 +13,13 @@ export class UnitOfWork implements IUnitOfWork{
     private transactionManager: EntityManager;
     //REPOSITORIES
     public brandRepository: BrandRepository;
+    public categoryRepository: CategoryRepository;
 
     constructor(@Inject('DATABASE_CONNECTION') private readonly asyncDatabaseConnection: Connection) {
         this.queryRunner = this.asyncDatabaseConnection.createQueryRunner();
         //REPOSITORIES
         this.brandRepository = this.asyncDatabaseConnection.getCustomRepository(BrandRepository);
+        this.categoryRepository = this.asyncDatabaseConnection.getCustomRepository(CategoryRepository);
     }
 
     setTransactionManager(){
