@@ -7,12 +7,12 @@ export class RegisterProviderService{
 
     async execute(request: RegisterProviderRequest): Promise<RegisterProviderResponse>{
         let newProvider: Provider;
-        const searchedCategory = await this._unitOfWork.providerRepository.findOne(request.reference);
+        const searchedCategory = await this._unitOfWork.providerRepository.findOne(request.identification);
         if(searchedCategory == undefined){
             newProvider = new Provider();
             newProvider = request;
-            await this._unitOfWork.start();
-            const savedProvider = await this._unitOfWork.complete(async () => await this._unitOfWork.brandRepository.save(newProvider));
+            this._unitOfWork.start();
+            const savedProvider = await this._unitOfWork.complete(async () => await this._unitOfWork.providerRepository.save(newProvider));
             if(savedProvider != undefined){
                 return new RegisterProviderResponse('Proveedor registrado con exito');
             }
@@ -29,7 +29,6 @@ export class RegisterProviderRequest{
         public email: string,
         public identification: string,
         public name: string,
-        public reference: string,
         public street: string,
         public telephone: string
     ) {}

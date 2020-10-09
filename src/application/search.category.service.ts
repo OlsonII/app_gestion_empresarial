@@ -14,7 +14,6 @@ export class SearchCategoryService{
       return new SearchCategoryResponse(null, searchedCategory);
     }
   }
-
 }
 
 export class SearchCategoryRequest{

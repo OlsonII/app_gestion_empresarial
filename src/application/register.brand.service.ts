@@ -11,7 +11,7 @@ export class RegisterBrandService{
         if(searchedBrand == undefined){
             newBrand = new Brand();
             newBrand = request;
-            await this._unitOfWork.start();
+            this._unitOfWork.start();
             const savedBrand = await this._unitOfWork.complete(async () => await this._unitOfWork.brandRepository.save(newBrand));
             if(savedBrand != undefined){
                 return new RegisterBrandResponse('Marca registrada con exito');

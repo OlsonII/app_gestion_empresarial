@@ -12,8 +12,8 @@ export class RegisterCategoryService{
         if(searchedCategory == undefined){
             newCategory = new Category();
             newCategory = request;
-            await this._unitOfWork.start();
-            const savedCategory = await this._unitOfWork.complete(async () => await this._unitOfWork.brandRepository.save(newCategory));
+            this._unitOfWork.start();
+            const savedCategory = await this._unitOfWork.complete(async () => await this._unitOfWork.categoryRepository.save(newCategory));
             if(savedCategory != undefined){
                 return new RegisterCategoryResponse('Categoria registrada con exito');
             }

@@ -1,6 +1,5 @@
 export interface IProvider{
 
-    reference: string;
     identification: string;
     name: string;
     company: string;

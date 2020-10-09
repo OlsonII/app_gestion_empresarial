@@ -6,18 +6,18 @@ export class SearchProviderService{
   constructor(private readonly _unitOfWork: IUnitOfWork) {}
 
   async execute(request: SearchProviderRequest): Promise<SearchProviderResponse>{
-    if (request.reference == undefined){
+    if (request.identification == undefined){
       const searchedProvider = await this._unitOfWork.providerRepository.find();
       return new SearchProviderResponse(searchedProvider);
     }else{
-      const searchedProviders = await  this._unitOfWork.providerRepository.findOne(request.reference);
+      const searchedProviders = await  this._unitOfWork.providerRepository.findOne(request.identification);
       return new SearchProviderResponse(null, searchedProviders);
     }
   }
 }
 
 export class SearchProviderRequest{
-  constructor(public readonly reference?: string) {}
+  constructor(public readonly identification?: string) {}
 }
 
 export class SearchProviderResponse{
