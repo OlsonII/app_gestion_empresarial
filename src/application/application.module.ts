@@ -4,6 +4,8 @@ import {Brand} from "../domain/entity/brand.entity";
 import {RegisterBrandService} from "./register.brand.service";
 import {RegisterCategoryService} from "./register.category.service";
 import {RegisterProviderService} from "./register.provider.service";
+import {SearchBrandService} from "./search.brand.service";
+import {SearchCategoryService} from "./search.category.service";
 
 @Module({
     imports: [
@@ -11,12 +13,16 @@ import {RegisterProviderService} from "./register.provider.service";
         InfrastructureModule,
         RegisterBrandService,
         RegisterCategoryService,
-        RegisterProviderService
+        RegisterProviderService,
+        SearchBrandService,
+        SearchCategoryService
     ],
     exports:[
         RegisterBrandService,
         RegisterCategoryService,
-        RegisterProviderService
+        RegisterProviderService,
+        SearchBrandService,
+        SearchCategoryService
     ]
 })
 export class ApplicationModule{}

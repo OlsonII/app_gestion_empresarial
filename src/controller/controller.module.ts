@@ -3,6 +3,7 @@ import {ApplicationModule} from "../application/application.module";
 import {InfrastructureModule} from "../infrastructure/infrastructure.module";
 import {CategoryController} from "./category.controller";
 import {BrandController} from "./brand.controller";
+import {ProviderController} from "./provider.controller";
 
 @Module({
     imports: [
@@ -11,7 +12,8 @@ import {BrandController} from "./brand.controller";
     ],
     controllers: [
         CategoryController,
-        BrandController
+        BrandController,
+        ProviderController
     ]
 })
 export class ControllersModule{}

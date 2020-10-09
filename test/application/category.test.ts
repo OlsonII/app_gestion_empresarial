@@ -6,6 +6,12 @@ import {
     RegisterCategoryResponse,
     RegisterCategoryService
 } from "../../src/application/register.category.service";
+import {SearchBrandRequest, SearchBrandResponse, SearchBrandService} from "../../src/application/search.brand.service";
+import {
+    SearchCategoryRequest,
+    SearchCategoryResponse,
+    SearchCategoryService
+} from "../../src/application/search.category.service";
 
 
 const assert = require('assert');
@@ -14,14 +20,13 @@ describe('Application tests of register category', () => {
 
     let unitOfWork: IUnitOfWork;
 
-    beforeEach(async ()=>{
+    //TODO: REVISION A ESTOS TESTS
+
+    beforeAll(async ()=>{
         unitOfWork = new UnitOfWork(await createConnection({
-            name: 'test',
             type: 'mysql',
             host: 'localhost',
             port: 3306,
-            dropSchema: true,
-            synchronize: true,
             logging: true,
             username: 'root',
             password: '1981',
@@ -38,6 +43,22 @@ describe('Application tests of register category', () => {
         );
         const response: RegisterCategoryResponse = await service.execute(request);
         assert.equal(response.message, 'Categoria registrada con exito')
+    });
+
+    it('find one registry', async () => {
+        const service: SearchCategoryService = new SearchCategoryService(unitOfWork);
+        const request = new SearchCategoryRequest(
+            '1111'
+        );
+        const response: SearchCategoryResponse = await service.execute(request);
+        assert.equal(response.category, undefined)
+    });
+
+    it('find many registry', async () => {
+        const service: SearchCategoryService = new SearchCategoryService(unitOfWork);
+        const request = new SearchCategoryRequest();
+        const response: SearchCategoryResponse = await service.execute(request);
+        assert.equal(response.categories.length, '0')
     });
 
 })
