@@ -6,4 +6,4 @@ import {ProviderOrm} from "../database/entity/provider.orm";
 
 @Injectable()
 @EntityRepository(ProviderOrm)
-export class ProviderRepository extends GenericRepository<CategoryOrm>{}
+export class ProviderRepository extends GenericRepository<ProviderOrm>{}
