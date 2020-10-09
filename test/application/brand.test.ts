@@ -6,6 +6,7 @@ import {
     RegisterBrandResponse,
     RegisterBrandService
 } from "../../src/application/register.brand.service";
+import {SearchBrandRequest, SearchBrandResponse, SearchBrandService} from "../../src/application/search.brand.service";
 
 const assert = require('assert');
 
@@ -13,9 +14,8 @@ describe('Application tests of register brand', () => {
 
     let unitOfWork: IUnitOfWork;
 
-    beforeEach(async ()=>{
+    beforeAll(async ()=>{
         unitOfWork = new UnitOfWork(await createConnection({
-            name: 'test',
             type: 'mysql',
             host: 'localhost',
             port: 3306,
@@ -37,6 +37,22 @@ describe('Application tests of register brand', () => {
         );
         const response: RegisterBrandResponse = await service.execute(request);
         assert.equal(response.message, 'Marca registrada con exito')
+    });
+
+    it('find one registry', async () => {
+        const service: SearchBrandService = new SearchBrandService(unitOfWork);
+        const request = new SearchBrandRequest(
+            '1111'
+        );
+        const response: SearchBrandResponse = await service.execute(request);
+        assert.equal(response.brand.reference, '1111')
+    });
+
+    it('find many registry', async () => {
+        const service: SearchBrandService = new SearchBrandService(unitOfWork);
+        const request = new SearchBrandRequest();
+        const response: SearchBrandResponse = await service.execute(request);
+        assert.equal(response.brands.length, '1')
     });
 
 })
