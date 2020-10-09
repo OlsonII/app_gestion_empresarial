@@ -6,6 +6,7 @@ import {RegisterCategoryService} from "./register.category.service";
 import {RegisterProviderService} from "./register.provider.service";
 import {SearchBrandService} from "./search.brand.service";
 import {SearchCategoryService} from "./search.category.service";
+import { SearchProviderService } from './search.provider.service';
 
 @Module({
     imports: [
@@ -15,14 +16,16 @@ import {SearchCategoryService} from "./search.category.service";
         RegisterCategoryService,
         RegisterProviderService,
         SearchBrandService,
-        SearchCategoryService
+        SearchCategoryService,
+        SearchProviderService
     ],
     exports:[
         RegisterBrandService,
         RegisterCategoryService,
         RegisterProviderService,
         SearchBrandService,
-        SearchCategoryService
+        SearchCategoryService,
+        SearchProviderService
     ]
 })
 export class ApplicationModule{}

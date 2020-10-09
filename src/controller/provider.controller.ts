@@ -5,6 +5,7 @@ import {
     RegisterProviderResponse,
     RegisterProviderService
 } from "../application/register.provider.service";
+import { SearchProviderRequest, SearchProviderService } from '../application/search.provider.service';
 
 @Controller('provider')
 export class ProviderController{
@@ -16,6 +17,12 @@ export class ProviderController{
         const service: RegisterProviderService = new RegisterProviderService(this._unitOfWork);
         const response: RegisterProviderResponse = await service.execute(request);
         return response.message;
+    }
+
+    @Get()
+    async searchProvider(@Body() request: SearchProviderRequest){
+        const service: SearchProviderService = new SearchProviderService(this._unitOfWork);
+        return await service.execute(request);
     }
 
 }
