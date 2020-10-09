@@ -24,7 +24,7 @@ describe('Application tests of register category', () => {
             synchronize: true,
             logging: true,
             username: 'root',
-            password: 'Tumama2018',
+            password: '1981',
             database: 'FINANCIAL_MANAGEMENT_TEST',
             entities: ['src/infrastructure/database/entity/*.ts']
         }));
@@ -32,11 +32,11 @@ describe('Application tests of register category', () => {
 
     it('correct registry', async () => {
         const service: RegisterCategoryService = new RegisterCategoryService(unitOfWork);
-        let request = new RegisterCategoryRequest(
+        const request = new RegisterCategoryRequest(
             '1111',
             'Example Category'
         );
-        let response: RegisterCategoryResponse = await service.execute(request);
+        const response: RegisterCategoryResponse = await service.execute(request);
         assert.equal(response.message, 'Categoria registrada con exito')
     });
 

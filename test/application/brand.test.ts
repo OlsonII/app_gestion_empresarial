@@ -23,7 +23,7 @@ describe('Application tests of register brand', () => {
             synchronize: true,
             logging: true,
             username: 'root',
-            password: 'Tumama2018',
+            password: '1981',
             database: 'FINANCIAL_MANAGEMENT_TEST',
             entities: ['src/infrastructure/database/entity/*.ts']
         }));
@@ -31,11 +31,11 @@ describe('Application tests of register brand', () => {
 
     it('correct registry', async () => {
         const service: RegisterBrandService = new RegisterBrandService(unitOfWork);
-        let request = new RegisterBrandRequest(
+        const request = new RegisterBrandRequest(
             '1111',
             'Example'
         );
-        let response: RegisterBrandResponse = await service.execute(request);
+        const response: RegisterBrandResponse = await service.execute(request);
         assert.equal(response.message, 'Marca registrada con exito')
     });
 

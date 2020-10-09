@@ -9,7 +9,7 @@ export const databaseProviders = [
             port: 3306,
             username: 'root',
             password: '1981',
-            database: 'MANAGEMENT_SERVICES',
+            database: 'FINANCIAL_MANAGEMENT_TEST',
             entities: ['dist/infrastructure/database/entity/*.js']
         })
     }

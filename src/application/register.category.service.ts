@@ -8,7 +8,7 @@ export class RegisterCategoryService{
 
     async execute(request: RegisterCategoryRequest): Promise<RegisterCategoryResponse>{
         let newCategory: Category;
-        const searchedCategory = await this._unitOfWork.brandRepository.findOne(request.reference);
+        const searchedCategory = await this._unitOfWork.categoryRepository.findOne(request.reference);
         if(searchedCategory == undefined){
             newCategory = new Category();
             newCategory = request;
