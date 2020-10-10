@@ -32,6 +32,11 @@ import {
     RegisterProductResponse,
     RegisterProductService
 } from "../../src/application/register.product.service";
+import {
+    SearchProductRequest,
+    SearchProductResponse,
+    SearchProductService,
+} from '../../src/application/search.product.service';
 
 
 describe('Application tests', () => {
@@ -227,6 +232,20 @@ describe('Application tests', () => {
 
 
             expect(response.message).toBe('Producto registrado con exito');
+        });
+
+        test('find one registry', async () => {
+
+            const service: SearchProductService = new SearchProductService(unitOfWork);
+            const request = new SearchProductRequest('8563');
+            const response: SearchProductResponse = await service.execute(request);
+            expect(response.product.reference).toBe('8563');
+        });
+
+        test('find many registry', async () => {
+            const service: SearchProductService = new SearchProductService(unitOfWork);
+            const response: SearchProductResponse = await service.execute(new SearchProductRequest());
+            expect(response.products.length).toBe(1);
         });
 
         afterAll(() => {
