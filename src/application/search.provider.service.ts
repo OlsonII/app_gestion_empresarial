@@ -7,11 +7,11 @@ export class SearchProviderService{
 
   async execute(request: SearchProviderRequest): Promise<SearchProviderResponse>{
     if (request.identification == undefined){
-      const searchedProvider = await this._unitOfWork.providerRepository.find();
-      return new SearchProviderResponse(searchedProvider);
+      const searchedProviders = await this._unitOfWork.providerRepository.find();
+      return new SearchProviderResponse(searchedProviders, null);
     }else{
-      const searchedProviders = await  this._unitOfWork.providerRepository.findOne(request.identification);
-      return new SearchProviderResponse(null, searchedProviders);
+      const searchedProvider = await  this._unitOfWork.providerRepository.findOne(request.identification);
+      return new SearchProviderResponse(null, searchedProvider);
     }
   }
 }

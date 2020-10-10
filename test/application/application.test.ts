@@ -22,6 +22,16 @@ import {
     RegisterProviderResponse,
     RegisterProviderService
 } from "../../src/application/register.provider.service";
+import {
+    SearchProviderRequest,
+    SearchProviderResponse,
+    SearchProviderService
+} from "../../src/application/search.provider.service";
+import {
+    RegisterProductRequest,
+    RegisterProductResponse,
+    RegisterProductService
+} from "../../src/application/register.product.service";
 
 
 describe('Application tests', () => {
@@ -134,13 +144,27 @@ describe('Application tests', () => {
             const request = new RegisterProviderRequest(
                 'Company Example',
                 'sellerOne@email',
-                'Name Example',
                 '1065',
+                'Name Example',
                 'Street example',
                 'phone example'
             );
             const response: RegisterProviderResponse = await service.execute(request);
             expect(response.message).toBe('Proveedor registrado con exito');
+        });
+
+        test('find one registry', async () => {
+
+            const service: SearchProviderService = new SearchProviderService(unitOfWork);
+            const request = new SearchProviderRequest('1065');
+            const response: SearchProviderResponse = await service.execute(request);
+            expect(response.provider.identification).toBe('1065');
+        });
+
+        test('find many registry', async () => {
+            const service: SearchProviderService = new SearchProviderService(unitOfWork);
+            const response: SearchProviderResponse = await service.execute(new SearchProviderRequest());
+            expect(response.providers.length).toBe(1);
         });
 
         afterAll(() => {
@@ -149,4 +173,65 @@ describe('Application tests', () => {
 
     });
 
+    describe('product test', () => {
+
+        beforeAll(async ()=>{
+            unitOfWork = new UnitOfWork(await createConnection({
+                type: 'sqlite',
+                database: ':memory:',
+                logging: false,
+                dropSchema: true,
+                synchronize: true,
+                entities: ['src/infrastructure/database/entity/*.ts']
+            }));
+        });
+
+        test('correct registry', async () => {
+            const registerProviderService = await new RegisterProviderService(unitOfWork).execute(
+                new RegisterProviderRequest(
+                    'Company Example',
+                    'sellerOne@email',
+                    '1065',
+                    'Name Example',
+                    'Street example',
+                    'phone example'
+                )
+            );
+
+            const registerBrandService = await new RegisterBrandService(unitOfWork).execute(
+                new RegisterBrandRequest(
+                    '1111',
+                    'Example Category'
+                )
+            );
+
+            const registerCategoryService = await new RegisterCategoryService(unitOfWork).execute(
+                new RegisterCategoryRequest(
+                    '1111',
+                    'Example Category'
+                )
+            );
+
+            const service: RegisterProductService = new RegisterProductService(unitOfWork);
+            const response: RegisterProductResponse = await service.execute(
+                new RegisterProductRequest(
+                    '8563',
+                    '1111',
+                    '1111',
+                    'Product Name Example',
+                    '1065',
+                    5000,
+                    'Description Example'
+                )
+            );
+
+
+            expect(response.message).toBe('Producto registrado con exito');
+        });
+
+        afterAll(() => {
+            return unitOfWork.closeConnection();
+        });
+
+    })
 })

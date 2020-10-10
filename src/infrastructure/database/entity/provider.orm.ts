@@ -12,8 +12,6 @@ export class ProviderOrm{
     @Column()
     name: string;
     @Column()
-    reference: string;
-    @Column()
     street: string;
     @Column()
     telephone: string;

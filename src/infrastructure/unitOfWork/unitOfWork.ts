@@ -5,6 +5,7 @@ import {BrandRepository} from "../repositories/brand.repository";
 import {BrandOrm} from "../database/entity/brand.orm";
 import {CategoryRepository} from "../repositories/category.repository";
 import {ProviderRepository} from "../repositories/provider.repository";
+import {ProductRepository} from "../repositories/product.repository";
 
 
 @Injectable()
@@ -16,6 +17,7 @@ export class UnitOfWork implements IUnitOfWork{
     public brandRepository: BrandRepository;
     public categoryRepository: CategoryRepository;
     public providerRepository: ProviderRepository;
+    public productRepository: ProductRepository;
 
     constructor(@Inject('DATABASE_CONNECTION') private readonly asyncDatabaseConnection: Connection) {
         this.queryRunner = this.asyncDatabaseConnection.createQueryRunner();
@@ -23,6 +25,7 @@ export class UnitOfWork implements IUnitOfWork{
         this.brandRepository = this.asyncDatabaseConnection.getCustomRepository(BrandRepository);
         this.categoryRepository = this.asyncDatabaseConnection.getCustomRepository(CategoryRepository);
         this.providerRepository = this.asyncDatabaseConnection.getCustomRepository(ProviderRepository);
+        this.productRepository = this.asyncDatabaseConnection.getCustomRepository(ProductRepository);
     }
 
     setTransactionManager(){
