@@ -1,5 +1,6 @@
 import { IUnitOfWork } from '../infrastructure/contracts/unitOfWork.interface';
 import { Provider } from '../domain/entity/provider.entity';
+import { SearchBrandResponse } from './search.brand.service';
 
 export class SearchProviderService{
 
@@ -15,6 +16,9 @@ export class SearchProviderService{
       return new SearchProviderResponse(providers, null);
     }else{
       const searchedProvider = await  this._unitOfWork.providerRepository.findOne({where: {identification: request.identification}});
+      if(searchedProvider == undefined){
+        return new SearchProviderResponse(null,null,'Este proveedor no existe')
+      }
       return new SearchProviderResponse(null, new Provider().mappedOrmToEntity(searchedProvider));
     }
   }
@@ -25,5 +29,5 @@ export class SearchProviderRequest{
 }
 
 export class SearchProviderResponse{
-  constructor(public readonly providers?: Provider[], public readonly provider?: Provider) {}
+  constructor(public readonly providers?: Provider[], public readonly provider?: Provider, public readonly message?: string) {}
 }

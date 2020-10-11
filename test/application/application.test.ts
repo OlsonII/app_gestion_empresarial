@@ -67,6 +67,19 @@ describe('Application tests', () => {
             expect(response.message).toBe('Marca registrada con exito');
         });
 
+        test('duplicate registry', async () => {
+            const service: RegisterBrandService = new RegisterBrandService(unitOfWork);
+            const request = new RegisterBrandRequest(
+              '1111',
+              'Example'
+            );
+
+            await service.execute(request);
+
+            const response: RegisterBrandResponse = await service.execute(request);
+            expect(response.message).toBe('Esta marca ya se encuentra registrada');
+        });
+
         test('find one registry', async () => {
             const service: SearchBrandService = new SearchBrandService(unitOfWork);
             const request = new SearchBrandRequest(
@@ -74,6 +87,15 @@ describe('Application tests', () => {
             );
             const response: SearchBrandResponse = await service.execute(request);
             expect(response.brand.reference).toBe('1111');
+        });
+
+        test('find a non-existent registry', async () => {
+            const service: SearchBrandService = new SearchBrandService(unitOfWork);
+            const request = new SearchBrandRequest(
+              '1112'
+            );
+            const response: SearchBrandResponse = await service.execute(request);
+            expect(response.message).toBe('Esta marca no existe');
         });
 
         test('find many registry', async () => {
@@ -112,6 +134,19 @@ describe('Application tests', () => {
             expect(response.message).toBe('Categoria registrada con exito');
         });
 
+        test('duplicate registry', async () => {
+            const service: RegisterCategoryService = new RegisterCategoryService(unitOfWork);
+            const request = new RegisterCategoryRequest(
+              '1111',
+              'Example Category'
+            );
+
+            await service.execute(request);
+
+            const response: RegisterCategoryResponse = await service.execute(request);
+            expect(response.message).toBe('Esta categoria ya se encuentra registrada');
+        });
+
         test('find one registry', async () => {
 
             const service: SearchCategoryService = new SearchCategoryService(unitOfWork);
@@ -120,6 +155,16 @@ describe('Application tests', () => {
             );
             const response: SearchCategoryResponse = await service.execute(request);
             expect(response.category.reference).toBe('1111');
+        });
+
+        test('find a non-existent registry', async () => {
+
+            const service: SearchCategoryService = new SearchCategoryService(unitOfWork);
+            const request = new SearchCategoryRequest(
+              '1112'
+            );
+            const response: SearchCategoryResponse = await service.execute(request);
+            expect(response.message).toBe('Esta categoria no existe');
         });
 
         test('find many registry', async () => {
@@ -161,12 +206,38 @@ describe('Application tests', () => {
             expect(response.message).toBe('Proveedor registrado con exito');
         });
 
+        test('duplicate registry', async () => {
+
+            const service: RegisterProviderService = new RegisterProviderService(unitOfWork);
+            const request = new RegisterProviderRequest(
+              'Company Example',
+              'sellerOne@email',
+              '1065',
+              'Name Example',
+              'Street example',
+              'phone example'
+            );
+
+            await service.execute(request);
+
+            const response: RegisterProviderResponse = await service.execute(request);
+            expect(response.message).toBe('Este proveedor ya se encuentra registrado');
+        });
+
         test('find one registry', async () => {
 
             const service: SearchProviderService = new SearchProviderService(unitOfWork);
             const request = new SearchProviderRequest('1065');
             const response: SearchProviderResponse = await service.execute(request);
             expect(response.provider.identification).toBe('1065');
+        });
+
+        test('find a non-existent registry', async () => {
+
+            const service: SearchProviderService = new SearchProviderService(unitOfWork);
+            const request = new SearchProviderRequest('1066');
+            const response: SearchProviderResponse = await service.execute(request);
+            expect(response.message).toBe('Este proveedor no existe');
         });
 
         test('find many registry', async () => {
@@ -239,12 +310,75 @@ describe('Application tests', () => {
             expect(response.message).toBe('Producto registrado con exito');
         });
 
+        test('duplicate registry', async () => {
+            const registerProviderService = await new RegisterProviderService(unitOfWork).execute(
+              new RegisterProviderRequest(
+                'Company Example',
+                'sellerOne@email',
+                '1065',
+                'Name Example',
+                'Street example',
+                'phone example'
+              )
+            );
+
+            const registerBrandService = await new RegisterBrandService(unitOfWork).execute(
+              new RegisterBrandRequest(
+                '1111',
+                'Example Brand'
+              )
+            );
+
+            const registerCategoryService = await new RegisterCategoryService(unitOfWork).execute(
+              new RegisterCategoryRequest(
+                '1111',
+                'Example Category'
+              )
+            );
+
+            const service: RegisterProductService = new RegisterProductService(unitOfWork);
+
+            await service.execute(
+              new RegisterProductRequest(
+                '8563',
+                '1111',
+                '1111',
+                'Product Name Example',
+                '1065',
+                5000,
+                'Description Example'
+              )
+            );
+
+            const response: RegisterProductResponse = await service.execute(
+              new RegisterProductRequest(
+                '8563',
+                '1111',
+                '1111',
+                'Product Name Example',
+                '1065',
+                5000,
+                'Description Example'
+              )
+            );
+
+            expect(response.message).toBe('Este producto ya se encuentra registrado');
+        });
+
         test('find one registry', async () => {
 
             const service: SearchProductService = new SearchProductService(unitOfWork);
             const request = new SearchProductRequest('8563');
             const response: SearchProductResponse = await service.execute(request);
             expect(response.product.reference).toBe('8563');
+        });
+
+        test('find a non-existent registry', async () => {
+
+            const service: SearchProductService = new SearchProductService(unitOfWork);
+            const request = new SearchProductRequest('8547');
+            const response: SearchProductResponse = await service.execute(request);
+            expect(response.message).toBe('Este producto no existe');
         });
 
         test('find many registry', async () => {

@@ -16,6 +16,9 @@ export class SearchBrandService{
             return new SearchBrandResponse(brands);
         }else{
             const searchedBrand = await this._unitOfWork.brandRepository.findOne({where: {reference: request.reference}});
+            if(searchedBrand == undefined){
+                return new SearchBrandResponse(null,null,'Esta marca no existe')
+            }
             return new SearchBrandResponse(null, new Brand().mappedOrmToEntity(searchedBrand));
         }
     }
@@ -27,5 +30,5 @@ export class SearchBrandRequest{
 }
 
 export class SearchBrandResponse{
-    constructor(public readonly brands?: Brand[], public readonly brand?: Brand) {}
+    constructor(public readonly brands?: Brand[], public readonly brand?: Brand, public readonly message?: string) {}
 }

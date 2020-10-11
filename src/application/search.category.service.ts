@@ -1,5 +1,6 @@
 import { IUnitOfWork } from '../infrastructure/contracts/unitOfWork.interface';
 import { Category } from '../domain/entity/category.entity';
+import { SearchBrandResponse } from './search.brand.service';
 
 export class SearchCategoryService{
 
@@ -15,6 +16,9 @@ export class SearchCategoryService{
       return new SearchCategoryResponse(categories);
     }else{
       const searchedCategory = await this._unitOfWork.categoryRepository.findOne({where: {reference: request.reference}});
+      if(searchedCategory == undefined){
+        return new SearchCategoryResponse(null,null,'Esta categoria no existe')
+      }
       return new SearchCategoryResponse(null, new Category().mappedOrmToEntity(searchedCategory));
     }
   }
@@ -25,5 +29,5 @@ export class SearchCategoryRequest{
 }
 
 export class SearchCategoryResponse{
-  constructor(public readonly categories?: Category[], public readonly category?: Category) {}
+  constructor(public readonly categories?: Category[], public readonly category?: Category, public readonly message?: string) {}
 }

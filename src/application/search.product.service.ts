@@ -1,6 +1,6 @@
 import { Product } from '../domain/entity/product.entity';
 import { IUnitOfWork } from '../infrastructure/contracts/unitOfWork.interface';
-import {SearchBrandRequest, SearchBrandService} from "./search.brand.service";
+import { SearchBrandRequest, SearchBrandResponse, SearchBrandService } from './search.brand.service';
 
 
 export class SearchProductService{
@@ -16,6 +16,9 @@ export class SearchProductService{
       return new SearchProductResponse(productsList);
     }else{
       const searchedProduct = await this._unitOfWork.productRepository.findOne({where: {reference: request.reference}});
+      if(searchedProduct == undefined){
+        return new SearchProductResponse(null,null,'Este producto no existe')
+      }
       return new SearchProductResponse(null, new Product().mappedOrmToEntity(searchedProduct));
     }
   }
@@ -26,5 +29,5 @@ export class SearchProductRequest{
 }
 
 export class SearchProductResponse{
-  constructor(public readonly products?: Product[], public readonly product?: Product) {}
+  constructor(public readonly products?: Product[], public readonly product?: Product, public readonly message?: string) {}
 }
