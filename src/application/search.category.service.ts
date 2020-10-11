@@ -7,11 +7,15 @@ export class SearchCategoryService{
 
   async execute(request: SearchCategoryRequest): Promise<SearchCategoryResponse>{
     if(request.reference == undefined){
+      const categories: Category[] = [];
       const searchedCategories = await this._unitOfWork.categoryRepository.find();
-      return new SearchCategoryResponse(searchedCategories);
+      searchedCategories.forEach(category => {
+        categories.push(new Category().mappedOrmToEntity(category));
+      });
+      return new SearchCategoryResponse(categories);
     }else{
-      const searchedCategory = await this._unitOfWork.categoryRepository.findOne(request.reference);
-      return new SearchCategoryResponse(null, searchedCategory);
+      const searchedCategory = await this._unitOfWork.categoryRepository.findOne({where: {reference: request.reference}});
+      return new SearchCategoryResponse(null, new Category().mappedOrmToEntity(searchedCategory));
     }
   }
 }

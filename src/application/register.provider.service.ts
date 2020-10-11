@@ -1,5 +1,6 @@
 import {IUnitOfWork} from "../infrastructure/contracts/unitOfWork.interface";
 import {Provider} from "../domain/entity/provider.entity";
+import { ObjectID } from 'mongodb';
 
 export class RegisterProviderService{
 
@@ -7,10 +8,15 @@ export class RegisterProviderService{
 
     async execute(request: RegisterProviderRequest): Promise<RegisterProviderResponse>{
         let newProvider: Provider;
-        const searchedCategory = await this._unitOfWork.providerRepository.findOne(request.identification);
+        const searchedCategory = await this._unitOfWork.providerRepository.findOne({where: {identification: request.identification}});
         if(searchedCategory == undefined){
             newProvider = new Provider();
-            newProvider = request;
+            newProvider.identification = request.identification;
+            newProvider.name = request.name;
+            newProvider.email = request.email;
+            newProvider.telephone = request.telephone;
+            newProvider.street = request.street;
+            newProvider.company = request.company;
             this._unitOfWork.start();
             const savedProvider = await this._unitOfWork.complete(async () => await this._unitOfWork.providerRepository.save(newProvider));
             if(savedProvider != undefined){
@@ -31,7 +37,8 @@ export class RegisterProviderRequest{
         public name: string,
         public street: string,
         public telephone: string
-    ) {}
+    ) {
+    }
 }
 
 export class RegisterProviderResponse{

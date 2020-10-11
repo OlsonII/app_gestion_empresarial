@@ -1,9 +1,11 @@
-import {Column, Entity, PrimaryColumn} from "typeorm";
+import {Column, Entity, ObjectID, ObjectIdColumn, PrimaryColumn} from "typeorm";
 
 @Entity('PROVIDER')
 export class ProviderOrm{
 
-    @PrimaryColumn()
+    @ObjectIdColumn()
+    _id: ObjectID;
+    @Column()
     identification: string;
     @Column()
     company: string;

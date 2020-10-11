@@ -1,5 +1,6 @@
 import { Product } from '../domain/entity/product.entity';
 import { IUnitOfWork } from '../infrastructure/contracts/unitOfWork.interface';
+import {SearchBrandRequest, SearchBrandService} from "./search.brand.service";
 
 
 export class SearchProductService{
@@ -7,11 +8,15 @@ export class SearchProductService{
 
   async execute(request: SearchProductRequest): Promise<SearchProductResponse>{
     if(request.reference == undefined){
+      const productsList: Product[] = []
       const searchedProducts = await this._unitOfWork.productRepository.find();
-      return new SearchProductResponse(searchedProducts);
+      searchedProducts.forEach(productOrm => {
+        productsList.push(new Product().mappedOrmToEntity(productOrm));
+      });
+      return new SearchProductResponse(productsList);
     }else{
-      const searchedProducts = await this._unitOfWork.productRepository.findOne(request.reference);
-      return new SearchProductResponse(null, searchedProducts);
+      const searchedProduct = await this._unitOfWork.productRepository.findOne({where: {reference: request.reference}});
+      return new SearchProductResponse(null, new Product().mappedOrmToEntity(searchedProduct));
     }
   }
 }

@@ -1,10 +1,12 @@
-import {Column, Entity, PrimaryColumn} from "typeorm";
+import {Column, Entity, ObjectID, ObjectIdColumn, PrimaryColumn} from "typeorm";
 
 @Entity({
     name: 'BRAND'
 })
 export class BrandOrm{
-    @PrimaryColumn()
+    @ObjectIdColumn()
+    _id: ObjectID;
+    @Column()
     reference: string;
     @Column()
     name: string;

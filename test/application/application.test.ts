@@ -47,9 +47,10 @@ describe('Application tests', () => {
 
         beforeAll(async ()=>{
             unitOfWork = new UnitOfWork(await createConnection({
-                type: 'sqlite',
-                database: ':memory:',
-                logging: false,
+                type: 'mongodb',
+                url: 'mongodb+srv://olson:1981@cluster0.fhagr.mongodb.net/memory?retryWrites=true&w=majority',
+                logging: true,
+                useNewUrlParser: true,
                 dropSchema: true,
                 synchronize: true,
                 entities: ['src/infrastructure/database/entity/*.ts']
@@ -91,9 +92,10 @@ describe('Application tests', () => {
 
         beforeAll(async ()=>{
             unitOfWork = new UnitOfWork(await createConnection({
-                type: 'sqlite',
-                database: ':memory:',
-                logging: false,
+                type: 'mongodb',
+                url: 'mongodb+srv://olson:1981@cluster0.fhagr.mongodb.net/memory?retryWrites=true&w=majority',
+                logging: true,
+                useNewUrlParser: true,
                 dropSchema: true,
                 synchronize: true,
                 entities: ['src/infrastructure/database/entity/*.ts']
@@ -135,9 +137,10 @@ describe('Application tests', () => {
 
         beforeAll(async ()=>{
             unitOfWork = new UnitOfWork(await createConnection({
-                type: 'sqlite',
-                database: ':memory:',
-                logging: false,
+                type: 'mongodb',
+                url: 'mongodb+srv://olson:1981@cluster0.fhagr.mongodb.net/memory?retryWrites=true&w=majority',
+                logging: true,
+                useNewUrlParser: true,
                 dropSchema: true,
                 synchronize: true,
                 entities: ['src/infrastructure/database/entity/*.ts']
@@ -182,9 +185,10 @@ describe('Application tests', () => {
 
         beforeAll(async ()=>{
             unitOfWork = new UnitOfWork(await createConnection({
-                type: 'sqlite',
-                database: ':memory:',
-                logging: false,
+                type: 'mongodb',
+                url: 'mongodb+srv://olson:1981@cluster0.fhagr.mongodb.net/memory?retryWrites=true&w=majority',
+                logging: true,
+                useNewUrlParser: true,
                 dropSchema: true,
                 synchronize: true,
                 entities: ['src/infrastructure/database/entity/*.ts']
@@ -206,7 +210,7 @@ describe('Application tests', () => {
             const registerBrandService = await new RegisterBrandService(unitOfWork).execute(
                 new RegisterBrandRequest(
                     '1111',
-                    'Example Category'
+                    'Example Brand'
                 )
             );
 
@@ -218,6 +222,7 @@ describe('Application tests', () => {
             );
 
             const service: RegisterProductService = new RegisterProductService(unitOfWork);
+
             const response: RegisterProductResponse = await service.execute(
                 new RegisterProductRequest(
                     '8563',
@@ -245,6 +250,7 @@ describe('Application tests', () => {
         test('find many registry', async () => {
             const service: SearchProductService = new SearchProductService(unitOfWork);
             const response: SearchProductResponse = await service.execute(new SearchProductRequest());
+            console.log(response.products);
             expect(response.products.length).toBe(1);
         });
 
@@ -253,4 +259,4 @@ describe('Application tests', () => {
         });
 
     })
-})
+});

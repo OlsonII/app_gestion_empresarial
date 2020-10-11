@@ -1,5 +1,6 @@
 import {IUnitOfWork} from "../infrastructure/contracts/unitOfWork.interface";
 import {Brand} from "../domain/entity/brand.entity";
+import {BrandOrm} from "../infrastructure/database/entity/brand.orm";
 
 export class RegisterBrandService{
 
@@ -7,10 +8,11 @@ export class RegisterBrandService{
 
     async execute(request: RegisterBrandRequest): Promise<RegisterBrandResponse>{
         let newBrand: Brand;
-        const searchedBrand = await this._unitOfWork.brandRepository.findOne(request.reference);
+        const searchedBrand = await this._unitOfWork.brandRepository.findOne({where: {reference: request.reference}});
         if(searchedBrand == undefined){
             newBrand = new Brand();
-            newBrand = request;
+            newBrand.reference = request.reference;
+            newBrand.name = request.name;
             this._unitOfWork.start();
             const savedBrand = await this._unitOfWork.complete(async () => await this._unitOfWork.brandRepository.save(newBrand));
             if(savedBrand != undefined){

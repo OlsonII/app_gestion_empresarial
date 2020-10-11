@@ -1,5 +1,6 @@
 import {IUnitOfWork} from "../infrastructure/contracts/unitOfWork.interface";
 import {Brand} from "../domain/entity/brand.entity";
+import {Category} from "../domain/entity/category.entity";
 
 export class SearchBrandService{
 
@@ -7,11 +8,15 @@ export class SearchBrandService{
 
     async execute(request: SearchBrandRequest): Promise<SearchBrandResponse>{
         if(request.reference == undefined){
+            const brands: Brand[] = [];
             const searchedBrands = await this._unitOfWork.brandRepository.find();
-            return new SearchBrandResponse(searchedBrands);
+            searchedBrands.forEach(brand => {
+                brands.push(new Brand().mappedOrmToEntity(brand));
+            });
+            return new SearchBrandResponse(brands);
         }else{
-            const searchedBrand = await this._unitOfWork.brandRepository.findOne(request.reference);
-            return new SearchBrandResponse(null, searchedBrand);
+            const searchedBrand = await this._unitOfWork.brandRepository.findOne({where: {reference: request.reference}});
+            return new SearchBrandResponse(null, new Brand().mappedOrmToEntity(searchedBrand));
         }
     }
 

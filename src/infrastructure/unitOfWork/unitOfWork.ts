@@ -1,11 +1,12 @@
 import {Inject, Injectable} from "@nestjs/common";
 import {IUnitOfWork} from "../contracts/unitOfWork.interface";
-import {Connection, EntityManager, QueryRunner} from "typeorm";
+import {Connection, EntityManager, MongoRepository, QueryRunner} from "typeorm";
 import {BrandRepository} from "../repositories/brand.repository";
 import {BrandOrm} from "../database/entity/brand.orm";
 import {CategoryRepository} from "../repositories/category.repository";
 import {ProviderRepository} from "../repositories/provider.repository";
 import {ProductRepository} from "../repositories/product.repository";
+import {ProviderOrm} from "../database/entity/provider.orm";
 
 
 @Injectable()

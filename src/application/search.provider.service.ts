@@ -7,11 +7,15 @@ export class SearchProviderService{
 
   async execute(request: SearchProviderRequest): Promise<SearchProviderResponse>{
     if (request.identification == undefined){
+      const providers: Provider[] = [];
       const searchedProviders = await this._unitOfWork.providerRepository.find();
-      return new SearchProviderResponse(searchedProviders, null);
+      searchedProviders.forEach(provider => {
+        providers.push(new Provider().mappedOrmToEntity(provider));
+      })
+      return new SearchProviderResponse(providers, null);
     }else{
-      const searchedProvider = await  this._unitOfWork.providerRepository.findOne(request.identification);
-      return new SearchProviderResponse(null, searchedProvider);
+      const searchedProvider = await  this._unitOfWork.providerRepository.findOne({where: {identification: request.identification}});
+      return new SearchProviderResponse(null, new Provider().mappedOrmToEntity(searchedProvider));
     }
   }
 }

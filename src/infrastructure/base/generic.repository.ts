@@ -1,6 +1,6 @@
 import {Injectable} from "@nestjs/common";
-import {Repository} from "typeorm";
+import {MongoRepository, Repository} from "typeorm";
 
 
 @Injectable()
-export class GenericRepository<T> extends Repository<T>{}
+export class GenericRepository<T> extends MongoRepository<T>{}

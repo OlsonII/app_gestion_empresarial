@@ -1,7 +1,4 @@
-import {IBrand} from "../../../domain/contracts/brand.interface";
-import {ICategory} from "../../../domain/contracts/category.interface";
-import {IProvider} from "../../../domain/contracts/provider.interface";
-import {Column, Entity, ManyToOne, PrimaryColumn} from "typeorm";
+import {Column, Entity, ObjectID, ObjectIdColumn, PrimaryColumn} from "typeorm";
 import {BrandOrm} from "./brand.orm";
 import {CategoryOrm} from "./category.orm";
 import {ProviderOrm} from "./provider.orm";
@@ -9,38 +6,32 @@ import {ProviderOrm} from "./provider.orm";
 @Entity('PRODUCT')
 export class ProductOrm{
 
-    @ManyToOne(type => BrandOrm, brand => brand.reference)
+    @Column(type => CategoryOrm)
     brand: BrandOrm;
-
-    @ManyToOne(type => CategoryOrm, category => category.reference)
+    @Column(type => CategoryOrm)
     category: CategoryOrm;
-
     @Column({
         default: 0
     })
     cost: number;
-
     @Column({
         default: " "
     })
     description: string;
-
     @Column()
     name: string;
-
     @Column({
         default: 0
     })
     price: number;
-
-    @ManyToOne(type => ProviderOrm, provider => provider.identification)
+    @Column(type => ProviderOrm)
     provider: ProviderOrm;
-
     @Column({
         default: 0
     })
     quantity: number;
-
-    @PrimaryColumn()
+    @ObjectIdColumn()
+    _id: ObjectID;
+    @Column()
     reference: string;
 }

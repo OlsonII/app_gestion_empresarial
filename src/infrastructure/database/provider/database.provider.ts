@@ -4,12 +4,11 @@ export const databaseProviders = [
     {
         provide: 'DATABASE_CONNECTION',
         useFactory: async () => await createConnection({
-            type: 'mysql',
-            host: 'localhost',
-            port: 3306,
-            username: 'root',
-            password: '1981',
-            database: 'FINANCIAL_MANAGEMENT',
+            type: 'mongodb',
+            url: 'mongodb+srv://olson:1981@cluster0.fhagr.mongodb.net/business_management?retryWrites=true&w=majority',
+            logging: true,
+            useNewUrlParser: true,
+            ssl: true,
             entities: ['dist/infrastructure/database/entity/*.js']
         })
     }
