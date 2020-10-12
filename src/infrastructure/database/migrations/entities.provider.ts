@@ -2,6 +2,7 @@ import {Connection} from "typeorm";
 import {BrandOrm} from "../entity/brand.orm";
 import {CategoryOrm} from "../entity/category.orm";
 import {ProviderOrm} from "../entity/provider.orm";
+import {ProductOrm} from "../entity/product.orm";
 
 
 export const brandProviders = [
@@ -27,6 +28,14 @@ export const providerProviders = [
         inject: ['DATABASE_CONNECTION'],
     }
 ];
+
+export const productProviders =[
+    {
+        provide: 'PRODUCT_REPOSITORY',
+        useFactory: (connection: Connection) => connection.getRepository(ProductOrm),
+        inject: ['DATABASE_CONNECTION'],
+    }
+]
 
 export const productTransactionProviders = [
     {

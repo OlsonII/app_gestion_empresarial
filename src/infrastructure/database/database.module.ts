@@ -1,7 +1,7 @@
 import {Module} from "@nestjs/common";
 import {
     brandProviders,
-    categoryProviders,
+    categoryProviders, productProviders,
     productTransactionProviders,
     providerProviders
 } from "./migrations/entities.provider";
@@ -14,6 +14,7 @@ import {databaseProviders} from "./provider/database.provider";
             ...brandProviders,
             ...categoryProviders,
             ...providerProviders,
+            ...productProviders,
             ...productTransactionProviders
         ],
         exports: [
@@ -21,6 +22,7 @@ import {databaseProviders} from "./provider/database.provider";
             ...brandProviders,
             ...categoryProviders,
             ...providerProviders,
+            ...productProviders,
             ...productTransactionProviders
         ]
     }
