@@ -9,7 +9,9 @@ import {ProductTransactionRepository} from "./repositories/product.transaction.r
 
 @Module(
     {
-        imports: [DatabaseModule],
+        imports: [
+            DatabaseModule
+        ],
         providers: [
             UnitOfWork
         ],
