@@ -6,16 +6,18 @@ import {ProductOrm} from "../../infrastructure/database/entity/product.orm";
 import {Brand} from "./brand.entity";
 import {Category} from "./category.entity";
 import {Provider} from "./provider.entity";
+import {ObjectID} from "typeorm";
 
 export class Product implements IProduct{
+    public _id: ObjectID;
     public brand: Brand;
     public category: Category;
-    public cost?: number;
-    public description?: string;
+    public cost: number;
+    public description: string;
     public name: string;
-    public price?: number;
+    public price: number;
     public provider: Provider;
-    public quantity?: number;
+    public quantity: number;
     public reference: string;
 
     insertProduct(quantity: number){
@@ -24,9 +26,6 @@ export class Product implements IProduct{
 
     removeProduct(quantity: number){
         this.quantity -= quantity;
-        if(this.quantity < 0){
-            this.quantity = 0;
-        }
     }
 
     calculateTotalCost(){
@@ -39,6 +38,7 @@ export class Product implements IProduct{
 
     mappedOrmToEntity(orm: ProductOrm): Product{
         const product = new Product();
+        product._id = orm._id;
         product.reference = orm.reference;
         product.name = orm.name;
         product.description = orm.description;

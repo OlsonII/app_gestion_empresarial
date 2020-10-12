@@ -1,6 +1,5 @@
 import {IUnitOfWork} from "../infrastructure/contracts/unitOfWork.interface";
 import {Provider} from "../domain/entity/provider.entity";
-import { ObjectID } from 'mongodb';
 
 export class RegisterProviderService{
 
@@ -37,8 +36,7 @@ export class RegisterProviderRequest{
         public name: string,
         public street: string,
         public telephone: string
-    ) {
-    }
+    ) { }
 }
 
 export class RegisterProviderResponse{

@@ -27,3 +27,11 @@ export const providerProviders = [
         inject: ['DATABASE_CONNECTION'],
     }
 ];
+
+export const productTransactionProviders = [
+    {
+        provide: 'PRODUCT_TRANSACTION_REPOSITORY',
+        useFactory: (connection: Connection) => connection.getRepository(ProviderOrm),
+        inject: ['DATABASE_CONNECTION'],
+    }
+];

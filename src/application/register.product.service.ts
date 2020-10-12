@@ -9,6 +9,7 @@ import {SearchBrandRequest, SearchBrandService} from "./search.brand.service";
 import {Provider} from "../domain/entity/provider.entity";
 import {Category} from "../domain/entity/category.entity";
 import {Brand} from "../domain/entity/brand.entity";
+import {ObjectID} from "typeorm";
 
 export class RegisterProductService{
 

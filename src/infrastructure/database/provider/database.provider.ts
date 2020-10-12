@@ -7,6 +7,8 @@ export const databaseProviders = [
             type: 'mongodb',
             url: 'mongodb+srv://olson:1981@cluster0.fhagr.mongodb.net/business_management?retryWrites=true&w=majority',
             logging: true,
+            dropSchema: true,
+            synchronize: true,
             useNewUrlParser: true,
             ssl: true,
             entities: ['dist/infrastructure/database/entity/*.js']

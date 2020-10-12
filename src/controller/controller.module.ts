@@ -4,6 +4,7 @@ import {InfrastructureModule} from "../infrastructure/infrastructure.module";
 import {CategoryController} from "./category.controller";
 import {BrandController} from "./brand.controller";
 import {ProviderController} from "./provider.controller";
+import {ProductController} from "./product.controller";
 
 @Module({
     imports: [
@@ -13,7 +14,8 @@ import {ProviderController} from "./provider.controller";
     controllers: [
         CategoryController,
         BrandController,
-        ProviderController
+        ProviderController,
+        ProductController
     ]
 })
 export class ControllersModule{}

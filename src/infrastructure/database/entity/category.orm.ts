@@ -1,7 +1,7 @@
 import {Column, Entity, ObjectID, ObjectIdColumn, PrimaryColumn} from "typeorm";
 
 @Entity({
-    name: 'CATEGORY'
+    name: 'CATEGORIES'
 })
 export class CategoryOrm{
     @ObjectIdColumn()

@@ -1,6 +1,7 @@
 import { Product } from '../domain/entity/product.entity';
 import { IUnitOfWork } from '../infrastructure/contracts/unitOfWork.interface';
 import { SearchBrandRequest, SearchBrandResponse, SearchBrandService } from './search.brand.service';
+import {ObjectID} from "typeorm";
 
 
 export class SearchProductService{

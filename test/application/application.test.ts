@@ -37,6 +37,15 @@ import {
     SearchProductResponse,
     SearchProductService,
 } from '../../src/application/search.product.service';
+import {
+    RegisterProductInputRequest, RegisterProductInputResponse,
+    RegisterProductInputService
+} from "../../src/application/register.product.input.service";
+import {
+    RegisterProductOutputRequest,
+    RegisterProductOutputResponse,
+    RegisterProductOutputService
+} from "../../src/application/register.product.output.service";
 
 
 describe('Application tests', () => {
@@ -267,7 +276,7 @@ describe('Application tests', () => {
         });
 
         test('correct registry', async () => {
-            const registerProviderService = await new RegisterProviderService(unitOfWork).execute(
+            await new RegisterProviderService(unitOfWork).execute(
                 new RegisterProviderRequest(
                     'Company Example',
                     'sellerOne@email',
@@ -278,14 +287,14 @@ describe('Application tests', () => {
                 )
             );
 
-            const registerBrandService = await new RegisterBrandService(unitOfWork).execute(
+            await new RegisterBrandService(unitOfWork).execute(
                 new RegisterBrandRequest(
                     '1111',
                     'Example Brand'
                 )
             );
 
-            const registerCategoryService = await new RegisterCategoryService(unitOfWork).execute(
+            await new RegisterCategoryService(unitOfWork).execute(
                 new RegisterCategoryRequest(
                     '1111',
                     'Example Category'
@@ -311,7 +320,7 @@ describe('Application tests', () => {
         });
 
         test('duplicate registry', async () => {
-            const registerProviderService = await new RegisterProviderService(unitOfWork).execute(
+            await new RegisterProviderService(unitOfWork).execute(
               new RegisterProviderRequest(
                 'Company Example',
                 'sellerOne@email',
@@ -322,14 +331,14 @@ describe('Application tests', () => {
               )
             );
 
-            const registerBrandService = await new RegisterBrandService(unitOfWork).execute(
+            await new RegisterBrandService(unitOfWork).execute(
               new RegisterBrandRequest(
                 '1111',
                 'Example Brand'
               )
             );
 
-            const registerCategoryService = await new RegisterCategoryService(unitOfWork).execute(
+            await new RegisterCategoryService(unitOfWork).execute(
               new RegisterCategoryRequest(
                 '1111',
                 'Example Category'
@@ -393,4 +402,139 @@ describe('Application tests', () => {
         });
 
     })
+
+    describe('product transaction test', () => {
+
+        beforeAll(async ()=>{
+            unitOfWork = new UnitOfWork(await createConnection({
+                type: 'mongodb',
+                url: 'mongodb+srv://olson:1981@cluster0.fhagr.mongodb.net/memory?retryWrites=true&w=majority',
+                logging: true,
+                useNewUrlParser: true,
+                dropSchema: true,
+                synchronize: true,
+                entities: ['src/infrastructure/database/entity/*.ts']
+            }));
+        });
+
+        test('correct input', async () => {
+            await new RegisterProviderService(unitOfWork).execute(
+                new RegisterProviderRequest(
+                    'Company Example',
+                    'sellerOne@email',
+                    '1065',
+                    'Name Example',
+                    'Street example',
+                    'phone example'
+                )
+            );
+
+            await new RegisterBrandService(unitOfWork).execute(
+                new RegisterBrandRequest(
+                    '1111',
+                    'Example Brand'
+                )
+            );
+
+            await new RegisterCategoryService(unitOfWork).execute(
+                new RegisterCategoryRequest(
+                    '1111',
+                    'Example Category'
+                )
+            );
+
+            await new RegisterProductService(unitOfWork).execute(
+                new RegisterProductRequest(
+                    '8563',
+                    '1111',
+                    '1111',
+                    'Product Name Example',
+                    '1065',
+                    5000,
+                    'Description Example',
+                    0,
+                    7500
+                )
+            );
+
+            const service: RegisterProductInputService = new RegisterProductInputService(unitOfWork);
+
+            const response: RegisterProductInputResponse = await service.execute(
+                new RegisterProductInputRequest(
+                    5,
+                    0,
+                    '8563',
+                    '11-10-2020'
+                )
+            );
+
+            expect(response.newQuantity).toBe(5);
+        });
+
+        test('correct output', async () => {
+            await new RegisterProviderService(unitOfWork).execute(
+                new RegisterProviderRequest(
+                    'Company Example',
+                    'sellerOne@email',
+                    '1065',
+                    'Name Example',
+                    'Street example',
+                    'phone example'
+                )
+            );
+
+            await new RegisterBrandService(unitOfWork).execute(
+                new RegisterBrandRequest(
+                    '1111',
+                    'Example Brand'
+                )
+            );
+
+            await new RegisterCategoryService(unitOfWork).execute(
+                new RegisterCategoryRequest(
+                    '1111',
+                    'Example Category'
+                )
+            );
+
+            await new RegisterProductService(unitOfWork).execute(
+                new RegisterProductRequest(
+                    '8563',
+                    '1111',
+                    '1111',
+                    'Product Name Example',
+                    '1065',
+                    5000,
+                    'Description Example',
+                    0,
+                    7500
+                )
+            );
+
+            await new RegisterProductInputService(unitOfWork).execute(
+                new RegisterProductInputRequest(
+                    15,
+                    0,
+                    '8563',
+                    '11-10-2020'
+                )
+            );
+
+            const response: RegisterProductOutputResponse = await new RegisterProductOutputService(unitOfWork).execute(
+                new RegisterProductOutputRequest(
+                    0,
+                    7,
+                    '8563',
+                    '11-10-2020'
+                )
+            );
+
+            expect(response.newQuantity).toBe(13);
+        });
+
+        afterAll(() => {
+            return unitOfWork.closeConnection();
+        });
+
+    });
 });
