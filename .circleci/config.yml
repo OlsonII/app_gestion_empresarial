@@ -5,7 +5,7 @@ orbs:
 workflows:
   heroku_deploy:
     jobs:
-      - heroku/deply-via-git
+      - heroku/deploy-via-git
 
 jobs:
   build:
