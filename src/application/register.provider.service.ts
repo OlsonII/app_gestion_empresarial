@@ -6,24 +6,29 @@ export class RegisterProviderService{
     constructor(private readonly _unitOfWork: IUnitOfWork) {}
 
     async execute(request: RegisterProviderRequest): Promise<RegisterProviderResponse>{
-        let newProvider: Provider;
-        const searchedCategory = await this._unitOfWork.providerRepository.findOne({where: {identification: request.identification}});
-        if(searchedCategory == undefined){
-            newProvider = new Provider();
-            newProvider.identification = request.identification;
-            newProvider.name = request.name;
-            newProvider.email = request.email;
-            newProvider.telephone = request.telephone;
-            newProvider.street = request.street;
-            newProvider.company = request.company;
-            this._unitOfWork.start();
-            const savedProvider = await this._unitOfWork.complete(async () => await this._unitOfWork.providerRepository.save(newProvider));
-            if(savedProvider != undefined){
-                return new RegisterProviderResponse('Proveedor registrado con exito');
+
+        try {
+            let newProvider: Provider;
+            const searchedCategory = await this._unitOfWork.providerRepository.findOne({where: {identification: request.identification}});
+            if(searchedCategory == undefined){
+                newProvider = new Provider();
+                newProvider.identification = request.identification;
+                newProvider.name = request.name;
+                newProvider.email = request.email;
+                newProvider.telephone = request.telephone;
+                newProvider.street = request.street;
+                newProvider.company = request.company;
+                this._unitOfWork.start();
+                const savedProvider = await this._unitOfWork.complete(async () => await this._unitOfWork.providerRepository.save(newProvider));
+                if(savedProvider != undefined){
+                    return new RegisterProviderResponse('Proveedor registrado con exito');
+                }
             }
-            return new RegisterProviderResponse('Ha habido un error al momento de registrar este proveedor')
+            return new RegisterProviderResponse('Este proveedor ya se encuentra registrado');
+        }catch (e) {
+            return new RegisterProviderResponse('Ha habido un error al momento de registrar este proveedor');
         }
-        return new RegisterProviderResponse('Este proveedor ya se encuentra registrado')
+
     }
 
 }

@@ -16,27 +16,33 @@ export class RegisterProductService{
     constructor(private readonly _unitOfWork: IUnitOfWork) {}
 
     async execute(request: RegisterProductRequest): Promise<RegisterProductResponse>{
-        let newProduct: Product;
-        const searchedCategory = await this._unitOfWork.productRepository.findOne({where: {reference: request.reference}});
-        if(searchedCategory == undefined){
-            newProduct = new Product();
-            newProduct.reference = request.reference;
-            newProduct.name = request.name;
-            newProduct.cost = request.cost;
-            newProduct.price = request.price;
-            newProduct.description = request.description;
-            newProduct.quantity = request.quantity;
-            newProduct.provider = new Provider().mappedOrmToEntity(await this._unitOfWork.providerRepository.findOne({where: {identification: request.providerIdentification}}));
-            newProduct.category = new Category().mappedOrmToEntity(await this._unitOfWork.categoryRepository.findOne({where: {reference: request.categoryReference}}));
-            newProduct.brand = new Brand().mappedOrmToEntity(await this._unitOfWork.brandRepository.findOne({where: {reference: request.brandReference}}));
-            this._unitOfWork.start();
-            const savedProduct = await this._unitOfWork.complete(async () => await this._unitOfWork.productRepository.save(newProduct));
-            if(savedProduct != undefined){
-                return new RegisterProductResponse('Producto registrado con exito');
+
+        try{
+            let newProduct: Product;
+            const searchedProduct = await this._unitOfWork.productRepository.findOne({where: {reference: request.reference}});
+            if(searchedProduct == undefined){
+                newProduct = new Product();
+                newProduct.reference = request.reference;
+                newProduct.name = request.name;
+                newProduct.cost = request.cost;
+                newProduct.price = request.price;
+                newProduct.description = request.description;
+                newProduct.quantity = request.quantity;
+                newProduct.provider = new Provider().mappedOrmToEntity(await this._unitOfWork.providerRepository.findOne({where: {identification: request.providerIdentification}}));
+                newProduct.category = new Category().mappedOrmToEntity(await this._unitOfWork.categoryRepository.findOne({where: {reference: request.categoryReference}}));
+                newProduct.brand = new Brand().mappedOrmToEntity(await this._unitOfWork.brandRepository.findOne({where: {reference: request.brandReference}}));
+                this._unitOfWork.start();
+                const savedProduct = await this._unitOfWork.complete(async () => await this._unitOfWork.productRepository.save(newProduct));
+                if(savedProduct != undefined){
+                    return new RegisterProductResponse('Producto registrado con exito');
+                }
+            }else{
+                return new RegisterProductResponse('Este producto ya se encuentra registrado')
             }
+        }catch (e){
+            console.log(e.toString());
             return new RegisterProductResponse('Ha habido un error al momento de registrar este producto')
         }
-        return new RegisterProductResponse('Este producto ya se encuentra registrado')
     }
 
 }

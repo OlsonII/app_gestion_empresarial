@@ -7,20 +7,26 @@ export class SearchBrandService{
     constructor(private readonly _unitOfWork: IUnitOfWork) {}
 
     async execute(request: SearchBrandRequest): Promise<SearchBrandResponse>{
-        if(request.reference == undefined){
-            const brands: Brand[] = [];
-            const searchedBrands = await this._unitOfWork.brandRepository.find();
-            searchedBrands.forEach(brand => {
-                brands.push(new Brand().mappedOrmToEntity(brand));
-            });
-            return new SearchBrandResponse(brands);
-        }else{
-            const searchedBrand = await this._unitOfWork.brandRepository.findOne({where: {reference: request.reference}});
-            if(searchedBrand == undefined){
-                return new SearchBrandResponse(null,null,'Esta marca no existe')
+        
+        try {
+            if(request.reference == undefined){
+                const brands: Brand[] = [];
+                const searchedBrands = await this._unitOfWork.brandRepository.find();
+                searchedBrands.forEach(brand => {
+                    brands.push(new Brand().mappedOrmToEntity(brand));
+                });
+                return new SearchBrandResponse(brands);
+            }else{
+                const searchedBrand = await this._unitOfWork.brandRepository.findOne({where: {reference: request.reference}});
+                if(searchedBrand == undefined){
+                    return new SearchBrandResponse(null,null,'Esta marca no existe')
+                }
+                return new SearchBrandResponse(null, new Brand().mappedOrmToEntity(searchedBrand));
             }
-            return new SearchBrandResponse(null, new Brand().mappedOrmToEntity(searchedBrand));
+        }catch (e) {
+            return new SearchBrandResponse(null, null, 'Ha habido un error al momento de realizar esta consulta');
         }
+
     }
 
 }

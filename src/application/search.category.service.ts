@@ -7,20 +7,26 @@ export class SearchCategoryService{
   constructor(private readonly _unitOfWork: IUnitOfWork) {}
 
   async execute(request: SearchCategoryRequest): Promise<SearchCategoryResponse>{
-    if(request.reference == undefined){
-      const categories: Category[] = [];
-      const searchedCategories = await this._unitOfWork.categoryRepository.find();
-      searchedCategories.forEach(category => {
-        categories.push(new Category().mappedOrmToEntity(category));
-      });
-      return new SearchCategoryResponse(categories);
-    }else{
-      const searchedCategory = await this._unitOfWork.categoryRepository.findOne({where: {reference: request.reference}});
-      if(searchedCategory == undefined){
-        return new SearchCategoryResponse(null,null,'Esta categoria no existe')
+
+    try {
+      if(request.reference == undefined){
+        const categories: Category[] = [];
+        const searchedCategories = await this._unitOfWork.categoryRepository.find();
+        searchedCategories.forEach(category => {
+          categories.push(new Category().mappedOrmToEntity(category));
+        });
+        return new SearchCategoryResponse(categories);
+      }else{
+        const searchedCategory = await this._unitOfWork.categoryRepository.findOne({where: {reference: request.reference}});
+        if(searchedCategory == undefined){
+          return new SearchCategoryResponse(null,null,'Esta categoria no existe')
+        }
+        return new SearchCategoryResponse(null, new Category().mappedOrmToEntity(searchedCategory));
       }
-      return new SearchCategoryResponse(null, new Category().mappedOrmToEntity(searchedCategory));
+    }catch (e) {
+      return new SearchCategoryResponse(null, null, 'Ha habido un error al momento de realizar esta consulta');
     }
+
   }
 }
 

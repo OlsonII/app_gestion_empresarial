@@ -8,20 +8,25 @@ export class SearchProductService{
   constructor(private readonly _unitOfWork: IUnitOfWork) {}
 
   async execute(request: SearchProductRequest): Promise<SearchProductResponse>{
-    if(request.reference == undefined){
-      const productsList: Product[] = []
-      const searchedProducts = await this._unitOfWork.productRepository.find();
-      searchedProducts.forEach(productOrm => {
-        productsList.push(new Product().mappedOrmToEntity(productOrm));
-      });
-      return new SearchProductResponse(productsList);
-    }else{
-      const searchedProduct = await this._unitOfWork.productRepository.findOne({where: {reference: request.reference}});
-      if(searchedProduct == undefined){
-        return new SearchProductResponse(null,null,'Este producto no existe')
+    try {
+      if(request.reference == undefined){
+        const productsList: Product[] = []
+        const searchedProducts = await this._unitOfWork.productRepository.find();
+        searchedProducts.forEach(productOrm => {
+          productsList.push(new Product().mappedOrmToEntity(productOrm));
+        });
+        return new SearchProductResponse(productsList);
+      }else{
+        const searchedProduct = await this._unitOfWork.productRepository.findOne({where: {reference: request.reference}});
+        if(searchedProduct == undefined){
+          return new SearchProductResponse(null,null,'Este producto no existe')
+        }
+        return new SearchProductResponse(null, new Product().mappedOrmToEntity(searchedProduct));
       }
-      return new SearchProductResponse(null, new Product().mappedOrmToEntity(searchedProduct));
+    }catch (e) {
+      return new SearchProductResponse(null, null, 'Ha habido un error al momento de realizar esta consulta');
     }
+
   }
 }
 

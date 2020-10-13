@@ -9,19 +9,25 @@ export class RegisterProductInputService{
     constructor(private readonly _unitOfWork: IUnitOfWork) {}
 
     async execute(request: RegisterProductInputRequest): Promise<RegisterProductInputResponse>{
-        const transaction: ProductTransaction = new ProductTransaction();
-        transaction.inputQuantity = request.inputQuantity;
-        transaction.outputQuantity = 0;
-        transaction.product = new Product().mappedOrmToEntity(await this._unitOfWork.productRepository.findOne({where: {reference: request.productReference}}));
-        transaction.product.insertProduct(request.inputQuantity);
-        transaction.date = request.date;
-        this._unitOfWork.start();
-        const savedProduct = await this._unitOfWork.productRepository.save(transaction.product);
-        const savedTransaction = await this._unitOfWork.productTransactionRepository.save(request);
-        if(savedTransaction != undefined){
-            return new RegisterProductInputResponse('Transaccion registrada con exito', savedProduct.quantity);
+
+        try {
+            const transaction: ProductTransaction = new ProductTransaction();
+            transaction.inputQuantity = request.inputQuantity;
+            transaction.outputQuantity = 0;
+            transaction.product = new Product().mappedOrmToEntity(await this._unitOfWork.productRepository.findOne({where: {reference: request.productReference}}));
+            transaction.product.insertProduct(request.inputQuantity);
+            transaction.date = request.date;
+            this._unitOfWork.start();
+            const savedProduct = await this._unitOfWork.complete(async () =>  await this._unitOfWork.productRepository.save(transaction.product));
+            this._unitOfWork.start();
+            const savedTransaction = await this._unitOfWork.complete(async () =>  await this._unitOfWork.productTransactionRepository.save(request));
+            if(savedTransaction != undefined){
+                return new RegisterProductInputResponse('Transaccion registrada con exito', savedProduct.quantity);
+            }
+        }catch (e) {
+            return new RegisterProductInputResponse('Ha habido un error al momento de registrar esta transaccion')
         }
-        return new RegisterProductInputResponse('Ha habido un error al momento de registrar esta transaccion')
+
     }
 
 }
