@@ -46,6 +46,11 @@ import {
     RegisterProductOutputResponse,
     RegisterProductOutputService
 } from "../../src/application/register.product.output.service";
+import {
+    UpdateProductRequest,
+    UpdateProductResponse,
+    UpdateProductService
+} from "../../src/application/update.product.service";
 
 
 describe('Application tests', () => {
@@ -358,14 +363,16 @@ describe('Application tests', () => {
             );
 
             const response: RegisterProductResponse = await service.execute(
-              new RegisterProductRequest(
-                '8563',
-                '1111',
-                '1111',
-                'Product Name Example',
-                5000,
-                'Description Example'
-              )
+                new RegisterProductRequest(
+                    '8563',
+                    '1111',
+                    '1111',
+                    'Product Name Example',
+                    5000,
+                    'Description Example',
+                    0,
+                    7000
+                )
             );
 
             expect(response.message).toBe('Este producto ya se encuentra registrado');
@@ -392,6 +399,62 @@ describe('Application tests', () => {
             const response: SearchProductResponse = await service.execute(new SearchProductRequest());
             console.log(response.products);
             expect(response.products.length).toBe(1);
+        });
+
+        test('correct update product', async () => {
+
+            await new RegisterProductService(unitOfWork).execute(
+                new RegisterProductRequest(
+                    '8563',
+                    '1111',
+                    '1111',
+                    'Product Name Example',
+                    5000,
+                    'Description Example',
+                    0,
+                    7000
+                )
+            );
+
+            const service = new UpdateProductService(unitOfWork);
+            const response: UpdateProductResponse = await service.execute(
+                new UpdateProductRequest(
+                    '8563',
+                    8500,
+                    6000,
+                    '1111',
+                    'Example product updated'
+                )
+            );
+            expect(response.message).toBe('Producto actualizado correctamente');
+        });
+
+        test('update only price', async () => {
+
+            await new RegisterProductService(unitOfWork).execute(
+                new RegisterProductRequest(
+                    '8563',
+                    '1111',
+                    '1111',
+                    'Product Name Example',
+                    5000,
+                    'Description Example',
+                    0,
+                    7000
+                )
+            );
+
+            const service = new UpdateProductService(unitOfWork);
+            const response: UpdateProductResponse = await service.execute(
+                new UpdateProductRequest(
+                    '8563',
+                    10000,
+                    undefined,
+                    undefined,
+                    undefined
+                )
+            );
+            expect(response.message).toBe('Producto actualizado correctamente');
         });
 
         afterAll(() => {

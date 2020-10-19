@@ -20,5 +20,4 @@ export class ProductFactory{
         }
         return product;
     }
-
 }

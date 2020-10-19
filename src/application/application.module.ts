@@ -11,6 +11,7 @@ import {RegisterProductService} from "./register.product.service";
 import {RegisterProductInputService} from "./register.product.input.service";
 import {RegisterProductOutputService} from "./register.product.output.service";
 import {SearchProductService} from "./search.product.service";
+import {UpdateProductService} from "./update.product.service";
 
 @Module({
     imports: [
@@ -25,7 +26,8 @@ import {SearchProductService} from "./search.product.service";
         SearchBrandService,
         SearchCategoryService,
         SearchProviderService,
-        SearchProductService
+        SearchProductService,
+        UpdateProductService
     ],
     exports:[
         RegisterBrandService,
@@ -37,7 +39,8 @@ import {SearchProductService} from "./search.product.service";
         SearchBrandService,
         SearchCategoryService,
         SearchProviderService,
-        SearchProductService
+        SearchProductService,
+        UpdateProductService
     ]
 })
 export class ApplicationModule{}
