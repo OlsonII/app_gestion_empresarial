@@ -1,4 +1,4 @@
-import {Column, Entity, ObjectID, ObjectIdColumn, PrimaryColumn} from "typeorm";
+import {Column, Entity, ObjectID, ObjectIdColumn} from "typeorm";
 
 @Entity({
     name: 'CATEGORIES'

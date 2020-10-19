@@ -7,13 +7,4 @@ export class Category implements ICategory{
     public _id: ObjectID;
     public name: string;
     public reference: string;
-
-    mappedOrmToEntity(orm: CategoryOrm): Category{
-        const category = new Category();
-        category._id = orm._id;
-        category.reference = orm.reference;
-        category.name = orm.name;
-        return category;
-    }
-
 }

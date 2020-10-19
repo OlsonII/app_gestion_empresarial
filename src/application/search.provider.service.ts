@@ -1,6 +1,7 @@
 import { IUnitOfWork } from '../infrastructure/contracts/unitOfWork.interface';
 import { Provider } from '../domain/entity/provider.entity';
 import { SearchBrandResponse } from './search.brand.service';
+import {ProviderFactory} from "../domain/factory/provider.factory";
 
 export class SearchProviderService{
 
@@ -12,7 +13,7 @@ export class SearchProviderService{
         const providers: Provider[] = [];
         const searchedProviders = await this._unitOfWork.providerRepository.find();
         searchedProviders.forEach(provider => {
-          providers.push(new Provider().mappedOrmToEntity(provider));
+          providers.push(new ProviderFactory().create(provider));
         })
         return new SearchProviderResponse(providers, null);
       }else{
@@ -20,7 +21,7 @@ export class SearchProviderService{
         if(searchedProvider == undefined){
           return new SearchProviderResponse(null,null,'Este proveedor no existe')
         }
-        return new SearchProviderResponse(null, new Provider().mappedOrmToEntity(searchedProvider));
+        return new SearchProviderResponse(null, new ProviderFactory().create(searchedProvider));
       }
     }catch (e) {
       return new SearchProviderResponse(null, null, 'Ha habido un error al momento de realizar esta consulta');

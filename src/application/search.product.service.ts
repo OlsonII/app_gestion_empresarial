@@ -2,6 +2,7 @@ import { Product } from '../domain/entity/product.entity';
 import { IUnitOfWork } from '../infrastructure/contracts/unitOfWork.interface';
 import { SearchBrandRequest, SearchBrandResponse, SearchBrandService } from './search.brand.service';
 import {ObjectID} from "typeorm";
+import {ProductFactory} from "../domain/factory/product.factory";
 
 
 export class SearchProductService{
@@ -13,7 +14,7 @@ export class SearchProductService{
         const productsList: Product[] = []
         const searchedProducts = await this._unitOfWork.productRepository.find();
         searchedProducts.forEach(productOrm => {
-          productsList.push(new Product().mappedOrmToEntity(productOrm));
+          productsList.push(new ProductFactory().create(productOrm));
         });
         return new SearchProductResponse(productsList);
       }else{
@@ -21,7 +22,7 @@ export class SearchProductService{
         if(searchedProduct == undefined){
           return new SearchProductResponse(null,null,'Este producto no existe')
         }
-        return new SearchProductResponse(null, new Product().mappedOrmToEntity(searchedProduct));
+        return new SearchProductResponse(null, new ProductFactory().create(searchedProduct));
       }
     }catch (e) {
       return new SearchProductResponse(null, null, 'Ha habido un error al momento de realizar esta consulta');

@@ -1,4 +1,4 @@
-import {Column, Entity, ObjectID, ObjectIdColumn, PrimaryColumn} from "typeorm";
+import {Column, Entity, ObjectID, ObjectIdColumn} from "typeorm";
 import {BrandOrm} from "./brand.orm";
 import {CategoryOrm} from "./category.orm";
 import {ProviderOrm} from "./provider.orm";
@@ -6,9 +6,9 @@ import {ProviderOrm} from "./provider.orm";
 @Entity('PRODUCTS')
 export class ProductOrm{
 
-    @Column(type => CategoryOrm)
+    @Column()
     brand: BrandOrm;
-    @Column(type => CategoryOrm)
+    @Column()
     category: CategoryOrm;
     @Column({default: 0})
     cost: number;
@@ -18,8 +18,6 @@ export class ProductOrm{
     name: string;
     @Column({default: 0})
     price: number;
-    @Column(type => ProviderOrm)
-    provider: ProviderOrm;
     @Column({
         default: 0
     })

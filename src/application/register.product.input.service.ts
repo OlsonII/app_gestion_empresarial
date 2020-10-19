@@ -1,8 +1,6 @@
-import {Product} from "../domain/entity/product.entity";
 import {IUnitOfWork} from "../infrastructure/contracts/unitOfWork.interface";
-import {RegisterProductResponse} from "./register.product.service";
 import {ProductTransaction} from "../domain/entity/product.transaction.entity";
-import {ProductOrm} from "../infrastructure/database/entity/product.orm";
+import {ProductFactory} from "../domain/factory/product.factory";
 
 export class RegisterProductInputService{
 
@@ -14,33 +12,29 @@ export class RegisterProductInputService{
             const transaction: ProductTransaction = new ProductTransaction();
             transaction.inputQuantity = request.inputQuantity;
             transaction.outputQuantity = 0;
-            transaction.product = new Product().mappedOrmToEntity(await this._unitOfWork.productRepository.findOne({where: {reference: request.productReference}}));
+            transaction.product = new ProductFactory().create(await this._unitOfWork.productRepository.findOne({where: {reference: request.productReference}}));
             transaction.product.insertProduct(request.inputQuantity);
-            transaction.date = request.date;
+            transaction.date = new Date().getDate() + '-' + new Date().getMonth() + '-' + new Date().getFullYear();
             this._unitOfWork.start();
             const savedProduct = await this._unitOfWork.complete(async () =>  await this._unitOfWork.productRepository.save(transaction.product));
             this._unitOfWork.start();
-            const savedTransaction = await this._unitOfWork.complete(async () =>  await this._unitOfWork.productTransactionRepository.save(request));
+            const savedTransaction = await this._unitOfWork.complete(async () =>  await this._unitOfWork.productTransactionRepository.save(transaction));
             if(savedTransaction != undefined){
                 return new RegisterProductInputResponse('Transaccion registrada con exito', savedProduct.quantity);
             }
         }catch (e) {
-            return new RegisterProductInputResponse('Ha habido un error al momento de registrar esta transaccion')
+            return new RegisterProductInputResponse('Se ha presentado un error al momento de registrar esta transaccion')
         }
-
     }
 
 }
 
 export class RegisterProductInputRequest{
-
     constructor(
         public inputQuantity: number,
-        public outputQuantity: number,
         public productReference: string,
-        public date: string
-    ) { }
-
+        public description: string,
+    ) {}
 }
 
 export class RegisterProductInputResponse{

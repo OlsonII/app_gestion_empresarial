@@ -309,7 +309,6 @@ describe('Application tests', () => {
                     '1111',
                     '1111',
                     'Product Name Example',
-                    '1065',
                     5000,
                     'Description Example'
                 )
@@ -353,7 +352,6 @@ describe('Application tests', () => {
                 '1111',
                 '1111',
                 'Product Name Example',
-                '1065',
                 5000,
                 'Description Example'
               )
@@ -365,7 +363,6 @@ describe('Application tests', () => {
                 '1111',
                 '1111',
                 'Product Name Example',
-                '1065',
                 5000,
                 'Description Example'
               )
@@ -449,10 +446,9 @@ describe('Application tests', () => {
                     '1111',
                     '1111',
                     'Product Name Example',
-                    '1065',
                     5000,
                     'Description Example',
-                    0,
+                    5,
                     7500
                 )
             );
@@ -462,13 +458,12 @@ describe('Application tests', () => {
             const response: RegisterProductInputResponse = await service.execute(
                 new RegisterProductInputRequest(
                     5,
-                    0,
                     '8563',
-                    '11-10-2020'
+                    'Example input'
                 )
             );
 
-            expect(response.newQuantity).toBe(5);
+            expect(response.newQuantity).toBe(10);
         });
 
         test('correct output', async () => {
@@ -503,7 +498,6 @@ describe('Application tests', () => {
                     '1111',
                     '1111',
                     'Product Name Example',
-                    '1065',
                     5000,
                     'Description Example',
                     0,
@@ -514,22 +508,20 @@ describe('Application tests', () => {
             await new RegisterProductInputService(unitOfWork).execute(
                 new RegisterProductInputRequest(
                     15,
-                    0,
                     '8563',
-                    '11-10-2020'
+                    'Example input'
                 )
             );
 
             const response: RegisterProductOutputResponse = await new RegisterProductOutputService(unitOfWork).execute(
                 new RegisterProductOutputRequest(
-                    0,
                     7,
                     '8563',
-                    '11-10-2020'
+                    'Example output'
                 )
             );
 
-            expect(response.newQuantity).toBe(13);
+            expect(response.newQuantity).toBe(18);
         });
 
         afterAll(() => {

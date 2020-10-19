@@ -12,6 +12,4 @@ export interface IProduct{
     price?: number;
     cost?: number;
     category: ICategory;
-    provider: IProvider;
-
 }

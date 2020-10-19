@@ -1,5 +1,5 @@
 import {Injectable} from "@nestjs/common";
-import {MongoRepository, Repository} from "typeorm";
+import {MongoRepository} from "typeorm";
 
 
 @Injectable()

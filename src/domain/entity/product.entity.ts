@@ -16,7 +16,6 @@ export class Product implements IProduct{
     public description: string;
     public name: string;
     public price: number;
-    public provider: Provider;
     public quantity: number;
     public reference: string;
 
@@ -34,20 +33,5 @@ export class Product implements IProduct{
 
     calculateTotalPrice(){
         return this.quantity * this.price;
-    }
-
-    mappedOrmToEntity(orm: ProductOrm): Product{
-        const product = new Product();
-        product._id = orm._id;
-        product.reference = orm.reference;
-        product.name = orm.name;
-        product.description = orm.description;
-        product.provider = new Provider().mappedOrmToEntity(orm.provider);
-        product.brand = new Brand().mappedOrmToEntity(orm.brand);
-        product.category = new Category().mappedOrmToEntity(orm.category);
-        product.cost = orm.cost;
-        product.price = orm.price;
-        product.quantity = orm.quantity;
-        return product;
     }
 }

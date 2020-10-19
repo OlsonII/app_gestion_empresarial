@@ -1,5 +1,5 @@
-import {Product} from "../../../domain/entity/product.entity";
 import {Column, Entity, ObjectID, ObjectIdColumn} from "typeorm";
+import {ProductOrm} from "./product.orm";
 
 @Entity('PRODUCT_TRANSACTIONS')
 export class ProductTransactionOrm{
@@ -10,7 +10,9 @@ export class ProductTransactionOrm{
     @Column({nullable: false})
     public outputQuantity: number;
     @Column({nullable: false})
-    public product: Product;
+    public description: string;
+    @Column({nullable: false})
+    public product: ProductOrm;
     @Column({nullable: false})
     public date: string;
 

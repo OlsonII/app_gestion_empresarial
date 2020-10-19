@@ -3,9 +3,10 @@ import {ObjectID} from "typeorm";
 
 export class ProductTransaction{
 
-    private _id: ObjectID;
+    public _id: ObjectID;
     public inputQuantity: number;
     public outputQuantity: number;
+    public description: string;
     public product: Product;
     public date: string;
 

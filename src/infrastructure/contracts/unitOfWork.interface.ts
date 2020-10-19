@@ -1,9 +1,8 @@
-import {Connection, MongoRepository} from "typeorm";
+import {Connection} from "typeorm";
 import {BrandRepository} from "../repositories/brand.repository";
 import {CategoryRepository} from "../repositories/category.repository";
 import {ProviderRepository} from "../repositories/provider.repository";
 import {ProductRepository} from "../repositories/product.repository";
-import {ProviderOrm} from "../database/entity/provider.orm";
 import {ProductTransactionRepository} from "../repositories/product.transaction.repository";
 
 
