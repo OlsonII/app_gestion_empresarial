@@ -61,7 +61,12 @@ import {
     RegisterClientResponse,
     RegisterClientService
 } from "../../src/application/register.client.service";
-import {UpdateBrandRequest, UpdateBrandResponse, UpdateBrandService} from "../../src/application/update.brand.service";
+import {UpdateBrandRequest, UpdateBrandResponse, UpdateBrandService} from "../../src/application/Update.brand.service";
+import {
+    UpdateProviderRequest,
+    UpdateProviderResponse,
+    UpdateProviderService,
+} from '../../src/application/update.provider.service';
 
 
 describe('Application tests', () => {
@@ -305,6 +310,56 @@ describe('Application tests', () => {
             const service: SearchProviderService = new SearchProviderService(unitOfWork);
             const response: SearchProviderResponse = await service.execute(new SearchProviderRequest());
             expect(response.providers.length).toBe(1);
+        });
+
+        test('correct update provider', async ()=>{
+
+            await new RegisterProviderService(unitOfWork).execute(
+              new RegisterProviderRequest(
+                'Company Example',
+                'sellerOne@email',
+                '1065',
+                'Name Example',
+                'Street example',
+                'phone example'
+              )
+            );
+
+            const service = new UpdateProviderService(unitOfWork);
+            const response: UpdateProviderResponse = await service.execute(
+              new UpdateProviderRequest(
+                '1065',
+                'Street example update',
+                'phone example update',
+                'update@email',
+                'Company Example'
+              )
+            )
+        });
+
+        test('update provider only telephone', async ()=>{
+
+            await new RegisterProviderService(unitOfWork).execute(
+              new RegisterProviderRequest(
+                'Company Example',
+                'sellerOne@email',
+                '1065',
+                'Name Example',
+                'Street example',
+                'phone example'
+              )
+            );
+
+            const service = new UpdateProviderService(unitOfWork);
+            const response: UpdateProviderResponse = await service.execute(
+              new UpdateProviderRequest(
+                '1065',
+                undefined,
+                'phone example update',
+                undefined,
+                undefined
+              )
+            )
         });
 
         afterAll(() => {

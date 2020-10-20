@@ -1,7 +1,6 @@
 import {Column, Entity, ObjectID, ObjectIdColumn} from "typeorm";
 import {BrandOrm} from "./brand.orm";
 import {CategoryOrm} from "./category.orm";
-import {ProviderOrm} from "./provider.orm";
 
 @Entity('PRODUCTS')
 export class ProductOrm{
