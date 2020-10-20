@@ -61,7 +61,7 @@ import {
     RegisterClientResponse,
     RegisterClientService
 } from "../../src/application/register.client.service";
-import {UpdateBrandRequest, UpdateBrandResponse, UpdateBrandService} from "../../src/application/Update.brand.service";
+import {UpdateBrandRequest, UpdateBrandResponse, UpdateBrandService} from "../../src/application/update.brand.service";
 import {
     UpdateProviderRequest,
     UpdateProviderResponse,
