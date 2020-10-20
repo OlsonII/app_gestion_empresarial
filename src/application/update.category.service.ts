@@ -11,13 +11,13 @@ export class UpdateCategoryService{
       const searchedCategory = new CategoryFactory().create(await this._unitOfWork.categoryRepository.findOne({where:{reference:request.reference}}));
 
       if (searchedCategory != undefined){
-        searchedCategory.name = request.name !=undefined ? request.name: searchedCategory.name;
+        searchedCategory.name = request.name;
         const savedCategory = await this._unitOfWork.complete(async () => await this._unitOfWork.categoryRepository.save(searchedCategory));
         if(savedCategory != undefined){
           return new UpdateCategoryResponse('Categoria actualizada correctamente');
         }
         else{
-          return new UpdateCategoryResponse('Este producto no se encuentra registrado');
+          return new UpdateCategoryResponse('Esta categoria no se encuentra registrado');
         }
       }
     }catch (e) {

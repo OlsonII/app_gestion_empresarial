@@ -56,6 +56,11 @@ import {
     UpdateCategoryResponse,
     UpdateCategoryService,
 } from '../../src/application/update.category.service';
+import {
+    UpdateBrandRequest,
+    UpdateBrandResponse,
+    UpdateBrandService,
+} from '../../src/application/Update.brand.service';
 
 
 describe('Application tests', () => {
@@ -122,6 +127,24 @@ describe('Application tests', () => {
             const request = new SearchBrandRequest();
             const response: SearchBrandResponse = await service.execute(request);
             expect(response.brands.length).toBe(1);
+        });
+
+        test( 'correct update brand', async ()=>{
+            await new RegisterBrandService(unitOfWork).execute(
+              new RegisterBrandRequest(
+                '1111',
+                'Example'
+              )
+            );
+
+            const service = new UpdateBrandService(unitOfWork);
+            const response: UpdateBrandResponse = await service.execute(
+              new UpdateBrandRequest(
+                '1111',
+                'Example Update Brand'
+              )
+            );
+           expect(response.message).toBe('Marca actualizada correctamente')
         });
 
         afterAll(() => {
@@ -192,12 +215,12 @@ describe('Application tests', () => {
             expect(response.categories.length).toBe(1);
         });
 
-        test('correct update product', async () => {
+        test('correct update category', async () => {
             await new RegisterCategoryService(unitOfWork).execute(
               new RegisterCategoryRequest(
-              '1111',
-              'Example Category'
-            )
+                  '1111',
+                  'Example Category'
+              )
             );
 
             const service = new UpdateCategoryService(unitOfWork);
