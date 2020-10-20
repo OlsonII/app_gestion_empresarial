@@ -13,7 +13,7 @@ import {RegisterProductOutputService} from "./register.product.output.service";
 import {SearchProductService} from "./search.product.service";
 import {UpdateProductService} from "./update.product.service";
 import { UpdateCategoryService } from './update.category.service';
-import { UpdateBrandService } from './Update.brand.service';
+import { UpdateBrandService } from './update.brand.service';
 import {RegisterClientService} from "./register.client.service";
 
 @Module({
@@ -26,6 +26,7 @@ import {RegisterClientService} from "./register.client.service";
         RegisterProductService,
         RegisterProductInputService,
         RegisterProductOutputService,
+        RegisterClientService,
         SearchBrandService,
         SearchCategoryService,
         SearchProviderService,
@@ -40,6 +41,7 @@ import {RegisterClientService} from "./register.client.service";
         RegisterProductService,
         RegisterProductInputService,
         RegisterProductOutputService,
+        RegisterClientService,
         SearchBrandService,
         SearchCategoryService,
         SearchProviderService,
