@@ -12,6 +12,7 @@ import {RegisterProductInputService} from "./register.product.input.service";
 import {RegisterProductOutputService} from "./register.product.output.service";
 import {SearchProductService} from "./search.product.service";
 import {UpdateProductService} from "./update.product.service";
+import { UpdateCategoryService } from './update.category.service';
 
 @Module({
     imports: [
@@ -27,7 +28,8 @@ import {UpdateProductService} from "./update.product.service";
         SearchCategoryService,
         SearchProviderService,
         SearchProductService,
-        UpdateProductService
+        UpdateProductService,
+        UpdateCategoryService
     ],
     exports:[
         RegisterBrandService,
@@ -40,7 +42,8 @@ import {UpdateProductService} from "./update.product.service";
         SearchCategoryService,
         SearchProviderService,
         SearchProductService,
-        UpdateProductService
+        UpdateProductService,
+        UpdateCategoryService
     ]
 })
 export class ApplicationModule{}

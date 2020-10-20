@@ -51,6 +51,11 @@ import {
     UpdateProductResponse,
     UpdateProductService
 } from "../../src/application/update.product.service";
+import {
+    UpdateCategoryRequest,
+    UpdateCategoryResponse,
+    UpdateCategoryService,
+} from '../../src/application/update.category.service';
 
 
 describe('Application tests', () => {
@@ -185,6 +190,24 @@ describe('Application tests', () => {
             const service: SearchCategoryService = new SearchCategoryService(unitOfWork);
             const response: SearchCategoryResponse = await service.execute(new SearchCategoryRequest());
             expect(response.categories.length).toBe(1);
+        });
+
+        test('correct update product', async () => {
+            await new RegisterCategoryService(unitOfWork).execute(
+              new RegisterCategoryRequest(
+              '1111',
+              'Example Category'
+            )
+            );
+
+            const service = new UpdateCategoryService(unitOfWork);
+            const response: UpdateCategoryResponse = await service.execute(
+              new UpdateCategoryRequest(
+                '1111',
+                'Example Update Category'
+              )
+            );
+            expect(response.message).toBe('Categoria actualizada correctamente')
         });
 
         afterAll(() => {
