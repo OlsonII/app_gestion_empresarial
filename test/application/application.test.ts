@@ -67,6 +67,11 @@ import {
     UpdateProviderResponse,
     UpdateProviderService,
 } from '../../src/application/update.provider.service';
+import {
+    SearchClientRequest,
+    SearchClientResponse,
+    SearchClientService
+} from "../../src/application/search.client.service";
 
 
 describe('Application tests', () => {
@@ -736,6 +741,28 @@ describe('Application tests', () => {
 
             const response: RegisterClientResponse = await service.execute(request);
             expect(response.message).toBe('Este cliente ya se encuentra registrado');
+        });
+
+        test('find one registry', async () => {
+
+            const service: SearchClientService = new SearchClientService(unitOfWork);
+            const request = new SearchClientRequest('1066');
+            const response: SearchClientResponse = await service.execute(request);
+            expect(response.client.identification).toBe('1066');
+        });
+
+        test('find a non-existent registry', async () => {
+
+            const service: SearchClientService = new SearchClientService(unitOfWork);
+            const request = new SearchClientRequest('1065');
+            const response: SearchClientResponse = await service.execute(request);
+            expect(response.message).toBe('Este cliente no existe');
+        });
+
+        test('find many registry', async () => {
+            const service: SearchClientService = new SearchClientService(unitOfWork);
+            const response: SearchClientResponse = await service.execute(new SearchClientRequest());
+            expect(response.clients.length).toBe(1);
         });
 
         afterAll(() => {

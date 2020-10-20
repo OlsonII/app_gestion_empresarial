@@ -1,4 +1,3 @@
-import {Provider} from "../entity/provider.entity";
 import {ClientOrm} from "../../infrastructure/database/entity/client.orm";
 import {Client} from "../entity/client.entity";
 
