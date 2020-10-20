@@ -1,20 +1,7 @@
-import {IBrand} from "../domain/contracts/brand.interface";
-import {ICategory} from "../domain/contracts/category.interface";
-import {IProvider} from "../domain/contracts/provider.interface";
 import {IUnitOfWork} from "../infrastructure/contracts/unitOfWork.interface";
 import {Product} from "../domain/entity/product.entity";
-import {SearchProviderRequest, SearchProviderService} from "./search.provider.service";
-import {SearchCategoryRequest, SearchCategoryService} from "./search.category.service";
-import {SearchBrandRequest, SearchBrandService} from "./search.brand.service";
-import {Provider} from "../domain/entity/provider.entity";
-import {Category} from "../domain/entity/category.entity";
-import {Brand} from "../domain/entity/brand.entity";
-import {ObjectID} from "typeorm";
-import {ProviderFactory} from "../domain/factory/provider.factory";
 import {CategoryFactory} from "../domain/factory/category.factory";
 import {BrandFactory} from "../domain/factory/brand.factory";
-import {ProductTransaction} from "../domain/entity/product.transaction.entity";
-import {ProductFactory} from "../domain/factory/product.factory";
 import {RegisterProductInputRequest, RegisterProductInputService} from "./register.product.input.service";
 
 export class RegisterProductService{
@@ -50,17 +37,7 @@ export class RegisterProductService{
                     if(response.message == 'Transaccion registrada con exito'){
                         return new RegisterProductResponse('Producto registrado con exito');
                     }
-
-                    /*newProduct.insertProduct(request.quantity)
-                    transaction.inputQuantity = request.quantity;
-                    transaction.outputQuantity = 0;
-                    transaction.product = newProduct;
-                    transaction.description = 'Registro de producto';
-                    transaction.date = new Date().getDate() + '-' + new Date().getMonth() + 1 + '-' + new Date().getFullYear();*/
                 }
-               /* //SAVE TRANSACTION
-                this._unitOfWork.start();
-                await this._unitOfWork.complete(async () =>  await this._unitOfWork.productTransactionRepository.save(transaction));*/
                 if(savedProduct != undefined){
                     return new RegisterProductResponse('Producto registrado con exito');
                 }

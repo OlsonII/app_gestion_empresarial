@@ -5,7 +5,6 @@ import {
     RegisterCategoryResponse,
     RegisterCategoryService
 } from "../application/register.category.service";
-import {SearchBrandRequest, SearchBrandService} from "../application/search.brand.service";
 import {SearchCategoryRequest, SearchCategoryService} from "../application/search.category.service";
 import {
     UpdateCategoryRequest,

@@ -1,8 +1,7 @@
-export interface IProvider{
+export interface IPerson{
 
     identification: string;
     name: string;
-    company: string;
     street: string;
     telephone: string;
     email: string;

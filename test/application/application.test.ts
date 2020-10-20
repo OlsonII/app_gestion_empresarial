@@ -1,6 +1,6 @@
 import {IUnitOfWork} from "../../src/infrastructure/contracts/unitOfWork.interface";
 import {UnitOfWork} from "../../src/infrastructure/unitOfWork/unitOfWork";
-import {createConnection, getConnection} from "typeorm";
+import {createConnection} from "typeorm";
 import {
     RegisterBrandRequest,
     RegisterBrandResponse,
@@ -57,10 +57,11 @@ import {
     UpdateCategoryService,
 } from '../../src/application/update.category.service';
 import {
-    UpdateBrandRequest,
-    UpdateBrandResponse,
-    UpdateBrandService,
-} from '../../src/application/Update.brand.service';
+    RegisterClientRequest,
+    RegisterClientResponse,
+    RegisterClientService
+} from "../../src/application/register.client.service";
+import {UpdateBrandRequest, UpdateBrandResponse, UpdateBrandService} from "../../src/application/Update.brand.service";
 
 
 describe('Application tests', () => {
@@ -631,6 +632,55 @@ describe('Application tests', () => {
             );
 
             expect(response.newQuantity).toBe(18);
+        });
+
+        afterAll(() => {
+            return unitOfWork.closeConnection();
+        });
+
+    });
+
+    describe('client tests', () => {
+
+        beforeAll(async ()=>{
+            unitOfWork = new UnitOfWork(await createConnection({
+                type: 'mongodb',
+                url: 'mongodb+srv://olson:1981@cluster0.fhagr.mongodb.net/memory?retryWrites=true&w=majority',
+                logging: true,
+                useNewUrlParser: true,
+                synchronize: true,
+                entities: ['src/infrastructure/database/entity/*.ts']
+            }));
+        });
+
+        test('correct registry', async () => {
+            const service: RegisterClientService = new RegisterClientService(unitOfWork);
+            const request = new RegisterClientRequest(
+                'clientOne@email',
+                '1066',
+                'Name Example',
+                'Street example',
+                'phone example'
+            );
+            const response: RegisterClientResponse = await service.execute(request);
+            expect(response.message).toBe('Cliente registrado satisfactoriamente');
+        });
+
+        test('duplicate registry', async () => {
+
+            const service: RegisterClientService = new RegisterClientService(unitOfWork);
+            const request = new RegisterClientRequest(
+                'clientOne@email',
+                '1066',
+                'Name Example',
+                'Street example',
+                'phone example'
+            );
+
+            await service.execute(request);
+
+            const response: RegisterClientResponse = await service.execute(request);
+            expect(response.message).toBe('Este cliente ya se encuentra registrado');
         });
 
         afterAll(() => {
