@@ -12,10 +12,15 @@ import {RegisterProductInputService} from "./register.product.input.service";
 import {RegisterProductOutputService} from "./register.product.output.service";
 import {SearchProductService} from "./search.product.service";
 import {UpdateProductService} from "./update.product.service";
+import { UpdateCategoryService } from './update.category.service';
+import { UpdateBrandService } from './Update.brand.service';
+import {RegisterClientService} from "./register.client.service";
+import { UpdateProviderService } from './update.provider.service';
+import {RegisterUserService} from "./register.user.service";
+import {SearchUserService} from "./search.user.service";
 
 @Module({
     imports: [
-        Brand,
         InfrastructureModule,
         RegisterBrandService,
         RegisterCategoryService,
@@ -23,24 +28,37 @@ import {UpdateProductService} from "./update.product.service";
         RegisterProductService,
         RegisterProductInputService,
         RegisterProductOutputService,
+        RegisterClientService,
+        RegisterUserService,
         SearchBrandService,
         SearchCategoryService,
         SearchProviderService,
         SearchProductService,
-        UpdateProductService
+        SearchUserService,
+        UpdateProductService,
+        UpdateCategoryService,
+        UpdateBrandService,
+        UpdateProviderService
     ],
     exports:[
+        InfrastructureModule,
         RegisterBrandService,
         RegisterCategoryService,
         RegisterProviderService,
         RegisterProductService,
         RegisterProductInputService,
         RegisterProductOutputService,
+        RegisterClientService,
+        RegisterUserService,
         SearchBrandService,
         SearchCategoryService,
         SearchProviderService,
         SearchProductService,
-        UpdateProductService
+        SearchUserService,
+        UpdateProductService,
+        UpdateCategoryService,
+        UpdateBrandService,
+        UpdateProviderService
     ]
 })
 export class ApplicationModule{}

@@ -1,6 +1,6 @@
 import {IUnitOfWork} from "../../src/infrastructure/contracts/unitOfWork.interface";
 import {UnitOfWork} from "../../src/infrastructure/unitOfWork/unitOfWork";
-import {createConnection, getConnection} from "typeorm";
+import {createConnection} from "typeorm";
 import {
     RegisterBrandRequest,
     RegisterBrandResponse,
@@ -51,6 +51,29 @@ import {
     UpdateProductResponse,
     UpdateProductService
 } from "../../src/application/update.product.service";
+import {
+    UpdateCategoryRequest,
+    UpdateCategoryResponse,
+    UpdateCategoryService,
+} from '../../src/application/update.category.service';
+import {
+    RegisterClientRequest,
+    RegisterClientResponse,
+    RegisterClientService
+} from "../../src/application/register.client.service";
+import {UpdateBrandRequest, UpdateBrandResponse, UpdateBrandService} from "../../src/application/update.brand.service";
+import {
+    UpdateProviderRequest,
+    UpdateProviderResponse,
+    UpdateProviderService,
+} from '../../src/application/update.provider.service';
+import {
+    SearchClientRequest,
+    SearchClientResponse,
+    SearchClientService
+} from "../../src/application/search.client.service";
+import {RegisterUserRequest, RegisterUserService} from "../../src/application/register.user.service";
+import {SearchUserRequest, SearchUserResponse, SearchUserService} from "../../src/application/search.user.service";
 
 
 describe('Application tests', () => {
@@ -119,6 +142,24 @@ describe('Application tests', () => {
             expect(response.brands.length).toBe(1);
         });
 
+        test( 'correct update brand', async ()=>{
+            await new RegisterBrandService(unitOfWork).execute(
+              new RegisterBrandRequest(
+                '1111',
+                'Example'
+              )
+            );
+
+            const service = new UpdateBrandService(unitOfWork);
+            const response: UpdateBrandResponse = await service.execute(
+              new UpdateBrandRequest(
+                '1111',
+                'Example Update Brand'
+              )
+            );
+           expect(response.message).toBe('Marca actualizada correctamente')
+        });
+
         afterAll(() => {
             return unitOfWork.closeConnection();
         });
@@ -185,6 +226,24 @@ describe('Application tests', () => {
             const service: SearchCategoryService = new SearchCategoryService(unitOfWork);
             const response: SearchCategoryResponse = await service.execute(new SearchCategoryRequest());
             expect(response.categories.length).toBe(1);
+        });
+
+        test('correct update category', async () => {
+            await new RegisterCategoryService(unitOfWork).execute(
+              new RegisterCategoryRequest(
+                  '1111',
+                  'Example Category'
+              )
+            );
+
+            const service = new UpdateCategoryService(unitOfWork);
+            const response: UpdateCategoryResponse = await service.execute(
+              new UpdateCategoryRequest(
+                '1111',
+                'Example Update Category'
+              )
+            );
+            expect(response.message).toBe('Categoria actualizada correctamente')
         });
 
         afterAll(() => {
@@ -258,6 +317,58 @@ describe('Application tests', () => {
             const service: SearchProviderService = new SearchProviderService(unitOfWork);
             const response: SearchProviderResponse = await service.execute(new SearchProviderRequest());
             expect(response.providers.length).toBe(1);
+        });
+
+        test('correct update provider', async ()=>{
+
+            await new RegisterProviderService(unitOfWork).execute(
+              new RegisterProviderRequest(
+                'Company Example',
+                'sellerOne@email',
+                '1065',
+                'Name Example',
+                'Street example',
+                'phone example'
+              )
+            );
+
+            const service = new UpdateProviderService(unitOfWork);
+            const response: UpdateProviderResponse = await service.execute(
+              new UpdateProviderRequest(
+                '1065',
+                'Street example update',
+                'phone example update',
+                'update@email',
+                'Company Example'
+              )
+            );
+            expect(response.message).toBe('Proveedor actualizado correctamente')
+        });
+
+        test('update provider only telephone', async ()=>{
+
+            await new RegisterProviderService(unitOfWork).execute(
+              new RegisterProviderRequest(
+                'Company Example',
+                'sellerOne@email',
+                '1065',
+                'Name Example',
+                'Street example',
+                'phone example'
+              )
+            );
+
+            const service = new UpdateProviderService(unitOfWork);
+            const response: UpdateProviderResponse = await service.execute(
+              new UpdateProviderRequest(
+                '1065',
+                undefined,
+                'phone example update',
+                undefined,
+                undefined
+              )
+            );
+            expect(response.message).toBe('Proveedor actualizado correctamente')
         });
 
         afterAll(() => {
@@ -585,6 +696,149 @@ describe('Application tests', () => {
             );
 
             expect(response.newQuantity).toBe(18);
+        });
+
+        afterAll(() => {
+            return unitOfWork.closeConnection();
+        });
+
+    });
+
+    describe('client tests', () => {
+
+        beforeAll(async ()=>{
+            unitOfWork = new UnitOfWork(await createConnection({
+                type: 'mongodb',
+                url: 'mongodb+srv://olson:1981@cluster0.fhagr.mongodb.net/memory?retryWrites=true&w=majority',
+                logging: true,
+                useNewUrlParser: true,
+                synchronize: true,
+                entities: ['src/infrastructure/database/entity/*.ts']
+            }));
+        });
+
+        test('correct registry', async () => {
+            const service: RegisterClientService = new RegisterClientService(unitOfWork);
+            const request = new RegisterClientRequest(
+                'clientOne@email',
+                '1066',
+                'Name Example',
+                'Street example',
+                'phone example'
+            );
+            const response: RegisterClientResponse = await service.execute(request);
+            expect(response.message).toBe('Cliente registrado satisfactoriamente');
+        });
+
+        test('duplicate registry', async () => {
+
+            const service: RegisterClientService = new RegisterClientService(unitOfWork);
+            const request = new RegisterClientRequest(
+                'clientOne@email',
+                '1066',
+                'Name Example',
+                'Street example',
+                'phone example'
+            );
+
+            await service.execute(request);
+
+            const response: RegisterClientResponse = await service.execute(request);
+            expect(response.message).toBe('Este cliente ya se encuentra registrado');
+        });
+
+        test('find one registry', async () => {
+
+            const service: SearchClientService = new SearchClientService(unitOfWork);
+            const request = new SearchClientRequest('1066');
+            const response: SearchClientResponse = await service.execute(request);
+            expect(response.client.identification).toBe('1066');
+        });
+
+        test('find a non-existent registry', async () => {
+
+            const service: SearchClientService = new SearchClientService(unitOfWork);
+            const request = new SearchClientRequest('1065');
+            const response: SearchClientResponse = await service.execute(request);
+            expect(response.message).toBe('Este cliente no existe');
+        });
+
+        test('find many registry', async () => {
+            const service: SearchClientService = new SearchClientService(unitOfWork);
+            const response: SearchClientResponse = await service.execute(new SearchClientRequest());
+            expect(response.clients.length).toBe(1);
+        });
+
+        afterAll(() => {
+            return unitOfWork.closeConnection();
+        });
+
+    });
+
+    describe('user tests', () => {
+
+        beforeAll(async ()=>{
+            unitOfWork = new UnitOfWork(await createConnection({
+                type: 'mongodb',
+                url: 'mongodb+srv://olson:1981@cluster0.fhagr.mongodb.net/memory?retryWrites=true&w=majority',
+                logging: true,
+                useNewUrlParser: true,
+                synchronize: true,
+                entities: ['src/infrastructure/database/entity/*.ts']
+            }));
+        });
+
+        test('correct registry', async () => {
+            const service: RegisterUserService = new RegisterUserService(unitOfWork);
+            const request = new RegisterUserRequest(
+                'adminOne@email',
+                '1067',
+                'Name Example',
+                'Street example',
+                'phone example',
+                '12345',
+                'admin'
+            );
+            const response: RegisterClientResponse = await service.execute(request);
+            expect(response.message).toBe('Usuario registrado satisfactoriamente');
+        });
+
+        test('duplicate registry', async () => {
+
+            const service: RegisterUserService = new RegisterUserService(unitOfWork);
+            const request = new RegisterUserRequest(
+                'adminOne@email',
+                '1067',
+                'Name Example',
+                'Street example',
+                'phone example',
+                '12345',
+                'admin'
+            );
+            const response: RegisterClientResponse = await service.execute(request);
+            expect(response.message).toBe('Este usuario ya se encuentra registrado');
+        });
+
+        test('find one registry', async () => {
+
+            const service: SearchUserService = new SearchUserService(unitOfWork);
+            const request = new SearchUserRequest('1067');
+            const response: SearchUserResponse = await service.execute(request);
+            expect(response.user.identification).toBe('1067');
+        });
+
+        test('find a non-existent registry', async () => {
+
+            const service: SearchUserService = new SearchUserService(unitOfWork);
+            const request = new SearchUserRequest('1065');
+            const response: SearchUserResponse = await service.execute(request);
+            expect(response.message).toBe('Este usuario no existe');
+        });
+
+        test('find many registry', async () => {
+            const service: SearchUserService = new SearchUserService(unitOfWork);
+            const response: SearchUserResponse = await service.execute(new SearchClientRequest());
+            expect(response.users.length).toBe(1);
         });
 
         afterAll(() => {

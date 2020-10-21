@@ -7,6 +7,8 @@ import {ProviderController} from "./provider.controller";
 import {ProductController} from "./product.controller";
 import {ProductInputController} from "./product.input.controller";
 import {ProductOutputController} from "./product.output.controller";
+import {ClientController} from "./client.controller";
+import {UserController} from "./user.controller";
 
 @Module({
     imports: [
@@ -19,7 +21,9 @@ import {ProductOutputController} from "./product.output.controller";
         ProviderController,
         ProductController,
         ProductInputController,
-        ProductOutputController
+        ProductOutputController,
+        ClientController,
+        UserController
     ]
 })
 export class ControllersModule{}

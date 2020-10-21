@@ -1,6 +1,5 @@
 import {IBrand} from "./brand.interface";
 import {ICategory} from "./category.interface";
-import {IProvider} from "./provider.interface";
 
 export interface IProduct{
 

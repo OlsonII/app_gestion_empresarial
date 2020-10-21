@@ -1,11 +1,6 @@
 import {IProduct} from "../contracts/product.interface";
-import {IBrand} from "../contracts/brand.interface";
-import {ICategory} from "../contracts/category.interface";
-import {IProvider} from "../contracts/provider.interface";
-import {ProductOrm} from "../../infrastructure/database/entity/product.orm";
 import {Brand} from "./brand.entity";
 import {Category} from "./category.entity";
-import {Provider} from "./provider.entity";
 import {ObjectID} from "typeorm";
 
 export class Product implements IProduct{
