@@ -16,10 +16,11 @@ import { UpdateCategoryService } from './update.category.service';
 import { UpdateBrandService } from './Update.brand.service';
 import {RegisterClientService} from "./register.client.service";
 import { UpdateProviderService } from './update.provider.service';
+import {RegisterUserService} from "./register.user.service";
+import {SearchUserService} from "./search.user.service";
 
 @Module({
     imports: [
-        Brand,
         InfrastructureModule,
         RegisterBrandService,
         RegisterCategoryService,
@@ -28,16 +29,19 @@ import { UpdateProviderService } from './update.provider.service';
         RegisterProductInputService,
         RegisterProductOutputService,
         RegisterClientService,
+        RegisterUserService,
         SearchBrandService,
         SearchCategoryService,
         SearchProviderService,
         SearchProductService,
+        SearchUserService,
         UpdateProductService,
         UpdateCategoryService,
         UpdateBrandService,
         UpdateProviderService
     ],
     exports:[
+        InfrastructureModule,
         RegisterBrandService,
         RegisterCategoryService,
         RegisterProviderService,
@@ -45,10 +49,12 @@ import { UpdateProviderService } from './update.provider.service';
         RegisterProductInputService,
         RegisterProductOutputService,
         RegisterClientService,
+        RegisterUserService,
         SearchBrandService,
         SearchCategoryService,
         SearchProviderService,
         SearchProductService,
+        SearchUserService,
         UpdateProductService,
         UpdateCategoryService,
         UpdateBrandService,

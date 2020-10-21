@@ -72,6 +72,8 @@ import {
     SearchClientResponse,
     SearchClientService
 } from "../../src/application/search.client.service";
+import {RegisterUserRequest, RegisterUserService} from "../../src/application/register.user.service";
+import {SearchUserRequest, SearchUserResponse, SearchUserService} from "../../src/application/search.user.service";
 
 
 describe('Application tests', () => {
@@ -763,6 +765,78 @@ describe('Application tests', () => {
             const service: SearchClientService = new SearchClientService(unitOfWork);
             const response: SearchClientResponse = await service.execute(new SearchClientRequest());
             expect(response.clients.length).toBe(1);
+        });
+
+        afterAll(() => {
+            return unitOfWork.closeConnection();
+        });
+
+    });
+
+    describe('user tests', () => {
+
+        beforeAll(async ()=>{
+            unitOfWork = new UnitOfWork(await createConnection({
+                type: 'mongodb',
+                url: 'mongodb+srv://olson:1981@cluster0.fhagr.mongodb.net/memory?retryWrites=true&w=majority',
+                logging: true,
+                useNewUrlParser: true,
+                synchronize: true,
+                entities: ['src/infrastructure/database/entity/*.ts']
+            }));
+        });
+
+        test('correct registry', async () => {
+            const service: RegisterUserService = new RegisterUserService(unitOfWork);
+            const request = new RegisterUserRequest(
+                'adminOne@email',
+                '1067',
+                'Name Example',
+                'Street example',
+                'phone example',
+                '12345',
+                'admin'
+            );
+            const response: RegisterClientResponse = await service.execute(request);
+            expect(response.message).toBe('Usuario registrado satisfactoriamente');
+        });
+
+        test('duplicate registry', async () => {
+
+            const service: RegisterUserService = new RegisterUserService(unitOfWork);
+            const request = new RegisterUserRequest(
+                'adminOne@email',
+                '1067',
+                'Name Example',
+                'Street example',
+                'phone example',
+                '12345',
+                'admin'
+            );
+            const response: RegisterClientResponse = await service.execute(request);
+            expect(response.message).toBe('Este usuario ya se encuentra registrado');
+        });
+
+        test('find one registry', async () => {
+
+            const service: SearchUserService = new SearchUserService(unitOfWork);
+            const request = new SearchUserRequest('1067');
+            const response: SearchUserResponse = await service.execute(request);
+            expect(response.user.identification).toBe('1067');
+        });
+
+        test('find a non-existent registry', async () => {
+
+            const service: SearchUserService = new SearchUserService(unitOfWork);
+            const request = new SearchUserRequest('1065');
+            const response: SearchUserResponse = await service.execute(request);
+            expect(response.message).toBe('Este usuario no existe');
+        });
+
+        test('find many registry', async () => {
+            const service: SearchUserService = new SearchUserService(unitOfWork);
+            const response: SearchUserResponse = await service.execute(new SearchClientRequest());
+            expect(response.users.length).toBe(1);
         });
 
         afterAll(() => {

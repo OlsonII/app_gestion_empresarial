@@ -3,7 +3,7 @@ import {
     brandProviders,
     categoryProviders, clientProviders, productProviders,
     productTransactionProviders,
-    providerProviders
+    providerProviders, userProviders
 } from "./migrations/entities.provider";
 import {databaseProviders} from "./provider/database.provider";
 
@@ -16,7 +16,8 @@ import {databaseProviders} from "./provider/database.provider";
             ...providerProviders,
             ...productProviders,
             ...productTransactionProviders,
-            ...clientProviders
+            ...clientProviders,
+            ...userProviders
         ],
         exports: [
             ...databaseProviders,
@@ -25,7 +26,8 @@ import {databaseProviders} from "./provider/database.provider";
             ...providerProviders,
             ...productProviders,
             ...productTransactionProviders,
-            ...clientProviders
+            ...clientProviders,
+            ...userProviders
         ]
     }
 )

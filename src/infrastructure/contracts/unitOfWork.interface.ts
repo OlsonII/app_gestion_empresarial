@@ -5,6 +5,7 @@ import {ProviderRepository} from "../repositories/provider.repository";
 import {ProductRepository} from "../repositories/product.repository";
 import {ProductTransactionRepository} from "../repositories/product.transaction.repository";
 import {ClientRepository} from "../repositories/client.repository";
+import {UserRepository} from "../repositories/user.repository";
 
 
 export interface IUnitOfWork{
@@ -16,6 +17,7 @@ export interface IUnitOfWork{
     productRepository: ProductRepository;
     productTransactionRepository: ProductTransactionRepository;
     clientRepository: ClientRepository;
+    userRepository: UserRepository;
 
     start(): void;
     complete(work: () => any): Promise<any>;

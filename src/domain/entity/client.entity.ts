@@ -1,4 +1,4 @@
-import {IPerson} from "../contracts/provider.interface";
+import {IPerson} from "../contracts/person.interface";
 import {ObjectID} from "typeorm";
 
 export class Client implements IPerson{
