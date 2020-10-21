@@ -1,6 +1,5 @@
 import {Module} from "@nestjs/common";
 import {InfrastructureModule} from "../infrastructure/infrastructure.module";
-import {Brand} from "../domain/entity/brand.entity";
 import {RegisterBrandService} from "./register.brand.service";
 import {RegisterCategoryService} from "./register.category.service";
 import {RegisterProviderService} from "./register.provider.service";
@@ -12,12 +11,12 @@ import {RegisterProductInputService} from "./register.product.input.service";
 import {RegisterProductOutputService} from "./register.product.output.service";
 import {SearchProductService} from "./search.product.service";
 import {UpdateProductService} from "./update.product.service";
-import { UpdateCategoryService } from './update.category.service';
-import { UpdateBrandService } from './Update.brand.service';
+import { UpdateBrandService } from './update.brand.service';
 import {RegisterClientService} from "./register.client.service";
-import { UpdateProviderService } from './update.provider.service';
 import {RegisterUserService} from "./register.user.service";
 import {SearchUserService} from "./search.user.service";
+import {UpdateCategoryService} from "./update.category.service";
+import {UpdateProviderService} from "./update.provider.service";
 
 @Module({
     imports: [
