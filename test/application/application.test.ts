@@ -51,22 +51,22 @@ import {
     UpdateProductResponse,
     UpdateProductService
 } from "../../src/application/update.product.service";
+import {UpdateBrandRequest, UpdateBrandResponse, UpdateBrandService} from "../../src/application/update.brand.service";
 import {
     UpdateCategoryRequest,
     UpdateCategoryResponse,
-    UpdateCategoryService,
-} from '../../src/application/update.category.service';
+    UpdateCategoryService
+} from "../../src/application/update.category.service";
+import {
+    UpdateProviderRequest,
+    UpdateProviderResponse,
+    UpdateProviderService
+} from "../../src/application/update.provider.service";
 import {
     RegisterClientRequest,
     RegisterClientResponse,
     RegisterClientService
 } from "../../src/application/register.client.service";
-import {UpdateBrandRequest, UpdateBrandResponse, UpdateBrandService} from "../../src/application/update.brand.service";
-import {
-    UpdateProviderRequest,
-    UpdateProviderResponse,
-    UpdateProviderService,
-} from '../../src/application/update.provider.service';
 import {
     SearchClientRequest,
     SearchClientResponse,
