@@ -341,7 +341,8 @@ describe('Application tests', () => {
                 'update@email',
                 'Company Example'
               )
-            )
+            );
+            expect(response.message).toBe('Proveedor actualizado correctamente')
         });
 
         test('update provider only telephone', async ()=>{
@@ -366,7 +367,8 @@ describe('Application tests', () => {
                 undefined,
                 undefined
               )
-            )
+            );
+            expect(response.message).toBe('Proveedor actualizado correctamente')
         });
 
         afterAll(() => {
