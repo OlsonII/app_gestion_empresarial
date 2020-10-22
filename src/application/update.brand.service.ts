@@ -12,7 +12,7 @@ export class UpdateBrandService{
 
       if (searchedBrand != undefined){
         searchedBrand.name = request.name;
-        const savedBrand = await this._unitOfWork.complete(async ()=> await this._unitOfWork.categoryRepository.save(searchedBrand));
+        const savedBrand = await this._unitOfWork.complete(async ()=> await this._unitOfWork.brandRepository.save(searchedBrand));
         if (savedBrand !=undefined){
           return new UpdateBrandResponse('Marca actualizada correctamente')
         }
