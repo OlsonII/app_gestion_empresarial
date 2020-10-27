@@ -1,6 +1,5 @@
 import {IUnitOfWork} from "../infrastructure/contracts/unitOfWork.interface";
 import {ProductTransaction} from "../domain/entity/product.transaction.entity";
-import {ProductFactory} from "../domain/factory/product.factory";
 
 export class RegisterProductInputService{
 
@@ -12,7 +11,7 @@ export class RegisterProductInputService{
             const transaction: ProductTransaction = new ProductTransaction();
             transaction.inputQuantity = request.inputQuantity;
             transaction.outputQuantity = 0;
-            transaction.product = new ProductFactory().create(await this._unitOfWork.productRepository.findOne({where: {reference: request.productReference}}));
+            transaction.product = await this._unitOfWork.productRepository.findProduct(request.productReference);
             transaction.product.insertProduct(request.inputQuantity);
             transaction.date = new Date().getDate() + '-' + new Date().getMonth() + '-' + new Date().getFullYear();
             this._unitOfWork.start();

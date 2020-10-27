@@ -1,8 +1,5 @@
 import {IUnitOfWork} from "../infrastructure/contracts/unitOfWork.interface";
 import {ProductTransaction} from "../domain/entity/product.transaction.entity";
-import {Product} from "../domain/entity/product.entity";
-import {RegisterProductResponse} from "./register.product.service";
-import {ProductFactory} from "../domain/factory/product.factory";
 
 export class RegisterProductOutputService{
 
@@ -14,7 +11,7 @@ export class RegisterProductOutputService{
             const transaction: ProductTransaction = new ProductTransaction();
             transaction.inputQuantity = 0;
             transaction.outputQuantity = request.outputQuantity;
-            transaction.product = new ProductFactory().create(await this._unitOfWork.productRepository.findOne({where: {reference: request.productReference}}));
+            transaction.product = await this._unitOfWork.productRepository.findProduct(request.productReference);
             if(transaction.product.quantity < transaction.outputQuantity){
                 transaction.outputQuantity = transaction.product.quantity;
                 transaction.product.quantity = 0;

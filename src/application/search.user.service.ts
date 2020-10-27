@@ -1,6 +1,5 @@
 import {User} from "../domain/entity/user";
 import {IUnitOfWork} from "../infrastructure/contracts/unitOfWork.interface";
-import {UserFactory} from "../domain/factory/user.factory";
 
 export class SearchUserService{
 
@@ -9,18 +8,13 @@ export class SearchUserService{
     async execute(request: SearchUserRequest): Promise<SearchUserResponse>{
         try {
             if (request.identification == undefined){
-                const users: User[] = [];
-                const searchedUsers = await this._unitOfWork.userRepository.find();
-                searchedUsers.forEach(provider => {
-                    users.push(new UserFactory().create(provider));
-                })
-                return new SearchUserResponse(users, null);
+                return new SearchUserResponse(await this._unitOfWork.userRepository.findAllUsers(), null);
             }else{
-                const searchedUser = await  this._unitOfWork.userRepository.findOne({where: {identification: request.identification}});
+                const searchedUser = await  this._unitOfWork.userRepository.findUser(request.identification);
                 if(searchedUser == undefined){
                     return new SearchUserResponse(null,null,'Este usuario no existe')
                 }
-                return new SearchUserResponse(null, new UserFactory().create(searchedUser));
+                return new SearchUserResponse(null, searchedUser);
             }
         }catch (e) {
             return new SearchUserResponse(null, null, 'Ha habido un error al momento de realizar esta consulta');

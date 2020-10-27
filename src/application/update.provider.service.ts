@@ -1,5 +1,4 @@
 import { IUnitOfWork } from '../infrastructure/contracts/unitOfWork.interface';
-import { ProviderFactory } from '../domain/factory/provider.factory';
 
 
 export class UpdateProviderService{
@@ -8,13 +7,14 @@ export class UpdateProviderService{
 
   async execute(request: UpdateProviderRequest): Promise<UpdateProviderResponse>{
     try{
-      const searchedProvider = new ProviderFactory().create(await this._unitOfWork.providerRepository.findOne({where:{identification: request.identification}}));
+      const searchedProvider = await  this._unitOfWork.providerRepository.findProvider(request.identification);
 
       if (searchedProvider !=undefined){
         searchedProvider.street = request.street != undefined ? request.street : searchedProvider.street;
         searchedProvider.telephone = request.telephone != undefined ? request.telephone : searchedProvider.telephone;
         searchedProvider.email = request.email != undefined ? request.email : searchedProvider.email;
         searchedProvider.company = request.company != undefined ? request.company : searchedProvider.company;
+        this._unitOfWork.start();
         const savedProvider = await this._unitOfWork.complete(async ()=> await this._unitOfWork.providerRepository.save(searchedProvider));
         if (savedProvider !=undefined){
           return new UpdateProviderResponse('Proveedor actualizado correctamente');

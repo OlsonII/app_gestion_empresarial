@@ -1,5 +1,4 @@
 import { IUnitOfWork } from '../infrastructure/contracts/unitOfWork.interface';
-import { BrandFactory } from '../domain/factory/brand.factory';
 
 
 export class UpdateBrandService{
@@ -8,10 +7,11 @@ export class UpdateBrandService{
   async execute(request: UpdateBrandRequest): Promise<UpdateBrandResponse>{
     
     try {
-      const searchedBrand = new BrandFactory().create(await this._unitOfWork.brandRepository.findOne({ where: { reference: request.reference } }));
+      const searchedBrand = await this._unitOfWork.brandRepository.findBrand(request.reference);
 
       if (searchedBrand != undefined){
         searchedBrand.name = request.name;
+        this._unitOfWork.start();
         const savedBrand = await this._unitOfWork.complete(async ()=> await this._unitOfWork.brandRepository.save(searchedBrand));
         if (savedBrand !=undefined){
           return new UpdateBrandResponse('Marca actualizada correctamente')

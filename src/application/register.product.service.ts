@@ -1,7 +1,5 @@
 import {IUnitOfWork} from "../infrastructure/contracts/unitOfWork.interface";
 import {Product} from "../domain/entity/product.entity";
-import {CategoryFactory} from "../domain/factory/category.factory";
-import {BrandFactory} from "../domain/factory/brand.factory";
 import {RegisterProductInputRequest, RegisterProductInputService} from "./register.product.input.service";
 
 export class RegisterProductService{
@@ -12,7 +10,7 @@ export class RegisterProductService{
 
         try{
             let newProduct: Product;
-            const searchedProduct = await this._unitOfWork.productRepository.findOne({where: {reference: request.reference}});
+            const searchedProduct = await this._unitOfWork.productRepository.findProduct(request.reference);
             if(searchedProduct == undefined){
                 newProduct = new Product();
                 newProduct.reference = request.reference;
@@ -21,8 +19,8 @@ export class RegisterProductService{
                 newProduct.price = request.price;
                 newProduct.quantity = 0;
                 newProduct.description = request.description;
-                newProduct.category = new CategoryFactory().create(await this._unitOfWork.categoryRepository.findOne({where: {reference: request.categoryReference}}));
-                newProduct.brand = new BrandFactory().create(await this._unitOfWork.brandRepository.findOne({where: {reference: request.brandReference}}));
+                newProduct.category = await this._unitOfWork.categoryRepository.findCategory(request.categoryReference);
+                newProduct.brand = await this._unitOfWork.brandRepository.findBrand(request.brandReference);
                 this._unitOfWork.start();
                 const savedProduct = await this._unitOfWork.complete(async () => await this._unitOfWork.productRepository.save(newProduct));
 

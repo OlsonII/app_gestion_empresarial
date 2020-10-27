@@ -1,6 +1,5 @@
 import {Client} from "../domain/entity/client.entity";
 import {IUnitOfWork} from "../infrastructure/contracts/unitOfWork.interface";
-import {ClientFactory} from "../domain/factory/client.factory";
 
 export class SearchClientService{
 
@@ -9,18 +8,13 @@ export class SearchClientService{
     async execute(request: SearchClientRequest): Promise<SearchClientResponse>{
         try {
             if (request.identification == undefined){
-                const clients: Client[] = [];
-                const searchedClients = await this._unitOfWork.clientRepository.find();
-                searchedClients.forEach(client => {
-                    clients.push(new ClientFactory().create(client));
-                })
-                return new SearchClientResponse(clients, null);
+                return new SearchClientResponse(await this._unitOfWork.clientRepository.findAllClients(), null);
             }else{
-                const searchedClient = await  this._unitOfWork.clientRepository.findOne({where: {identification: request.identification}});
+                const searchedClient = await  this._unitOfWork.clientRepository.findClient(request.identification);
                 if(searchedClient == undefined){
                     return new SearchClientResponse(null,null,'Este cliente no existe')
                 }
-                return new SearchClientResponse(null, new ClientFactory().create(searchedClient));
+                return new SearchClientResponse(null, searchedClient);
             }
         }catch (e) {
             return new SearchClientResponse(null, null, 'Ha habido un error al momento de realizar esta consulta');

@@ -1,7 +1,5 @@
 import { IUnitOfWork } from '../infrastructure/contracts/unitOfWork.interface';
 import { Category } from '../domain/entity/category.entity';
-import { SearchBrandResponse } from './search.brand.service';
-import {CategoryFactory} from "../domain/factory/category.factory";
 
 export class SearchCategoryService{
 
@@ -11,18 +9,13 @@ export class SearchCategoryService{
 
     try {
       if(request.reference == undefined){
-        const categories: Category[] = [];
-        const searchedCategories = await this._unitOfWork.categoryRepository.find();
-        searchedCategories.forEach(category => {
-          categories.push(new CategoryFactory().create(category));
-        });
-        return new SearchCategoryResponse(categories);
+        return new SearchCategoryResponse(await this._unitOfWork.categoryRepository.findAllCategories());
       }else{
-        const searchedCategory = await this._unitOfWork.categoryRepository.findOne({where: {reference: request.reference}});
+        const searchedCategory = await this._unitOfWork.categoryRepository.findCategory(request.reference);
         if(searchedCategory == undefined){
           return new SearchCategoryResponse(null,null,'Esta categoria no existe')
         }
-        return new SearchCategoryResponse(null, new CategoryFactory().create(searchedCategory));
+        return new SearchCategoryResponse(null, searchedCategory);
       }
     }catch (e) {
       return new SearchCategoryResponse(null, null, 'Ha habido un error al momento de realizar esta consulta');

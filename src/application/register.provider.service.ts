@@ -6,10 +6,9 @@ export class RegisterProviderService{
     constructor(private readonly _unitOfWork: IUnitOfWork) {}
 
     async execute(request: RegisterProviderRequest): Promise<RegisterProviderResponse>{
-
         try {
             let newProvider: Provider;
-            const searchedCategory = await this._unitOfWork.providerRepository.findOne({where: {identification: request.identification}});
+            const searchedCategory = await this._unitOfWork.providerRepository.findProvider(request.identification);
             if(searchedCategory == undefined){
                 newProvider = new Provider();
                 newProvider.identification = request.identification;
@@ -28,9 +27,7 @@ export class RegisterProviderService{
         }catch (e) {
             return new RegisterProviderResponse('Ha habido un error al momento de registrar este proveedor');
         }
-
     }
-
 }
 
 export class RegisterProviderRequest{
@@ -41,7 +38,7 @@ export class RegisterProviderRequest{
         public name: string,
         public street: string,
         public telephone: string
-    ) { }
+    ) {}
 }
 
 export class RegisterProviderResponse{

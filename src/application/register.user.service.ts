@@ -1,5 +1,5 @@
 import {IUnitOfWork} from "../infrastructure/contracts/unitOfWork.interface";
-import {UserFactory} from "../domain/factory/user.factory";
+import {User} from "../domain/entity/user";
 
 export class RegisterUserService{
 
@@ -8,8 +8,8 @@ export class RegisterUserService{
     async execute(request: RegisterUserRequest): Promise<RegisterUserResponse>{
 
         try {
-            const newUser = new UserFactory().create();
-            const searchedUser = await this._unitOfWork.userRepository.findOne({where: {identification: request.identification}});
+            const newUser = new User();
+            const searchedUser = await this._unitOfWork.userRepository.findUser(request.identification);
 
             if(searchedUser == undefined){
                 newUser.identification = request.identification;

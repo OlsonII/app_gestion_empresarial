@@ -11,5 +11,6 @@ export class User implements IPerson{
     public telephone: string;
     public password: string;
     public rol: string;
+    public session: boolean;
 
 }

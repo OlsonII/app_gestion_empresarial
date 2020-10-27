@@ -1,6 +1,5 @@
 import {IUnitOfWork} from "../infrastructure/contracts/unitOfWork.interface";
 import {Brand} from "../domain/entity/brand.entity";
-import {BrandFactory} from "../domain/factory/brand.factory";
 
 export class SearchBrandService{
 
@@ -10,18 +9,13 @@ export class SearchBrandService{
         
         try {
             if(request.reference == undefined){
-                const brands: Brand[] = [];
-                const searchedBrands = await this._unitOfWork.brandRepository.find();
-                searchedBrands.forEach(brand => {
-                    brands.push(new BrandFactory().create(brand));
-                });
-                return new SearchBrandResponse(brands);
+                return new SearchBrandResponse(await this._unitOfWork.brandRepository.findAllBrands());
             }else{
-                const searchedBrand = await this._unitOfWork.brandRepository.findOne({where: {reference: request.reference}});
+                const searchedBrand = await this._unitOfWork.brandRepository.findBrand(request.reference);
                 if(searchedBrand == undefined){
                     return new SearchBrandResponse(null,null,'Esta marca no existe')
                 }
-                return new SearchBrandResponse(null, new BrandFactory().create(searchedBrand));
+                return new SearchBrandResponse(null, searchedBrand);
             }
         }catch (e) {
             return new SearchBrandResponse(null, null, 'Ha habido un error al momento de realizar esta consulta');

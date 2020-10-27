@@ -9,7 +9,7 @@ export class RegisterClientService{
 
         try {
             const newClient = new Client();
-            const searchedClient = await this._unitOfWork.clientRepository.findOne({where: {identification: request.identification}});
+            const searchedClient = await this._unitOfWork.clientRepository.findClient(request.identification);
             if(searchedClient == undefined){
                 newClient.identification = request.identification;
                 newClient.name = request.name;

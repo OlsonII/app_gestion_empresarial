@@ -1,5 +1,4 @@
 import {IUnitOfWork} from "../infrastructure/contracts/unitOfWork.interface";
-import {Brand} from "../domain/entity/brand.entity";
 import {Category} from "../domain/entity/category.entity";
 
 export class RegisterCategoryService{
@@ -10,7 +9,7 @@ export class RegisterCategoryService{
 
         try{
             let newCategory: Category;
-            const searchedCategory = await this._unitOfWork.categoryRepository.findOne({where: {reference: request.reference}});
+            const searchedCategory = await this._unitOfWork.categoryRepository.findCategory(request.reference);
             if(searchedCategory == undefined){
                 newCategory = new Category();
                 newCategory.reference = request.reference;

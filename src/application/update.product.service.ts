@@ -1,6 +1,4 @@
 import {IUnitOfWork} from "../infrastructure/contracts/unitOfWork.interface";
-import {ProductFactory} from "../domain/factory/product.factory";
-import {CategoryFactory} from "../domain/factory/category.factory";
 
 export class UpdateProductService{
 
@@ -9,13 +7,14 @@ export class UpdateProductService{
     async execute(request: UpdateProductRequest): Promise<UpdateProductResponse> {
 
         try {
-            const searchedProduct = new ProductFactory().create(await this._unitOfWork.productRepository.findOne({where: {reference: request.productReference}}));
+            const searchedProduct = await this._unitOfWork.productRepository.findProduct(request.productReference);
 
             if(searchedProduct != undefined){
                 searchedProduct.price = request.price != undefined ? request.price : searchedProduct.price;
                 searchedProduct.cost = request.cost != undefined ? request.cost : searchedProduct.cost;
                 searchedProduct.description = request.description != undefined ? request.description : searchedProduct.description;
-                request.categoryReference != undefined ? searchedProduct.category = new CategoryFactory().create(await this._unitOfWork.categoryRepository.findOne({where: {reference: request.categoryReference}})) : null;
+                request.categoryReference != undefined ? searchedProduct.category = await this._unitOfWork.categoryRepository.findCategory(request.categoryReference) : null;
+                this._unitOfWork.start();
                 const savedProduct = await this._unitOfWork.complete(async () => await this._unitOfWork.productRepository.save(searchedProduct));
                 if(savedProduct != undefined){
                     return new UpdateProductResponse('Producto actualizado correctamente');

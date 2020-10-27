@@ -1,7 +1,5 @@
 import { IUnitOfWork } from '../infrastructure/contracts/unitOfWork.interface';
 import { Provider } from '../domain/entity/provider.entity';
-import { SearchBrandResponse } from './search.brand.service';
-import {ProviderFactory} from "../domain/factory/provider.factory";
 
 export class SearchProviderService{
 
@@ -10,18 +8,13 @@ export class SearchProviderService{
   async execute(request: SearchProviderRequest): Promise<SearchProviderResponse>{
     try {
       if (request.identification == undefined){
-        const providers: Provider[] = [];
-        const searchedProviders = await this._unitOfWork.providerRepository.find();
-        searchedProviders.forEach(provider => {
-          providers.push(new ProviderFactory().create(provider));
-        })
-        return new SearchProviderResponse(providers, null);
+        return new SearchProviderResponse(await this._unitOfWork.providerRepository.findAllProviders(), null);
       }else{
-        const searchedProvider = await  this._unitOfWork.providerRepository.findOne({where: {identification: request.identification}});
+        const searchedProvider = await  this._unitOfWork.providerRepository.findProvider(request.identification);
         if(searchedProvider == undefined){
           return new SearchProviderResponse(null,null,'Este proveedor no existe')
         }
-        return new SearchProviderResponse(null, new ProviderFactory().create(searchedProvider));
+        return new SearchProviderResponse(null, searchedProvider);
       }
     }catch (e) {
       return new SearchProviderResponse(null, null, 'Ha habido un error al momento de realizar esta consulta');
