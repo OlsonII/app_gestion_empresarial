@@ -1,6 +1,6 @@
 import {Column, Entity, ObjectID, ObjectIdColumn} from "typeorm";
 
-@Entity('ADMIN')
+@Entity('USERS')
 export class UserOrm{
 
     @ObjectIdColumn()
@@ -20,5 +20,5 @@ export class UserOrm{
     @Column()
     public rol: string;
     @Column()
-    public session: boolean;
+    public token: string;
 }

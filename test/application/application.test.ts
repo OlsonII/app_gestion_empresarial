@@ -80,19 +80,19 @@ describe('Application tests', () => {
 
     let unitOfWork: IUnitOfWork;
 
-    describe('brand test', () => {
+    beforeAll(async ()=>{
+        unitOfWork = new UnitOfWork(await createConnection({
+            type: 'mongodb',
+            url: 'mongodb+srv://olson:1981@cluster0.fhagr.mongodb.net/memory?retryWrites=true&w=majority',
+            logging: true,
+            useNewUrlParser: true,
+            dropSchema: true,
+            synchronize: true,
+            entities: ['src/infrastructure/database/entity/*.ts']
+        }));
+    });
 
-        beforeAll(async ()=>{
-            unitOfWork = new UnitOfWork(await createConnection({
-                type: 'mongodb',
-                url: 'mongodb+srv://olson:1981@cluster0.fhagr.mongodb.net/memory?retryWrites=true&w=majority',
-                logging: true,
-                useNewUrlParser: true,
-                dropSchema: true,
-                synchronize: true,
-                entities: ['src/infrastructure/database/entity/*.ts']
-            }));
-        });
+    describe('brand test', () => {
 
         test('correct registry', async () => {
             const service: RegisterBrandService = new RegisterBrandService(unitOfWork);
@@ -159,25 +159,9 @@ describe('Application tests', () => {
             );
            expect(response.message).toBe('Marca actualizada correctamente')
         });
-
-        afterAll(() => {
-            return unitOfWork.closeConnection();
-        });
     });
 
     describe('category tests', () => {
-
-        beforeAll(async ()=>{
-            unitOfWork = new UnitOfWork(await createConnection({
-                type: 'mongodb',
-                url: 'mongodb+srv://olson:1981@cluster0.fhagr.mongodb.net/memory?retryWrites=true&w=majority',
-                logging: true,
-                useNewUrlParser: true,
-                dropSchema: true,
-                synchronize: true,
-                entities: ['src/infrastructure/database/entity/*.ts']
-            }));
-        });
 
         test('correct registry', async () => {
             const service: RegisterCategoryService = new RegisterCategoryService(unitOfWork);
@@ -245,25 +229,9 @@ describe('Application tests', () => {
             );
             expect(response.message).toBe('Categoria actualizada correctamente')
         });
-
-        afterAll(() => {
-            return unitOfWork.closeConnection();
-        });
     });
 
     describe('provider tests', () => {
-
-        beforeAll(async ()=>{
-            unitOfWork = new UnitOfWork(await createConnection({
-                type: 'mongodb',
-                url: 'mongodb+srv://olson:1981@cluster0.fhagr.mongodb.net/memory?retryWrites=true&w=majority',
-                logging: true,
-                useNewUrlParser: true,
-                dropSchema: true,
-                synchronize: true,
-                entities: ['src/infrastructure/database/entity/*.ts']
-            }));
-        });
 
         test('correct registry', async () => {
             const service: RegisterProviderService = new RegisterProviderService(unitOfWork);
@@ -371,25 +339,9 @@ describe('Application tests', () => {
             expect(response.message).toBe('Proveedor actualizado correctamente')
         });
 
-        afterAll(() => {
-            return unitOfWork.closeConnection();
-        });
-
     });
 
     describe('product test', () => {
-
-        beforeAll(async ()=>{
-            unitOfWork = new UnitOfWork(await createConnection({
-                type: 'mongodb',
-                url: 'mongodb+srv://olson:1981@cluster0.fhagr.mongodb.net/memory?retryWrites=true&w=majority',
-                logging: true,
-                useNewUrlParser: true,
-                dropSchema: true,
-                synchronize: true,
-                entities: ['src/infrastructure/database/entity/*.ts']
-            }));
-        });
 
         test('correct registry', async () => {
             await new RegisterProviderService(unitOfWork).execute(
@@ -508,7 +460,6 @@ describe('Application tests', () => {
         test('find many registry', async () => {
             const service: SearchProductService = new SearchProductService(unitOfWork);
             const response: SearchProductResponse = await service.execute(new SearchProductRequest());
-            console.log(response.products);
             expect(response.products.length).toBe(1);
         });
 
@@ -568,25 +519,9 @@ describe('Application tests', () => {
             expect(response.message).toBe('Producto actualizado correctamente');
         });
 
-        afterAll(() => {
-            return unitOfWork.closeConnection();
-        });
-
     })
 
     describe('product transaction test', () => {
-
-        beforeAll(async ()=>{
-            unitOfWork = new UnitOfWork(await createConnection({
-                type: 'mongodb',
-                url: 'mongodb+srv://olson:1981@cluster0.fhagr.mongodb.net/memory?retryWrites=true&w=majority',
-                logging: true,
-                useNewUrlParser: true,
-                dropSchema: true,
-                synchronize: true,
-                entities: ['src/infrastructure/database/entity/*.ts']
-            }));
-        });
 
         test('correct input', async () => {
             await new RegisterProviderService(unitOfWork).execute(
@@ -622,14 +557,12 @@ describe('Application tests', () => {
                     'Product Name Example',
                     5000,
                     'Description Example',
-                    5,
+                    0,
                     7500
                 )
             );
 
-            const service: RegisterProductInputService = new RegisterProductInputService(unitOfWork);
-
-            const response: RegisterProductInputResponse = await service.execute(
+            const response: RegisterProductInputResponse = await new RegisterProductInputService(unitOfWork).execute(
                 new RegisterProductInputRequest(
                     5,
                     '8563',
@@ -637,7 +570,7 @@ describe('Application tests', () => {
                 )
             );
 
-            expect(response.newQuantity).toBe(10);
+            expect(response.newQuantity).toBe(5);
         });
 
         test('correct output', async () => {
@@ -695,27 +628,11 @@ describe('Application tests', () => {
                 )
             );
 
-            expect(response.newQuantity).toBe(18);
+            expect(response.newQuantity).toBe(13);
         });
-
-        afterAll(() => {
-            return unitOfWork.closeConnection();
-        });
-
     });
 
     describe('client tests', () => {
-
-        beforeAll(async ()=>{
-            unitOfWork = new UnitOfWork(await createConnection({
-                type: 'mongodb',
-                url: 'mongodb+srv://olson:1981@cluster0.fhagr.mongodb.net/memory?retryWrites=true&w=majority',
-                logging: true,
-                useNewUrlParser: true,
-                synchronize: true,
-                entities: ['src/infrastructure/database/entity/*.ts']
-            }));
-        });
 
         test('correct registry', async () => {
             const service: RegisterClientService = new RegisterClientService(unitOfWork);
@@ -769,24 +686,9 @@ describe('Application tests', () => {
             expect(response.clients.length).toBe(1);
         });
 
-        afterAll(() => {
-            return unitOfWork.closeConnection();
-        });
-
     });
 
     describe('user tests', () => {
-
-        beforeAll(async ()=>{
-            unitOfWork = new UnitOfWork(await createConnection({
-                type: 'mongodb',
-                url: 'mongodb+srv://olson:1981@cluster0.fhagr.mongodb.net/memory?retryWrites=true&w=majority',
-                logging: true,
-                useNewUrlParser: true,
-                synchronize: true,
-                entities: ['src/infrastructure/database/entity/*.ts']
-            }));
-        });
 
         test('correct registry', async () => {
             const service: RegisterUserService = new RegisterUserService(unitOfWork);
@@ -841,9 +743,10 @@ describe('Application tests', () => {
             expect(response.users.length).toBe(1);
         });
 
-        afterAll(() => {
-            return unitOfWork.closeConnection();
-        });
-
     });
+
+    afterAll(() => {
+        return unitOfWork.closeConnection();
+    });
+
 });

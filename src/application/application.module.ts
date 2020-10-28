@@ -17,6 +17,7 @@ import {RegisterUserService} from "./register.user.service";
 import {SearchUserService} from "./search.user.service";
 import {UpdateCategoryService} from "./update.category.service";
 import {UpdateProviderService} from "./update.provider.service";
+import {LoginService} from "./login.service";
 
 @Module({
     imports: [
@@ -37,7 +38,8 @@ import {UpdateProviderService} from "./update.provider.service";
         UpdateProductService,
         UpdateCategoryService,
         UpdateBrandService,
-        UpdateProviderService
+        UpdateProviderService,
+        LoginService
     ],
     exports:[
         InfrastructureModule,
@@ -57,7 +59,8 @@ import {UpdateProviderService} from "./update.provider.service";
         UpdateProductService,
         UpdateCategoryService,
         UpdateBrandService,
-        UpdateProviderService
+        UpdateProviderService,
+        LoginService
     ]
 })
 export class ApplicationModule{}

@@ -18,8 +18,12 @@ export class UserRepository extends GenericRepository<UserOrm>{
         user.email = orm.email;
         user.password = orm.password;
         user.rol = orm.rol;
-        user.session = orm.session;
+        user.token = orm.token;
         return user;
+    }
+
+    async login(user: UserOrm): Promise<User>{
+        return this.mappedOrmToUser(await this.save(user));
     }
 
     async findUser(identification: string): Promise<User> {

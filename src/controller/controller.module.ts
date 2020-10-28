@@ -9,6 +9,7 @@ import {ProductInputController} from "./product.input.controller";
 import {ProductOutputController} from "./product.output.controller";
 import {ClientController} from "./client.controller";
 import {UserController} from "./user.controller";
+import {LoginController} from "./login.controller";
 
 @Module({
     imports: [
@@ -23,7 +24,8 @@ import {UserController} from "./user.controller";
         ProductInputController,
         ProductOutputController,
         ClientController,
-        UserController
+        UserController,
+        LoginController
     ]
 })
 export class ControllersModule{}
