@@ -1,6 +1,5 @@
 import {Body, Controller, Get, Post} from "@nestjs/common";
 import {UnitOfWork} from "../infrastructure/unitOfWork/unitOfWork";
-import {SearchProviderRequest, SearchProviderService} from "../application/search.provider.service";
 import {RegisterUserRequest, RegisterUserResponse, RegisterUserService} from "../application/register.user.service";
 import {SearchUserRequest, SearchUserService} from "../application/search.user.service";
 

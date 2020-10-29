@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post, Put } from '@nestjs/common';
 import {UnitOfWork} from "../infrastructure/unitOfWork/unitOfWork";
 import {RegisterBrandRequest, RegisterBrandResponse, RegisterBrandService} from "../application/register.brand.service";
-import {SearchBrandRequest, SearchBrandResponse, SearchBrandService} from "../application/search.brand.service";
+import {SearchBrandRequest, SearchBrandService} from "../application/search.brand.service";
 import { UpdateBrandRequest, UpdateBrandResponse, UpdateBrandService } from '../application/update.brand.service';
 
 @Controller('brand')

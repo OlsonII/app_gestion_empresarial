@@ -5,7 +5,6 @@ import {
     RegisterProductService
 } from "../application/register.product.service";
 import {UnitOfWork} from "../infrastructure/unitOfWork/unitOfWork";
-import {SearchProviderRequest, SearchProviderService} from "../application/search.provider.service";
 import {SearchProductRequest, SearchProductService} from "../application/search.product.service";
 import {UpdateProductRequest, UpdateProductResponse, UpdateProductService} from "../application/update.product.service";
 

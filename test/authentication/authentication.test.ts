@@ -25,11 +25,12 @@ describe('authentication test', () => {
 
         const tokenGenerator = new Token();
         const token = tokenGenerator.generateToken();
+        console.log(token);
         expect(token.length).toBe(40);
     });
 
     test('login correct', async () => {
-    ``
+
         await new RegisterUserService(unitOfWork).execute(
             new RegisterUserRequest(
                 'adminOne@email',

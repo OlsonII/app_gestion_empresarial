@@ -17,7 +17,7 @@ export class Token {
     generateToken(): string{
         let token = '';
         for (let i = 0; i < 40; i++){
-            const position =Math.trunc(Math.random() * ((this.characters.length - 1)));
+            const position =Math.trunc(Math.random() * (this.characters.length - 1));
             const character = this.characters[position];
             token += character;
         }
