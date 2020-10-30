@@ -1,4 +1,4 @@
-import {Body, Controller, Post, Put} from "@nestjs/common";
+import {Body, Controller, Get, Post, Put} from "@nestjs/common";
 import {
     RegisterProductRequest,
     RegisterProductService
@@ -18,7 +18,7 @@ export class ProductController{
         return await service.execute(request);
     }
 
-    @Post()
+    @Get()
     async searchProduct(@Body() request: SearchProductRequest){
         const service: SearchProductService = new SearchProductService(this._unitOfWork);
         return await service.execute(request);
