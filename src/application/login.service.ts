@@ -14,13 +14,12 @@ export class LoginService {
                 user.token = token.generateToken();
                 this._unitOfWork.start();
                 const loggedUser = await this._unitOfWork.complete(async () => await this._unitOfWork.userRepository.login(user));
-                return new LoginResponse(loggedUser.token);
+                return new LoginResponse(loggedUser);
             }
             return new LoginResponse(undefined, 'Contraseña incorrecta');
         }
         return new LoginResponse(undefined, 'Este usuario no se encuentra registrado');
     }
-
 }
 
 export class LoginRequest {
@@ -32,7 +31,7 @@ export class LoginRequest {
 
 export class LoginResponse {
     constructor(
-       public readonly token: string,
+       public readonly user: User,
        public readonly message?: string
     ) {}
 }

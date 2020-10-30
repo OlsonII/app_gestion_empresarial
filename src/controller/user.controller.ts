@@ -1,7 +1,8 @@
-import {Body, Controller, Get, Post} from "@nestjs/common";
+import {Body, Controller, Post, Put} from "@nestjs/common";
 import {UnitOfWork} from "../infrastructure/unitOfWork/unitOfWork";
-import {RegisterUserRequest, RegisterUserResponse, RegisterUserService} from "../application/register.user.service";
+import {RegisterUserRequest, RegisterUserService} from "../application/register.user.service";
 import {SearchUserRequest, SearchUserService} from "../application/search.user.service";
+import {UpdateUserRequest, UpdateUserService} from "../application/update.user.service";
 
 @Controller('user')
 export class UserController{
@@ -11,14 +12,18 @@ export class UserController{
     @Post()
     async registerProvider(@Body() request: RegisterUserRequest){
         const service: RegisterUserService = new RegisterUserService(this._unitOfWork);
-        const response: RegisterUserResponse = await service.execute(request);
-        return response.message;
+        return await service.execute(request);
     }
 
-    @Get()
+    @Post()
     async searchProvider(@Body() request: SearchUserRequest){
         const service: SearchUserService = new SearchUserService(this._unitOfWork);
         return await service.execute(request);
     }
 
+    @Put()
+    async updateCategory(@Body() request: UpdateUserRequest){
+        const service: UpdateUserService = new UpdateUserService(this._unitOfWork);
+        return await service.execute(request);
+    }
 }

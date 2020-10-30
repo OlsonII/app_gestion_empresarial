@@ -9,13 +9,11 @@ async function bootstrap() {
 
   const options = new DocumentBuilder()
       .setTitle('Management Services')
-      .setVersion('0.8.9')
       .addTag('DDD')
       .build();
   const document = SwaggerModule.createDocument(app, options);
 
   SwaggerModule.setup('api', app, document);
-
   await app.listen(process.env.PORT || '80');
 }
 

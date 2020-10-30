@@ -15,6 +15,7 @@ describe('authentication test', () => {
             type: 'mongodb',
             url: 'mongodb+srv://olson:1981@cluster0.fhagr.mongodb.net/memory?retryWrites=true&w=majority',
             logging: true,
+            dropSchema: true,
             useNewUrlParser: true,
             synchronize: true,
             entities: ['src/infrastructure/database/entity/*.ts']
@@ -50,6 +51,10 @@ describe('authentication test', () => {
                 '12345'
             )
         );
-        expect(response.token.length).toBe(40);
+        expect(response.user.token.length).toBe(40);
+    });
+
+    afterAll(() => {
+        return unitOfWork.closeConnection();
     });
 })

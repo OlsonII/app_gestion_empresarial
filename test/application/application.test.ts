@@ -691,6 +691,7 @@ describe('Application tests', () => {
     describe('user tests', () => {
 
         test('correct registry', async () => {
+            await unitOfWork.complete(async () => await unitOfWork.userRepository.clear());
             const service: RegisterUserService = new RegisterUserService(unitOfWork);
             const request = new RegisterUserRequest(
                 'adminOne@email',
@@ -706,6 +707,18 @@ describe('Application tests', () => {
         });
 
         test('duplicate registry', async () => {
+
+            await new RegisterUserService(unitOfWork).execute(
+                new RegisterUserRequest(
+                    'adminOne@email',
+                    '1067',
+                    'Name Example',
+                    'Street example',
+                    'phone example',
+                    '12345',
+                    'admin'
+                )
+            );
 
             const service: RegisterUserService = new RegisterUserService(unitOfWork);
             const request = new RegisterUserRequest(

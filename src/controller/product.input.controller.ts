@@ -2,7 +2,6 @@ import {Body, Controller, Post} from "@nestjs/common";
 import {UnitOfWork} from "../infrastructure/unitOfWork/unitOfWork";
 import {
     RegisterProductInputRequest,
-    RegisterProductInputResponse,
     RegisterProductInputService
 } from "../application/register.product.input.service";
 
@@ -14,8 +13,7 @@ export class ProductInputController{
     @Post()
     async registerProductInput(@Body() request: RegisterProductInputRequest){
         const service: RegisterProductInputService = new RegisterProductInputService(this._unitOfWork);
-        const response: RegisterProductInputResponse = await service.execute(request);
-        return response.message;
+        return await service.execute(request);
     }
 
 }
