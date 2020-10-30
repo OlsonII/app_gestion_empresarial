@@ -42,6 +42,7 @@ import {UpdateClientService} from "./update.client.service";
         UpdateBrandService,
         UpdateProviderService,
         UpdateClientService,
+        UpdateUserService,
         LoginService
     ],
     exports:[
@@ -64,6 +65,7 @@ import {UpdateClientService} from "./update.client.service";
         UpdateBrandService,
         UpdateProviderService,
         UpdateClientService,
+        UpdateUserService,
         LoginService
     ]
 })
