@@ -37,7 +37,7 @@ export class UpdateClientRequest{
         public userIdentification: string,
         public token: string,
         public identification: string,
-        public newIdentification: string,
+        public newIdentification?: string,
         public email?: string,
         public name?: string,
         public street?: string,

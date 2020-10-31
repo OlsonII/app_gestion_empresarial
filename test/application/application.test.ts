@@ -74,11 +74,14 @@ import {
 } from "../../src/application/search.client.service";
 import {RegisterUserRequest, RegisterUserService} from "../../src/application/register.user.service";
 import {SearchUserRequest, SearchUserResponse, SearchUserService} from "../../src/application/search.user.service";
+import {User} from "../../src/domain/entity/user";
+import {LoginRequest, LoginService} from "../../src/application/login.service";
 
 
 describe('Application tests', () => {
 
     let unitOfWork: IUnitOfWork;
+    let user: User;
 
     beforeAll(async ()=>{
         unitOfWork = new UnitOfWork(await createConnection({
@@ -90,6 +93,21 @@ describe('Application tests', () => {
             synchronize: true,
             entities: ['src/infrastructure/database/entity/*.ts']
         }));
+
+        const u = new User();
+
+        u.identification = '1086';
+        u.email = 'adminOne@email';
+        u.name = 'Name Example';
+        u.street = 'Street example';
+        u.telephone = 'phone example';
+        u.password = '1067';
+        u.rol = 'admin';
+
+        await unitOfWork.complete(async () => await unitOfWork.userRepository.save(u));
+
+        const response = await new LoginService(unitOfWork).execute(new LoginRequest('1086', '1067'));
+        user = response.user;
     });
 
     describe('brand test', () => {
@@ -97,6 +115,8 @@ describe('Application tests', () => {
         test('correct registry', async () => {
             const service: RegisterBrandService = new RegisterBrandService(unitOfWork);
             const request = new RegisterBrandRequest(
+                user.identification,
+                user.token,
                 '1111',
                 'Example'
             );
@@ -107,6 +127,8 @@ describe('Application tests', () => {
         test('duplicate registry', async () => {
             const service: RegisterBrandService = new RegisterBrandService(unitOfWork);
             const request = new RegisterBrandRequest(
+                user.identification,
+                user.token,
               '1111',
               'Example'
             );
@@ -120,6 +142,8 @@ describe('Application tests', () => {
         test('find one registry', async () => {
             const service: SearchBrandService = new SearchBrandService(unitOfWork);
             const request = new SearchBrandRequest(
+                user.identification,
+                user.token,
                 '1111'
             );
             const response: SearchBrandResponse = await service.execute(request);
@@ -129,6 +153,8 @@ describe('Application tests', () => {
         test('find a non-existent registry', async () => {
             const service: SearchBrandService = new SearchBrandService(unitOfWork);
             const request = new SearchBrandRequest(
+                user.identification,
+                user.token,
               '1112'
             );
             const response: SearchBrandResponse = await service.execute(request);
@@ -137,7 +163,10 @@ describe('Application tests', () => {
 
         test('find many registry', async () => {
             const service: SearchBrandService = new SearchBrandService(unitOfWork);
-            const request = new SearchBrandRequest();
+            const request = new SearchBrandRequest(
+                user.identification,
+                user.token,
+            );
             const response: SearchBrandResponse = await service.execute(request);
             expect(response.brands.length).toBe(1);
         });
@@ -145,6 +174,8 @@ describe('Application tests', () => {
         test( 'correct update brand', async ()=>{
             await new RegisterBrandService(unitOfWork).execute(
               new RegisterBrandRequest(
+                  user.identification,
+                  user.token,
                 '1111',
                 'Example'
               )
@@ -153,6 +184,8 @@ describe('Application tests', () => {
             const service = new UpdateBrandService(unitOfWork);
             const response: UpdateBrandResponse = await service.execute(
               new UpdateBrandRequest(
+                  user.identification,
+                  user.token,
                 '1111',
                 'Example Update Brand'
               )
@@ -166,6 +199,8 @@ describe('Application tests', () => {
         test('correct registry', async () => {
             const service: RegisterCategoryService = new RegisterCategoryService(unitOfWork);
             const request = new RegisterCategoryRequest(
+                user.identification,
+                user.token,
                 '1111',
                 'Example Category'
             );
@@ -176,6 +211,8 @@ describe('Application tests', () => {
         test('duplicate registry', async () => {
             const service: RegisterCategoryService = new RegisterCategoryService(unitOfWork);
             const request = new RegisterCategoryRequest(
+                user.identification,
+                user.token,
               '1111',
               'Example Category'
             );
@@ -190,6 +227,8 @@ describe('Application tests', () => {
 
             const service: SearchCategoryService = new SearchCategoryService(unitOfWork);
             const request = new SearchCategoryRequest(
+                user.identification,
+                user.token,
                 '1111'
             );
             const response: SearchCategoryResponse = await service.execute(request);
@@ -200,6 +239,8 @@ describe('Application tests', () => {
 
             const service: SearchCategoryService = new SearchCategoryService(unitOfWork);
             const request = new SearchCategoryRequest(
+                user.identification,
+                user.token,
               '1112'
             );
             const response: SearchCategoryResponse = await service.execute(request);
@@ -208,13 +249,18 @@ describe('Application tests', () => {
 
         test('find many registry', async () => {
             const service: SearchCategoryService = new SearchCategoryService(unitOfWork);
-            const response: SearchCategoryResponse = await service.execute(new SearchCategoryRequest());
+            const response: SearchCategoryResponse = await service.execute(new SearchCategoryRequest(
+                user.identification,
+                user.token,
+            ));
             expect(response.categories.length).toBe(1);
         });
 
         test('correct update category', async () => {
             await new RegisterCategoryService(unitOfWork).execute(
               new RegisterCategoryRequest(
+                  user.identification,
+                  user.token,
                   '1111',
                   'Example Category'
               )
@@ -223,6 +269,8 @@ describe('Application tests', () => {
             const service = new UpdateCategoryService(unitOfWork);
             const response: UpdateCategoryResponse = await service.execute(
               new UpdateCategoryRequest(
+                  user.identification,
+                  user.token,
                 '1111',
                 'Example Update Category'
               )
@@ -236,6 +284,8 @@ describe('Application tests', () => {
         test('correct registry', async () => {
             const service: RegisterProviderService = new RegisterProviderService(unitOfWork);
             const request = new RegisterProviderRequest(
+                user.identification,
+                user.token,
                 'Company Example',
                 'sellerOne@email',
                 '1065',
@@ -251,6 +301,8 @@ describe('Application tests', () => {
 
             const service: RegisterProviderService = new RegisterProviderService(unitOfWork);
             const request = new RegisterProviderRequest(
+                user.identification,
+                user.token,
               'Company Example',
               'sellerOne@email',
               '1065',
@@ -268,7 +320,10 @@ describe('Application tests', () => {
         test('find one registry', async () => {
 
             const service: SearchProviderService = new SearchProviderService(unitOfWork);
-            const request = new SearchProviderRequest('1065');
+            const request = new SearchProviderRequest(
+                user.identification,
+                user.token,
+                '1065');
             const response: SearchProviderResponse = await service.execute(request);
             expect(response.provider.identification).toBe('1065');
         });
@@ -276,14 +331,20 @@ describe('Application tests', () => {
         test('find a non-existent registry', async () => {
 
             const service: SearchProviderService = new SearchProviderService(unitOfWork);
-            const request = new SearchProviderRequest('1066');
+            const request = new SearchProviderRequest(
+                user.identification,
+                user.token,
+                '1066');
             const response: SearchProviderResponse = await service.execute(request);
             expect(response.message).toBe('Este proveedor no existe');
         });
 
         test('find many registry', async () => {
             const service: SearchProviderService = new SearchProviderService(unitOfWork);
-            const response: SearchProviderResponse = await service.execute(new SearchProviderRequest());
+            const response: SearchProviderResponse = await service.execute(new SearchProviderRequest(
+                user.identification,
+                user.token,
+            ));
             expect(response.providers.length).toBe(1);
         });
 
@@ -291,6 +352,8 @@ describe('Application tests', () => {
 
             await new RegisterProviderService(unitOfWork).execute(
               new RegisterProviderRequest(
+                  user.identification,
+                  user.token,
                 'Company Example',
                 'sellerOne@email',
                 '1065',
@@ -303,6 +366,8 @@ describe('Application tests', () => {
             const service = new UpdateProviderService(unitOfWork);
             const response: UpdateProviderResponse = await service.execute(
               new UpdateProviderRequest(
+                  user.identification,
+                  user.token,
                 '1065',
                 'Street example update',
                 'phone example update',
@@ -317,6 +382,8 @@ describe('Application tests', () => {
 
             await new RegisterProviderService(unitOfWork).execute(
               new RegisterProviderRequest(
+                  user.identification,
+                  user.token,
                 'Company Example',
                 'sellerOne@email',
                 '1065',
@@ -329,6 +396,8 @@ describe('Application tests', () => {
             const service = new UpdateProviderService(unitOfWork);
             const response: UpdateProviderResponse = await service.execute(
               new UpdateProviderRequest(
+                  user.identification,
+                  user.token,
                 '1065',
                 undefined,
                 'phone example update',
@@ -346,6 +415,8 @@ describe('Application tests', () => {
         test('correct registry', async () => {
             await new RegisterProviderService(unitOfWork).execute(
                 new RegisterProviderRequest(
+                    user.identification,
+                    user.token,
                     'Company Example',
                     'sellerOne@email',
                     '1065',
@@ -357,6 +428,8 @@ describe('Application tests', () => {
 
             await new RegisterBrandService(unitOfWork).execute(
                 new RegisterBrandRequest(
+                    user.identification,
+                    user.token,
                     '1111',
                     'Example Brand'
                 )
@@ -364,6 +437,8 @@ describe('Application tests', () => {
 
             await new RegisterCategoryService(unitOfWork).execute(
                 new RegisterCategoryRequest(
+                    user.identification,
+                    user.token,
                     '1111',
                     'Example Category'
                 )
@@ -373,6 +448,8 @@ describe('Application tests', () => {
 
             const response: RegisterProductResponse = await service.execute(
                 new RegisterProductRequest(
+                    user.identification,
+                    user.token,
                     '8563',
                     '1111',
                     '1111',
@@ -389,6 +466,8 @@ describe('Application tests', () => {
         test('duplicate registry', async () => {
             await new RegisterProviderService(unitOfWork).execute(
               new RegisterProviderRequest(
+                  user.identification,
+                  user.token,
                 'Company Example',
                 'sellerOne@email',
                 '1065',
@@ -400,6 +479,8 @@ describe('Application tests', () => {
 
             await new RegisterBrandService(unitOfWork).execute(
               new RegisterBrandRequest(
+                  user.identification,
+                  user.token,
                 '1111',
                 'Example Brand'
               )
@@ -407,6 +488,8 @@ describe('Application tests', () => {
 
             await new RegisterCategoryService(unitOfWork).execute(
               new RegisterCategoryRequest(
+                  user.identification,
+                  user.token,
                 '1111',
                 'Example Category'
               )
@@ -416,6 +499,8 @@ describe('Application tests', () => {
 
             await service.execute(
               new RegisterProductRequest(
+                  user.identification,
+                  user.token,
                 '8563',
                 '1111',
                 '1111',
@@ -427,6 +512,8 @@ describe('Application tests', () => {
 
             const response: RegisterProductResponse = await service.execute(
                 new RegisterProductRequest(
+                    user.identification,
+                    user.token,
                     '8563',
                     '1111',
                     '1111',
@@ -444,7 +531,10 @@ describe('Application tests', () => {
         test('find one registry', async () => {
 
             const service: SearchProductService = new SearchProductService(unitOfWork);
-            const request = new SearchProductRequest('8563');
+            const request = new SearchProductRequest(
+                user.identification,
+                user.token,
+                '8563');
             const response: SearchProductResponse = await service.execute(request);
             expect(response.product.reference).toBe('8563');
         });
@@ -452,14 +542,20 @@ describe('Application tests', () => {
         test('find a non-existent registry', async () => {
 
             const service: SearchProductService = new SearchProductService(unitOfWork);
-            const request = new SearchProductRequest('8547');
+            const request = new SearchProductRequest(
+                user.identification,
+                user.token,
+                '8547');
             const response: SearchProductResponse = await service.execute(request);
             expect(response.message).toBe('Este producto no existe');
         });
 
         test('find many registry', async () => {
             const service: SearchProductService = new SearchProductService(unitOfWork);
-            const response: SearchProductResponse = await service.execute(new SearchProductRequest());
+            const response: SearchProductResponse = await service.execute(new SearchProductRequest(
+                user.identification,
+                user.token
+            ));
             expect(response.products.length).toBe(1);
         });
 
@@ -467,6 +563,8 @@ describe('Application tests', () => {
 
             await new RegisterProductService(unitOfWork).execute(
                 new RegisterProductRequest(
+                    user.identification,
+                    user.token,
                     '8563',
                     '1111',
                     '1111',
@@ -481,6 +579,8 @@ describe('Application tests', () => {
             const service = new UpdateProductService(unitOfWork);
             const response: UpdateProductResponse = await service.execute(
                 new UpdateProductRequest(
+                    user.identification,
+                    user.token,
                     '8563',
                     8500,
                     6000,
@@ -495,6 +595,8 @@ describe('Application tests', () => {
 
             await new RegisterProductService(unitOfWork).execute(
                 new RegisterProductRequest(
+                    user.identification,
+                    user.token,
                     '8563',
                     '1111',
                     '1111',
@@ -509,6 +611,8 @@ describe('Application tests', () => {
             const service = new UpdateProductService(unitOfWork);
             const response: UpdateProductResponse = await service.execute(
                 new UpdateProductRequest(
+                    user.identification,
+                    user.token,
                     '8563',
                     10000,
                     undefined,
@@ -526,6 +630,8 @@ describe('Application tests', () => {
         test('correct input', async () => {
             await new RegisterProviderService(unitOfWork).execute(
                 new RegisterProviderRequest(
+                    user.identification,
+                    user.token,
                     'Company Example',
                     'sellerOne@email',
                     '1065',
@@ -537,6 +643,8 @@ describe('Application tests', () => {
 
             await new RegisterBrandService(unitOfWork).execute(
                 new RegisterBrandRequest(
+                    user.identification,
+                    user.token,
                     '1111',
                     'Example Brand'
                 )
@@ -544,6 +652,8 @@ describe('Application tests', () => {
 
             await new RegisterCategoryService(unitOfWork).execute(
                 new RegisterCategoryRequest(
+                    user.identification,
+                    user.token,
                     '1111',
                     'Example Category'
                 )
@@ -551,6 +661,8 @@ describe('Application tests', () => {
 
             await new RegisterProductService(unitOfWork).execute(
                 new RegisterProductRequest(
+                    user.identification,
+                    user.token,
                     '8563',
                     '1111',
                     '1111',
@@ -564,6 +676,8 @@ describe('Application tests', () => {
 
             const response: RegisterProductInputResponse = await new RegisterProductInputService(unitOfWork).execute(
                 new RegisterProductInputRequest(
+                    user.identification,
+                    user.token,
                     5,
                     '8563',
                     'Example input'
@@ -576,6 +690,8 @@ describe('Application tests', () => {
         test('correct output', async () => {
             await new RegisterProviderService(unitOfWork).execute(
                 new RegisterProviderRequest(
+                    user.identification,
+                    user.token,
                     'Company Example',
                     'sellerOne@email',
                     '1065',
@@ -587,6 +703,8 @@ describe('Application tests', () => {
 
             await new RegisterBrandService(unitOfWork).execute(
                 new RegisterBrandRequest(
+                    user.identification,
+                    user.token,
                     '1111',
                     'Example Brand'
                 )
@@ -594,6 +712,8 @@ describe('Application tests', () => {
 
             await new RegisterCategoryService(unitOfWork).execute(
                 new RegisterCategoryRequest(
+                    user.identification,
+                    user.token,
                     '1111',
                     'Example Category'
                 )
@@ -601,6 +721,8 @@ describe('Application tests', () => {
 
             await new RegisterProductService(unitOfWork).execute(
                 new RegisterProductRequest(
+                    user.identification,
+                    user.token,
                     '8563',
                     '1111',
                     '1111',
@@ -614,6 +736,8 @@ describe('Application tests', () => {
 
             await new RegisterProductInputService(unitOfWork).execute(
                 new RegisterProductInputRequest(
+                    user.identification,
+                    user.token,
                     15,
                     '8563',
                     'Example input'
@@ -622,6 +746,8 @@ describe('Application tests', () => {
 
             const response: RegisterProductOutputResponse = await new RegisterProductOutputService(unitOfWork).execute(
                 new RegisterProductOutputRequest(
+                    user.identification,
+                    user.token,
                     7,
                     '8563',
                     'Example output'
@@ -637,6 +763,8 @@ describe('Application tests', () => {
         test('correct registry', async () => {
             const service: RegisterClientService = new RegisterClientService(unitOfWork);
             const request = new RegisterClientRequest(
+                user.identification,
+                user.token,
                 'clientOne@email',
                 '1066',
                 'Name Example',
@@ -651,6 +779,8 @@ describe('Application tests', () => {
 
             const service: RegisterClientService = new RegisterClientService(unitOfWork);
             const request = new RegisterClientRequest(
+                user.identification,
+                user.token,
                 'clientOne@email',
                 '1066',
                 'Name Example',
@@ -667,7 +797,10 @@ describe('Application tests', () => {
         test('find one registry', async () => {
 
             const service: SearchClientService = new SearchClientService(unitOfWork);
-            const request = new SearchClientRequest('1066');
+            const request = new SearchClientRequest(
+                user.identification,
+                user.token,
+                '1066');
             const response: SearchClientResponse = await service.execute(request);
             expect(response.client.identification).toBe('1066');
         });
@@ -675,14 +808,20 @@ describe('Application tests', () => {
         test('find a non-existent registry', async () => {
 
             const service: SearchClientService = new SearchClientService(unitOfWork);
-            const request = new SearchClientRequest('1065');
+            const request = new SearchClientRequest(
+                user.identification,
+                user.token,
+                '1065');
             const response: SearchClientResponse = await service.execute(request);
             expect(response.message).toBe('Este cliente no existe');
         });
 
         test('find many registry', async () => {
             const service: SearchClientService = new SearchClientService(unitOfWork);
-            const response: SearchClientResponse = await service.execute(new SearchClientRequest());
+            const response: SearchClientResponse = await service.execute(new SearchClientRequest(
+                user.identification,
+                user.token                
+            ));
             expect(response.clients.length).toBe(1);
         });
 
@@ -691,9 +830,10 @@ describe('Application tests', () => {
     describe('user tests', () => {
 
         test('correct registry', async () => {
-            await unitOfWork.complete(async () => await unitOfWork.userRepository.clear());
             const service: RegisterUserService = new RegisterUserService(unitOfWork);
             const request = new RegisterUserRequest(
+                user.identification,
+                user.token,
                 'adminOne@email',
                 '1067',
                 'Name Example',
@@ -710,6 +850,8 @@ describe('Application tests', () => {
 
             await new RegisterUserService(unitOfWork).execute(
                 new RegisterUserRequest(
+                    user.identification,
+                    user.token,
                     'adminOne@email',
                     '1067',
                     'Name Example',
@@ -722,6 +864,8 @@ describe('Application tests', () => {
 
             const service: RegisterUserService = new RegisterUserService(unitOfWork);
             const request = new RegisterUserRequest(
+                user.identification,
+                user.token,
                 'adminOne@email',
                 '1067',
                 'Name Example',
@@ -737,7 +881,10 @@ describe('Application tests', () => {
         test('find one registry', async () => {
 
             const service: SearchUserService = new SearchUserService(unitOfWork);
-            const request = new SearchUserRequest('1067');
+            const request = new SearchUserRequest(
+                user.identification,
+                user.token,
+                '1067');
             const response: SearchUserResponse = await service.execute(request);
             expect(response.user.identification).toBe('1067');
         });
@@ -745,15 +892,21 @@ describe('Application tests', () => {
         test('find a non-existent registry', async () => {
 
             const service: SearchUserService = new SearchUserService(unitOfWork);
-            const request = new SearchUserRequest('1065');
+            const request = new SearchUserRequest(
+                user.identification,
+                user.token,
+                '1065');
             const response: SearchUserResponse = await service.execute(request);
             expect(response.message).toBe('Este usuario no existe');
         });
 
         test('find many registry', async () => {
             const service: SearchUserService = new SearchUserService(unitOfWork);
-            const response: SearchUserResponse = await service.execute(new SearchClientRequest());
-            expect(response.users.length).toBe(1);
+            const response: SearchUserResponse = await service.execute(new SearchClientRequest(
+                user.identification,
+                user.token,
+            ));
+            expect(response.users.length).toBe(2);
         });
 
     });

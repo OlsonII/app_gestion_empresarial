@@ -8,20 +8,24 @@ export class RegisterBrandService{
     async execute(request: RegisterBrandRequest): Promise<RegisterBrandResponse>{
 
         try{
-            let newBrand: Brand;
-            const searchedBrand = await this._unitOfWork.brandRepository.findBrand(request.reference);
-            if(searchedBrand == undefined){
-                newBrand = new Brand();
-                newBrand.reference = request.reference;
-                newBrand.name = request.name;
-                this._unitOfWork.start();
-                const savedBrand = await this._unitOfWork.complete(async () => await this._unitOfWork.brandRepository.save(newBrand));
-                if(savedBrand != undefined){
-                    return new RegisterBrandResponse('Marca registrada con exito');
+            const user = await this._unitOfWork.userRepository.findUser(request.userIdentification);
+            if(request.token == user.token){
+                let newBrand: Brand;
+                const searchedBrand = await this._unitOfWork.brandRepository.findBrand(request.reference);
+                if(searchedBrand == undefined){
+                    newBrand = new Brand();
+                    newBrand.reference = request.reference;
+                    newBrand.name = request.name;
+                    this._unitOfWork.start();
+                    const savedBrand = await this._unitOfWork.complete(async () => await this._unitOfWork.brandRepository.save(newBrand));
+                    if(savedBrand != undefined){
+                        return new RegisterBrandResponse('Marca registrada con exito');
+                    }
+                }else{
+                    return new RegisterBrandResponse('Esta marca ya se encuentra registrada');
                 }
-            }else{
-                return new RegisterBrandResponse('Esta marca ya se encuentra registrada');
             }
+            return new RegisterBrandResponse('Hay un error al validar el usuario');
         }catch (e){
             return new RegisterBrandResponse('Ha habido un error al momento de registrar esta marca')
         }
@@ -31,7 +35,11 @@ export class RegisterBrandService{
 }
 
 export class RegisterBrandRequest{
-    constructor(public reference: string, public name: string) {}
+    constructor(
+        public userIdentification: string,
+        public token: string,
+        public reference: string,
+        public name: string) {}
 }
 
 export class RegisterBrandResponse{

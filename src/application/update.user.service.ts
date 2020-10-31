@@ -29,9 +29,7 @@ export class UpdateUserService{
         }catch (e) {
             return new UpdateUserResponse('Ha habido un error al momento de actualiar este usuario')
         }
-
     }
-
 }
 
 export class UpdateUserRequest{
@@ -39,7 +37,7 @@ export class UpdateUserRequest{
         public userIdentification: string,
         public token: string,
         public identification: string,
-        public newIdentification: string,
+        public newIdentification?: string,
         public email?: string,
         public name?: string,
         public street?: string,
