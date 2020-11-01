@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Post, Put} from '@nestjs/common';
+import {Body, Controller, Get, Post, Put, Req} from '@nestjs/common';
 import {UnitOfWork} from "../infrastructure/unitOfWork/unitOfWork";
 import {
     RegisterProviderRequest,
@@ -22,7 +22,7 @@ export class ProviderController{
     }
 
     @Get()
-    async searchProvider(@Body() request: SearchProviderRequest){
+    async searchProvider(@Req() request: SearchProviderRequest){
         const service: SearchProviderService = new SearchProviderService(this._unitOfWork);
         return await service.execute(request);
     }
