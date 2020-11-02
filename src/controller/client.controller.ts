@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Post, Put, Req} from "@nestjs/common";
+import {Body, Controller, Get, Headers, Param, Post, Put} from "@nestjs/common";
 import {UnitOfWork} from "../infrastructure/unitOfWork/unitOfWork";
 import {
     RegisterClientRequest,
@@ -19,10 +19,23 @@ export class ClientController{
         return await service.execute(request);
     }
 
-    @Get()
-    async searchProvider(@Req() request: SearchClientRequest){
+    @Get(':identification')
+    async searchSpecifyProvider(@Param('identification') identification, @Headers() headers: string){
         const service: SearchClientService = new SearchClientService(this._unitOfWork);
-        return await service.execute(request);
+        return await service.execute(new SearchClientRequest(
+            headers['authorization'].split(' ')[0],
+            headers['authorization'].split(' ')[1],
+            identification
+        ));
+    }
+
+    @Get()
+    async searchProviders(@Headers() headers: string){
+        const service: SearchClientService = new SearchClientService(this._unitOfWork);
+        return await service.execute(new SearchClientRequest(
+            headers['authorization'].split(' ')[0],
+            headers['authorization'].split(' ')[1]
+        ));
     }
 
     @Put()

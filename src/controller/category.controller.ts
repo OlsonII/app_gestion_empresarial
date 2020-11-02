@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Post, Put, Req} from '@nestjs/common';
+import {Body, Controller, Get, Headers, Param, Post, Put} from '@nestjs/common';
 import {UnitOfWork} from "../infrastructure/unitOfWork/unitOfWork";
 import {
     RegisterCategoryRequest,
@@ -9,6 +9,7 @@ import {
     UpdateCategoryRequest,
     UpdateCategoryService,
 } from '../application/update.category.service';
+import {SearchBrandRequest} from "../application/search.brand.service";
 
 
 @Controller('category')
@@ -22,10 +23,23 @@ export class CategoryController{
         return await service.execute(request);
     }
 
-    @Get()
-    async searchBrand(@Req() request: SearchCategoryRequest){
+    @Get(':reference')
+    async searchSpecifyCategory(@Param('reference') reference: string, @Headers() headers: string){
         const service: SearchCategoryService = new SearchCategoryService(this._unitOfWork);
-        return await service.execute(request);
+        return await service.execute(new SearchCategoryRequest(
+            headers['authorization'].split(' ')[0],
+            headers['authorization'].split(' ')[1],
+            reference
+        ));
+    }
+
+    @Get()
+    async searchCategories(@Headers() headers: string){
+        const service: SearchCategoryService = new SearchCategoryService(this._unitOfWork);
+        return await service.execute(new SearchCategoryRequest(
+            headers['authorization'].split(' ')[0],
+            headers['authorization'].split(' ')[1]
+        ));
     }
 
     @Put()

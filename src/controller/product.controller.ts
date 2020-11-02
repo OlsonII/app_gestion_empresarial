@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Post, Put, Req} from "@nestjs/common";
+import {Body, Controller, Get, Headers, Param, Post, Put} from "@nestjs/common";
 import {
     RegisterProductRequest,
     RegisterProductService
@@ -23,10 +23,23 @@ export class ProductController{
         return await service.execute(request);
     }
 
-    @Get()
-    async searchProduct(@Req() request: SearchProductRequest){
+    @Get(':reference')
+    async searchSpecifyProduct(@Param('reference') reference: string, @Headers() headers: string){
         const service: SearchProductService = new SearchProductService(this._unitOfWork);
-        return await service.execute(request);
+        return await service.execute(new SearchProductRequest(
+            headers['authorization'].split(' ')[0],
+            headers['authorization'].split(' ')[1],
+            reference
+        ));
+    }
+
+    @Get()
+    async searchProducts(@Headers() headers: string){
+        const service: SearchProductService = new SearchProductService(this._unitOfWork);
+        return await service.execute(new SearchProductRequest(
+            headers['authorization'].split(' ')[0],
+            headers['authorization'].split(' ')[1]
+        ));
     }
 
     @Put()
