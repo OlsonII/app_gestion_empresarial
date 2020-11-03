@@ -20,7 +20,7 @@ export class UpdateUserService{
                     userToUpdate.rol = request.rol != undefined ? request.rol : userToUpdate.rol;
                     userToUpdate.password = request.password != undefined ? request.password : userToUpdate.password;
                     this._unitOfWork.start();
-                    await this._unitOfWork.complete(async () => await this._unitOfWork.clientRepository.save(userToUpdate));
+                    await this._unitOfWork.complete(async () => await this._unitOfWork.userRepository.save(userToUpdate));
                     return new UpdateUserResponse('Usuario actualizado con exito');
                 }
                 return new UpdateUserResponse('Este usuario no existe');
