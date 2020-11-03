@@ -1,5 +1,6 @@
 import {Product} from "./product.entity";
 import {ObjectID} from "typeorm";
+import {IPerson} from "../contracts/person.interface";
 
 export class ProductTransaction{
 
@@ -9,5 +10,6 @@ export class ProductTransaction{
     public description: string;
     public product: Product;
     public date: string;
+    public partner: IPerson;
 
 }

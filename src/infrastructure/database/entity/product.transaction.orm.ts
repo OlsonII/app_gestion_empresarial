@@ -1,5 +1,6 @@
 import {Column, Entity, ObjectID, ObjectIdColumn} from "typeorm";
 import {ProductOrm} from "./product.orm";
+import {UserOrm} from "./user.orm";
 
 @Entity('PRODUCT_TRANSACTIONS')
 export class ProductTransactionOrm{
@@ -15,5 +16,6 @@ export class ProductTransactionOrm{
     public product: ProductOrm;
     @Column({nullable: false})
     public date: string;
-
+    @Column({nullable: false})
+    public partner: UserOrm;
 }

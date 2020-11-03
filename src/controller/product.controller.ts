@@ -11,6 +11,10 @@ import {
     RegisterProductOutputRequest,
     RegisterProductOutputService
 } from "../application/register.product.output.service";
+import {
+    SearchProductTransactionRequest,
+    SearchProductTransactionService
+} from "../application/search.product.transaction.service";
 
 @Controller(`product`)
 export class ProductController{
@@ -37,6 +41,15 @@ export class ProductController{
     async searchProducts(@Headers() headers: string){
         const service: SearchProductService = new SearchProductService(this._unitOfWork);
         return await service.execute(new SearchProductRequest(
+            headers['authorization'].split(' ')[0],
+            headers['authorization'].split(' ')[1]
+        ));
+    }
+
+    @Get('find/transactions')
+    async searchProductsTransactions(@Headers() headers: string){
+        const service: SearchProductTransactionService = new SearchProductTransactionService(this._unitOfWork);
+        return await service.execute(new SearchProductTransactionRequest(
             headers['authorization'].split(' ')[0],
             headers['authorization'].split(' ')[1]
         ));
