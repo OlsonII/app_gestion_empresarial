@@ -3,13 +3,18 @@ pipeline {
 
     stages {
         stage('Build') {
-            steps {
-                echo 'Building Backend..'
-                bat 'npm install'
-                echo 'Building Frontend...'
-                bat 'cd src/presentation/'
-                bat 'npm install'
-                bat 'cd ../..'
+            stage('build Frontend'){
+                steps {
+                  echo 'Building Backend...'
+                  bat 'npm install'
+                }
+            }
+            stage('build Backend'){
+                steps {
+                    echo 'Building Frontend...'
+                    bat 'cd src/presentation/'
+                    bat 'npm install'
+                }
             }
         }
         stage('Test') {

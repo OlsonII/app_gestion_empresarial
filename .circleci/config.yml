@@ -8,30 +8,42 @@ workflows:
       - heroku/deploy-via-git
 
 jobs:
-  build:
-    working_directory: ~/repo
-    docker:
-      - image: circleci/node:10.16.3
-    steps:
-      - checkout
-      - run:
-          name: Update NPM
-          command: "sudo npm install -g npm@5"
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
-      - run:
-          name: Install Dependencies
-          command: npm install
-      - run:
-          name: cd to front
-          comand: "cd src/presentation"
-      - run:
-          name: Install front Dependencies
-          command: npm install
-      - save_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
-          paths:
-            - ./node_modules
-      - run:
-          name: Run tests
-          command: npm run test
+  workflows:
+    "Building Back"
+    build:
+      working_directory: ~/repo
+      docker:
+        - image: circleci/node:10.16.3
+      steps:
+        - checkout
+        - run:
+            name: Update NPM
+            command: "sudo npm install -g npm@5"
+        - restore_cache:
+            key: dependency-cache-{{ checksum "package-lock.json" }}
+        - run:
+            name: Install Dependencies
+            command: npm install
+        - save_cache:
+            key: dependency-cache-{{ checksum "package-lock.json" }}
+            paths:
+              - ./node_modules
+        - run:
+            name: Run tests
+            command: npm run test
+    "Building Front"
+    build-back:
+      working_directory: ~/src/presentation
+      docker:
+        - image: circleci/node:8-browsers
+      steps:
+        - checkout
+        - restore_cache:
+            key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
+        - run: npm install
+        - save_cache:
+            key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
+            paths:
+              - "src/presentation/node_modules"
+        - run: xvfb-run -a npm run test -- --single-run --no-progress --browser=ChromeNoSandbox
+        - run: xvfb-run -a npm run e2e -- --no-progress --config=protractor-ci.conf.js
