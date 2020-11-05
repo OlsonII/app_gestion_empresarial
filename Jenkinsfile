@@ -1,22 +1,32 @@
 pipeline {
-    agent any
+  agent any
+  stages {
+    stage('Build') {
+      parallel {
+        stage('Build Front') {
+          steps {
+            echo 'Building Backend..'
+            bat 'npm install'
+          }
+        }
 
-    stages {
-        stage('Build') {
-            steps {
-                echo 'Building Backend..'
-                bat 'npm install'
-                echo 'Building Frontend...'
-                bat 'cd src/presentation/'
-                bat 'npm install'
-                bat 'cd ../..'
-            }
+        stage('Build Back') {
+          steps {
+            echo 'Building front...'
+            bat 'cd src/presentation/'
+            bat 'npm install'
+          }
         }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-                bat 'npm run test'
-            }
-        }
+
+      }
     }
+
+    stage('Test') {
+      steps {
+        echo 'Testing..'
+        bat 'npm run test'
+      }
+    }
+
+  }
 }
