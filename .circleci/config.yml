@@ -31,14 +31,14 @@ jobs:
           command: npm run test
 
   build-front:
-    working_directory: ~/src/presentation
+    working_directory: ~/repo
     docker:
       - image: circleci/node:8-browsers
     steps:
       - checkout
       - restore_cache:
           key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
-      - run: npm install
+      - run: cd src/presentation/ & npm install
       - save_cache:
           key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
