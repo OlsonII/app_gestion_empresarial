@@ -1,4 +1,4 @@
-import {Token} from "../../../app_gestion_empresarial/src/infrastructure/authentication/token";
+import {Token} from "../../src/infrastructure/authentication/token";
 
 
 describe('authentication test', () => {
