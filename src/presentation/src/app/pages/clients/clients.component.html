@@ -1,0 +1,143 @@
+<div class="content">
+  <div class=" row">
+    <div class=" col-md-12">
+      <div class=" card">
+        <div class=" card-header"><h4 class=" title">Registro de clientes</h4>
+          <p class=" category">
+            Los datos marcados con (*) son de carácter obligatorio
+          </p>
+        </div>
+        <div class=" card-body">
+          <form>
+            <div class=" row">
+              <div class=" col-md-5 pr-md-4">
+                <div class=" form-group">
+                  <label> Cédula <a class="text-primary">*</a></label>
+                  <input
+                    class=" form-control"
+                    placeholder="Num identificacion"
+                    type="text"
+                    name="identificacion"
+                    [(ngModel)]="client.identification"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class=" row">
+              <div class=" col-md-5 pr-md-4">
+                <div class=" form-group">
+                  <label> Nombres <a class="text-primary">*</a> </label>
+                  <input
+                    class=" form-control"
+                    placeholder="nombres"
+                    type="text"
+                    name="name"
+                    [(ngModel)]="client.name"
+                  />
+                </div>
+
+                <div class=" form-group">
+                  <label> Teléfono <a class="text-primary">*</a></label>
+                  <input
+                    class=" form-control"
+                    placeholder="Telefono"
+                    type="text"
+                    name="telephone"
+                    [(ngModel)]="client.telephone"
+                  />
+                </div>
+              </div>
+
+
+              <div class=" col-md-5 pr-md-4">
+                <div class=" form-group">
+                  <label> Dirección <a class="text-primary">*</a></label>
+                  <input
+                    class=" form-control"
+                    placeholder="Direccion"
+                    type="text"
+                    name="street"
+                    [(ngModel)]="client.street"
+                  />
+                </div>
+
+                <div class=" form-group">
+                  <label> Correo <a class="text-primary">*</a></label>
+                  <input
+                    class=" form-control"
+                    placeholder="Digite correo"
+                    type="text"
+                    name="email"
+                    [(ngModel)]="client.email"
+                  />
+                </div>
+              </div>
+
+            </div>
+
+          </form>
+        </div>
+        <div class=" card-footer">
+          <button class=" btn btn-fill btn-danger" (click)="add()" type="submit">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class=" row">
+    <div class="col-md-12 ">
+      <div class=" card">
+        <div class=" card-header">
+          <h4 class="title">Clientes registrados
+            <div class="col-lg-4 mb-2 search-custom">
+              <label> Búsqueda </label>
+              <input
+                class=" form-control"
+                placeholder="Nombre o identificación"
+                type="text"
+                name="busqueda"
+                [(ngModel)]="searchValue"
+              />
+            </div>
+          </h4>
+
+
+        </div>
+        <div class=" card card-plain">
+          <div class=" card-body">
+
+            <div class="table-custom table-responsive">
+              <table class=" table table-striped" *ngIf="clients">
+                <thead class=" text-primary">
+                <tr>
+                  <th>#</th>
+                  <th>Cédula</th>
+                  <th>Nombre</th>
+                  <th>Teléfono</th>
+                  <th>Dirección</th>
+                  <th>Correo</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let client of clients |searchClient:searchValue; index as i ">
+                  <th scope="row">{{i+1}}</th>
+                  <td>{{client.identification}}</td>
+                  <td>{{client.name}}</td>
+                  <td>{{client.telephone}}</td>
+                  <td>{{client.street}}</td>
+                  <td>{{client.email}}</td>
+                  <td class=" td-actions text-right">
+                    <button class=" btn btn-link" container="body" ngbtooltip="Edit Task" placement="left"
+                    type="button" [routerLink]="'/modifyClient/'+client.identification"><i class=" tim-icons icon-pencil"></i></button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

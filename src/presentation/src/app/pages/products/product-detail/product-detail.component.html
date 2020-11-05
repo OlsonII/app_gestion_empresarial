@@ -1,0 +1,62 @@
+
+<div class=" content">
+  <div class=" row">
+    <div class=" col-md-12">
+      <div class=" card">
+        <div class=" card-header header-costum">
+          <div class="cardheader-custom">
+            <h5 class=" card-category">Datos del producto</h5>
+            <div class=" typography-line cardheader-custom">
+              <h2>{{product.name}}</h2>
+
+            </div>
+          </div>
+          <button class=" btn btn-icon btn-round button-custom" type="submit"
+          [routerLink]="'/modifyProduct/'+product.reference">
+            <i class=" tim-icons icon-pencil"></i>
+          </button>
+          <button name="InOut" class="btn btn-icon btn-round button-custom mr-2" (click)="registrarEntrada()"> <i class="tim-icons icon-refresh-02"> </i></button>
+
+        </div>
+        <div class=" card-body">
+
+          <div class="row">
+            <div class="col-md-5 ml-2 mb-2">
+
+              <div class=" typography-line">
+                    <h5 >Referencia: <span  class="text-info"> {{product.reference}}</span></h5>
+                    <h5> Marca: <span  class="text-info"> {{product.brand.name}}</span></h5>
+                    <h5>Categoria:  <span  class="text-info">{{product.category.name}}</span></h5>
+              </div>
+
+            </div>
+            <div class="col-md-6 mb-2">
+
+
+                  <h5> Cantidad: <span  class="text-success"> {{product.quantity}}</span></h5>
+
+
+
+
+                <h5> Precio: <span  class="text-info">{{product.price}}</span> </h5>
+                <h5> Costo:  <span  class="text-info">{{product.cost}}</span></h5>
+            </div>
+
+          </div>
+
+
+
+
+          <div class=" typography-line">
+            <h5> Descripción:  </h5>
+            <p class=" blockquote text-info">
+              {{product.description}}
+            </p>
+          </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+

@@ -1,0 +1,86 @@
+<div class="content">
+  <div class=" row">
+    <div class=" col-md-12">
+      <div class=" card">
+        <div class=" card-header"><h4 class=" title">Modificación de cliente</h4>
+          <p class=" category">
+            Los datos marcados con (*) son de carácter obligatorio
+          </p>
+        </div>
+        <div class=" card-body">
+          <form>
+            <div class=" row">
+              <div class=" col-md-5 pr-md-4">
+                <div class=" form-group">
+                  <label> Cédula <a class="text-primary">*</a></label>
+                  <input
+                    class=" form-control"
+                    placeholder="Num identificacion"
+                    type="text"
+                    name="identificacion"
+                    disabled=""
+                    [(ngModel)]="client.identification"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class=" row">
+              <div class=" col-md-5 pr-md-4">
+                <div class=" form-group">
+                  <label> Nombres <a class="text-primary">*</a> </label>
+                  <input
+                    class=" form-control"
+                    placeholder="nombres"
+                    type="text"
+                    name="name"
+                    disabled=""
+                    [(ngModel)]="client.name"
+                  />
+                </div>
+
+                  <div class=" form-group">
+                    <label> Teléfono <a class="text-primary">*</a></label>
+                    <input
+                      class=" form-control"
+                      placeholder="Telefono"
+                      type="text"
+                      name="telephone"
+                      [(ngModel)]="client.telephone"
+                    />
+                  </div>
+              </div>
+              <div class=" col-md-5 pr-md-4">
+                <div class=" form-group">
+                  <label> Dirección <a class="text-primary">*</a></label>
+                  <input
+                    class=" form-control"
+                    placeholder="Direccion"
+                    type="text"
+                    name="street"
+                    [(ngModel)]="client.street"
+                  />
+                </div>
+
+                <div class=" form-group">
+                  <label> Correo <a class="text-primary">*</a></label>
+                  <input
+                    class=" form-control"
+                    placeholder="Digite correo"
+                    type="text"
+                    name="email"
+                    [(ngModel)]="client.email"
+                  />
+                </div>
+              </div>
+
+            </div>
+
+          </form>
+        </div>
+        <div class=" card-footer">
+          <button class=" btn btn-fill btn-danger" (click)="UpdateClient()" type="submit">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

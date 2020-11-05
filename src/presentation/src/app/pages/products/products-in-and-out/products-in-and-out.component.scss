@@ -1,0 +1,23 @@
+.custom-select {
+  position: relative;
+  background-color: transparent;
+  border-color:#2b3553;
+
+}
+
+.custom-select option{
+  background-color: #27293d;
+  border-color: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.btn.custom{
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
+  padding-right: 3%;
+  padding-left: 3%;
+  padding-top: 10px;
+  margin-top: 0%;
+
+}

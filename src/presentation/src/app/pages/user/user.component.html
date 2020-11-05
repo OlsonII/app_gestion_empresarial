@@ -1,0 +1,158 @@
+
+<div class="content">
+  <div class=" row">
+    <div class=" col-md-12">
+      <div class=" card">
+        <div class=" card-header"><h4 class=" title">Registro de usuarios</h4>
+          <p class=" category">
+            Los datos marcados con (*) son de carácter obligatorio
+          </p>
+        </div>
+        <div class=" card-body">
+          <form>
+            <div class=" row">
+              <div class=" col-md-5 pr-md-4">
+                <div class=" form-group">
+                  <label> Cedula <a class="text-primary">*</a></label>
+                  <input
+                    class=" form-control"
+                    placeholder="Num identificacion"
+                    type="text"
+                    name="identification"
+                    [(ngModel)]="user.identification"
+                  />
+                </div>
+              </div>
+              </div>
+            <div class=" row">
+              <div class=" col-md-5 pr-md-4">
+                <div class=" form-group">
+                  <label> Nombres <a class="text-primary">*</a> </label>
+                  <input
+                    class=" form-control"
+                    placeholder="nombres"
+                    type="text"
+                    name="nombre"
+                    [(ngModel)]="user.name"
+                  />
+                </div>
+              </div>
+
+            </div>
+            <div class=" row">
+              <div class=" col-md-5 pr-md-4">
+                <div class=" form-group">
+                  <label> Direccion <a class="text-primary">*</a></label>
+                  <input
+                    class=" form-control"
+                    placeholder="Direccion"
+                    type="text"
+                    value="calle 18b b, nr. 8 Bl 1, Sc 1, Ap 09"
+                    name="direccion"
+                    [(ngModel)]="user.street"
+                  />
+                </div>
+              </div>
+              <div class=" col-md-5 pr-md-4">
+                <div class=" form-group">
+                  <label> Telefono <a class="text-primary">*</a></label>
+                  <input
+                    class=" form-control"
+                    placeholder="Telefono"
+                    type="text"
+                    name="telefono"
+                    [(ngModel)]="user.telephone"
+                  />
+                </div>
+            </div>
+            <div class=" row">
+
+              </div>
+              <div class=" col-md-5 pr-md-4">
+                <div class=" form-group">
+                  <label> Rol <a class="text-primary">*</a> </label>
+                  <div class="input-group" >
+                    <select class="custom-select" name="miselect" [(ngModel)]="user.rol">
+                      <option [value]="rol" *ngFor="let rol of roles">{{rol}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class=" col-md-5 pr-md-4">
+                <div class=" form-group">
+                  <label> Contraseña <a class="text-primary">*</a></label>
+                  <input
+                    class=" form-control"
+                    placeholder="Digite contraseña"
+                    type="password"
+                    name="password"
+                    [(ngModel)]="user.password"
+                  />
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class=" card-footer">
+          <button class=" btn btn-fill btn-danger" type="submit" (click)="add()">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class=" row">
+    <div class="col-md-12 ">
+      <div class=" card">
+        <div class=" card-header">
+          <h4 class="title">Usuarios registrados
+            <div class="col-lg-4 mb-2 search-custom">
+              <label> Búsqueda </label>
+              <input
+                class=" form-control"
+                placeholder="Nombre o cédula"
+                type="text"
+                name="busqueda"
+                [(ngModel)]="searchValue"
+              />
+            </div>
+          </h4>
+        </div>
+        <div class=" card card-plain">
+          <div class=" card-body">
+            <div class="table-full-width table-responsive">
+              <table class=" table table-striped" *ngIf="user">
+                <thead class=" text-primary">
+                <tr>
+                  <th>#</th>
+                  <th>Cedula</th>
+                  <th>Nombre</th>
+                  <th>Telefono</th>
+                  <th>Direccion</th>
+                  <th>Rol</th>
+                  <th>Contraseña</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let user of users |searchUser:searchValue; index as i">
+                  <th scope="row">{{i+1}}</th>
+                  <td>{{user.identification}}</td>
+                  <td>{{user.name}}</td>
+                  <td>{{user.telephone}}</td>
+                  <td>{{user.street}}</td>
+                  <td>{{user.rol}}</td>
+                  <td>{{user.password}}</td>
+                  <td class=" td-actions text-right">
+                    <button class=" btn btn-link" container="body" ngbtooltip="Edit Task"
+                    placement="left" type="button" [routerLink]="'/modifyUser/'+user.identification"><i class=" tim-icons icon-pencil"></i></button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

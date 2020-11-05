@@ -1,0 +1,44 @@
+<div class="container h-100">
+  <div class="row justify-content-center h-100">
+    <div class="col-sm-5 align-self-center text-center">
+      <div class="card" style="margin-top: 200px;">
+  <h4 class="card-header">Login</h4>
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Usuario</label>
+        <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+          <div *ngIf="f.username.errors.required">Username is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Constraseña</label>
+        <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+          <div *ngIf="f.password.errors.required">La contraseña es requerida</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary">
+          <span class="spinner-border spinner-border-sm mr-1"></span>
+          Ingresar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+    </div>
+  </div>
+</div>
+
+
+<ngb-alert [type]="'danger'" *ngIf="staticAlertClosed" [dismissible]="false">
+  <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close" (click)="staticAlertClosed = true">
+    <i class="tim-icons icon-simple-remove"></i>
+  </button>
+  <span>
+      <b> Danger </b> Texto
+    </span>
+</ngb-alert>
+

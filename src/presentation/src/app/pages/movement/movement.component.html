@@ -1,0 +1,35 @@
+<div class=" content">
+  <div class=" row">
+    <div class="col-md-12 ">
+      <div class=" card">
+        <div class=" card-header">
+          <h4 class="title">Movimientos
+          </h4>
+        </div>
+        <div class=" card card-plain">
+          <div class=" card-body">
+            <div class="table-full-width table-responsive">
+              <table class=" table" id="">
+                <thead class=" text-primary">
+                <tr>
+                  <th>Date</th>
+                  <th>OutputQuantity</th>
+                  <th>Name</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let movement of movements">
+                  <td>{{movement.date}}</td>
+                  <td>{{movement.outputQuantity}}</td>
+                  <td>{{movement.product.name}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

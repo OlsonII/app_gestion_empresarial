@@ -1,81 +1,81 @@
-import {IUnitOfWork} from "../../src/infrastructure/contracts/unitOfWork.interface";
-import {UnitOfWork} from "../../src/infrastructure/unitOfWork/unitOfWork";
-import {createConnection} from "typeorm";
+import {IUnitOfWork} from '../../src/infrastructure/contracts/unitOfWork.interface';
+import {UnitOfWork} from '../../src/infrastructure/unitOfWork/unitOfWork';
+import {createConnection} from 'typeorm';
 import {
     RegisterBrandRequest,
     RegisterBrandResponse,
     RegisterBrandService
-} from "../../src/application/register.brand.service";
-import {SearchBrandRequest, SearchBrandResponse, SearchBrandService} from "../../src/application/search.brand.service";
+} from '../../src/application/register.brand.service';
+import {SearchBrandRequest, SearchBrandResponse, SearchBrandService} from '../../../app_gestion_empresarial/src/application/search.brand.service';
 import {
     RegisterCategoryRequest,
     RegisterCategoryResponse,
     RegisterCategoryService
-} from "../../src/application/register.category.service";
+} from '../../src/application/register.category.service';
 import {
     SearchCategoryRequest,
     SearchCategoryResponse,
     SearchCategoryService
-} from "../../src/application/search.category.service";
+} from '../../../app_gestion_empresarial/src/application/search.category.service';
 import {
     RegisterProviderRequest,
     RegisterProviderResponse,
     RegisterProviderService
-} from "../../src/application/register.provider.service";
+} from '../../../app_gestion_empresarial/src/application/register.provider.service';
 import {
     SearchProviderRequest,
     SearchProviderResponse,
     SearchProviderService
-} from "../../src/application/search.provider.service";
+} from '../../../app_gestion_empresarial/src/application/search.provider.service';
 import {
     RegisterProductRequest,
     RegisterProductResponse,
     RegisterProductService
-} from "../../src/application/register.product.service";
+} from '../../../app_gestion_empresarial/src/application/register.product.service';
 import {
     SearchProductRequest,
     SearchProductResponse,
     SearchProductService,
-} from '../../src/application/search.product.service';
+} from '../../../app_gestion_empresarial/src/application/search.product.service';
 import {
     RegisterProductInputRequest, RegisterProductInputResponse,
     RegisterProductInputService
-} from "../../src/application/register.product.input.service";
+} from '../../../app_gestion_empresarial/src/application/register.product.input.service';
 import {
     RegisterProductOutputRequest,
     RegisterProductOutputResponse,
     RegisterProductOutputService
-} from "../../src/application/register.product.output.service";
+} from '../../../app_gestion_empresarial/src/application/register.product.output.service';
 import {
     UpdateProductRequest,
     UpdateProductResponse,
     UpdateProductService
-} from "../../src/application/update.product.service";
-import {UpdateBrandRequest, UpdateBrandResponse, UpdateBrandService} from "../../src/application/update.brand.service";
+} from '../../../app_gestion_empresarial/src/application/update.product.service';
+import {UpdateBrandRequest, UpdateBrandResponse, UpdateBrandService} from '../../../app_gestion_empresarial/src/application/update.brand.service';
 import {
     UpdateCategoryRequest,
     UpdateCategoryResponse,
     UpdateCategoryService
-} from "../../src/application/update.category.service";
+} from '../../../app_gestion_empresarial/src/application/update.category.service';
 import {
     UpdateProviderRequest,
     UpdateProviderResponse,
     UpdateProviderService
-} from "../../src/application/update.provider.service";
+} from '../../../app_gestion_empresarial/src/application/update.provider.service';
 import {
     RegisterClientRequest,
     RegisterClientResponse,
     RegisterClientService
-} from "../../src/application/register.client.service";
+} from '../../../app_gestion_empresarial/src/application/register.client.service';
 import {
     SearchClientRequest,
     SearchClientResponse,
     SearchClientService
-} from "../../src/application/search.client.service";
-import {RegisterUserRequest, RegisterUserService} from "../../src/application/register.user.service";
-import {SearchUserRequest, SearchUserResponse, SearchUserService} from "../../src/application/search.user.service";
-import {User} from "../../src/domain/entity/user";
-import {LoginRequest, LoginService} from "../../src/application/login.service";
+} from '../../../app_gestion_empresarial/src/application/search.client.service';
+import {RegisterUserRequest, RegisterUserService} from '../../../app_gestion_empresarial/src/application/register.user.service';
+import {SearchUserRequest, SearchUserResponse, SearchUserService} from '../../../app_gestion_empresarial/src/application/search.user.service';
+import {User} from '../../../app_gestion_empresarial/src/domain/entity/user';
+import {LoginRequest, LoginService} from '../../../app_gestion_empresarial/src/application/login.service';
 
 
 describe('Application tests', () => {
@@ -84,7 +84,7 @@ describe('Application tests', () => {
     let user: User;
 
     beforeAll(async ()=>{
-        unitOfWork = new UnitOfWork(await createConnection({
+      unitOfWork = new UnitOfWork(await createConnection({
             type: 'mongodb',
             url: 'mongodb+srv://olson:1981@cluster0.fhagr.mongodb.net/memory?retryWrites=true&w=majority',
             logging: true,
@@ -820,7 +820,7 @@ describe('Application tests', () => {
             const service: SearchClientService = new SearchClientService(unitOfWork);
             const response: SearchClientResponse = await service.execute(new SearchClientRequest(
                 user.identification,
-                user.token                
+                user.token
             ));
             expect(response.clients.length).toBe(1);
         });

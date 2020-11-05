@@ -1,0 +1,102 @@
+<div class=" content">
+  <div class=" row">
+    <div class=" col-md-12 ">
+      <div class=" card">
+        <div class=" card-header"><h4 class=" title">Modificar proveedor</h4>
+          <p class=" category">
+            Los datos marcados con (*) son de carácter obligatorio
+          </p>
+        </div>
+
+        <div class=" card-body">
+          <form >
+            <div class=" row">
+              <div class=" col-md-5 pr-md-4">
+                <div class=" form-group">
+                  <label> Cedula <a class="text-primary">*</a></label>
+                  <input
+                    class=" form-control"
+                    placeholder="Digite cedula"
+                    type="text"
+                    disabled=""
+                    name="identification"
+                    [(ngModel)]="provider.identification"
+                  >
+                </div>
+              </div>
+              <div class=" col-md-5 pr-md-4">
+                <div class=" form-group">
+                  <label> Nombre <a class="text-primary">*</a></label>
+                  <input
+                    class=" form-control"
+                    placeholder="Nombre"
+                    type="text"
+                    name="name"
+                    disabled=""
+                    [(ngModel)]="provider.name"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class=" row">
+              <div class=" col-md-5 pr-md-4">
+                <div class=" form-group">
+                  <label> Telefono <a class="text-primary">*</a></label>
+                  <input
+                    class=" form-control"
+                    placeholder="Telefono"
+                    type="tel"
+                    name="telephone"
+                    [(ngModel)]="provider.telephone"
+                  />
+                </div>
+              </div>
+              <div class=" col-md-5 pr-md-4">
+                <div class=" form-group">
+                  <label> Empresa <a class="text-primary">*</a></label>
+                  <input
+                    class=" form-control"
+                    placeholder="Empresa"
+                    type="text"
+                    name="company"
+                    [(ngModel)]="provider.company"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class=" row">
+              <div class=" col-md-5 pr-md-4">
+                <div class=" form-group">
+                  <label> Correo </label>
+                  <input
+                    class=" form-control"
+                    placeholder="Aqui va el correo"
+                    type="email"
+                    name="email"
+                    [(ngModel)]="provider.email"
+                  >
+                </div>
+              </div>
+              <div class=" col-md-5 pr-md-4">
+                <div class=" form-group">
+                  <label> Direccion </label>
+                  <input
+                    class=" form-control"
+                    placeholder="Ingrese la direccion"
+                    type="text"
+                    name="adress"
+                    [(ngModel)]="provider.street"
+                  >
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+        <div class=" card-footer">
+          <button class=" btn btn-fill btn-danger" type="submit" (click)="modifyProvider()">Guardar</button>
+        </div>
+      </div>
+    </div>
+
+  </div>

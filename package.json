@@ -1,6 +1,6 @@
 {
   "name": "app-gestion-empresarial",
-  "version": "0.18.2",
+  "version": "0.19.0",
   "description": "",
   "author": "OlsonLabs",
   "private": true,
@@ -11,7 +11,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "node dist/main.js",
     "start:dist": "node dist/main.js",
-    "start:dev": "nest start --watch",
+    "start:dev": "concurrently  \"nest start --watch\" \"(cd src/presentation && npm run start)\"",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -25,13 +25,14 @@
     "@nestjs/common": "^7.0.0",
     "@nestjs/core": "^7.0.0",
     "@nestjs/platform-express": "^7.0.0",
+    "@nestjs/swagger": "^4.6.1",
+    "concurrently": "^5.3.0",
     "mongodb": "^3.6.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.4",
-    "typeorm": "^0.2.28",
-    "@nestjs/swagger": "^4.6.1",
-    "swagger-ui-express": "^4.1.4"
+    "swagger-ui-express": "^4.1.4",
+    "typeorm": "^0.2.28"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.0.0",

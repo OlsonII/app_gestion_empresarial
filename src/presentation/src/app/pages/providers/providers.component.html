@@ -1,0 +1,166 @@
+<div class=" content">
+  <div class=" row">
+    <div class=" col-md-12 ">
+      <div class=" card">
+        <div class=" card-header"><h4 class=" title">Registro de proveedor</h4>
+          <p class=" category">
+            Los datos marcados con (*) son de carácter obligatorio
+          </p>
+        </div>
+
+        <div class=" card-body">
+          <form >
+            <div class=" row">
+              <div class=" col-md-5 pr-md-4">
+                <div class=" form-group">
+                  <label> Cedula <a class="text-primary">*</a></label>
+                  <input
+                    class=" form-control"
+                    placeholder="Digite cedula"
+                    type="text"
+                    name="identification"
+                    [(ngModel)]="provider.identification"
+                    required
+                  >
+                </div>
+              </div>
+              <div class=" col-md-5 pr-md-4">
+                <div class=" form-group">
+                  <label> Nombre <a class="text-primary">*</a></label>
+                  <input
+                    class=" form-control"
+                    placeholder="Nombre"
+                    type="text"
+                    name="name"
+                    [(ngModel)]="provider.name"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class=" row">
+              <div class=" col-md-5 pr-md-4">
+                <div class=" form-group">
+                  <label> Telefono <a class="text-primary">*</a></label>
+                  <input
+                    class=" form-control"
+                    placeholder="Telefono"
+                    type="tel"
+                    name="telephone"
+                    [(ngModel)]="provider.telephone"
+                  />
+                </div>
+              </div>
+              <div class=" col-md-5 pr-md-4">
+                <div class=" form-group">
+                  <label> Empresa <a class="text-primary">*</a></label>
+                  <input
+                    class=" form-control"
+                    placeholder="Empresa"
+                    type="text"
+                    name="company"
+                    [(ngModel)]="provider.company"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class=" row">
+              <div class=" col-md-5 pr-md-4">
+                <div class=" form-group">
+                  <label> Correo </label>
+                  <input
+                    class=" form-control"
+                    placeholder="Aqui va el correo"
+                    type="email"
+                    name="email"
+                    [(ngModel)]="provider.email"
+                  >
+                </div>
+              </div>
+              <div class=" col-md-5 pr-md-4">
+                <div class=" form-group">
+                  <label> Direccion </label>
+                  <input
+                    class=" form-control"
+                    placeholder="Ingrese la direccion"
+                    type="text"
+                    name="adress"
+                    [(ngModel)]="provider.street"
+                  >
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+        <div class=" card-footer">
+          <button class=" btn btn-fill btn-danger" type="submit" (click)="add()">Guardar</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <ngb-alert [type]="'danger'" *ngIf="staticAlertClosed" [dismissible]="false">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close" (click)="staticAlertClosed = true">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>
+      <b> Danger </b> Texto
+    </span>
+  </ngb-alert>
+
+  <div class=" row">
+    <div class="col-md-12 ">
+      <div class=" card">
+        <div class=" card-header">
+          <h4 class="title">Proveedores registrados
+            <div class="col-lg-4 mb-2 search-custom">
+              <label> Búsqueda </label>
+              <input
+                class=" form-control"
+                placeholder="Nombre o cédula"
+                type="text"
+                name="busqueda"
+                [(ngModel)]="searchValue"
+              />
+            </div>
+          </h4>
+
+        </div>
+        <div class=" card card-plain">
+          <div class=" card-body">
+            <div class="table-full-width table-responsive">
+              <table class=" table table-striped" *ngIf="provider">
+                <thead class=" text-primary">
+                <tr>
+                  <th>#</th>
+                  <th>Cedula</th>
+                  <th>Nombre</th>
+                  <th>Telefono</th>
+                  <th>Empresa</th>
+                  <th>Direccion</th>
+                  <th>Correo</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let provider of providers| searchProvider:searchValue; index as i">
+                  <th scope="row">{{i+1}}</th>
+                  <td>{{provider.identification}}</td>
+                  <td>{{provider.name}}</td>
+                  <td>{{provider.telephone}}</td>
+                  <td>{{provider.company}}</td>
+                  <td>{{provider.street}}</td>
+                  <td>{{provider.email}}</td>
+                  <td class=" td-actions text-right">
+                    <button class=" btn btn-link" container="body" ngbtooltip="Edit Task" placement="left" type="button" [routerLink]="'/modifyProvider/'+provider.identification"><i class=" tim-icons icon-pencil"></i></button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
