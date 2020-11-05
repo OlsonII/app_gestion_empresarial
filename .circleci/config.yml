@@ -23,8 +23,8 @@ jobs:
           name: Install Dependencies
           command: npm install
       - run:
-          name: go to front
-          comand: cd src/presentation
+          name: cd to front
+          comand: "cd src/presentation"
       - run:
           name: Install front Dependencies
           command: npm install

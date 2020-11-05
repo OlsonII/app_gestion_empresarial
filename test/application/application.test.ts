@@ -6,7 +6,7 @@ import {
     RegisterBrandResponse,
     RegisterBrandService
 } from '../../src/application/register.brand.service';
-import {SearchBrandRequest, SearchBrandResponse, SearchBrandService} from '../../../app_gestion_empresarial/src/application/search.brand.service';
+import {SearchBrandRequest, SearchBrandResponse, SearchBrandService} from '../../src/application/search.brand.service';
 import {
     RegisterCategoryRequest,
     RegisterCategoryResponse,
@@ -16,66 +16,66 @@ import {
     SearchCategoryRequest,
     SearchCategoryResponse,
     SearchCategoryService
-} from '../../../app_gestion_empresarial/src/application/search.category.service';
+} from '../../src/application/search.category.service';
 import {
     RegisterProviderRequest,
     RegisterProviderResponse,
     RegisterProviderService
-} from '../../../app_gestion_empresarial/src/application/register.provider.service';
+} from '../../src/application/register.provider.service';
 import {
     SearchProviderRequest,
     SearchProviderResponse,
     SearchProviderService
-} from '../../../app_gestion_empresarial/src/application/search.provider.service';
+} from '../../src/application/search.provider.service';
 import {
     RegisterProductRequest,
     RegisterProductResponse,
     RegisterProductService
-} from '../../../app_gestion_empresarial/src/application/register.product.service';
+} from '../../src/application/register.product.service';
 import {
     SearchProductRequest,
     SearchProductResponse,
     SearchProductService,
-} from '../../../app_gestion_empresarial/src/application/search.product.service';
+} from '../../src/application/search.product.service';
 import {
     RegisterProductInputRequest, RegisterProductInputResponse,
     RegisterProductInputService
-} from '../../../app_gestion_empresarial/src/application/register.product.input.service';
+} from '../../src/application/register.product.input.service';
 import {
     RegisterProductOutputRequest,
     RegisterProductOutputResponse,
     RegisterProductOutputService
-} from '../../../app_gestion_empresarial/src/application/register.product.output.service';
+} from '../../src/application/register.product.output.service';
 import {
     UpdateProductRequest,
     UpdateProductResponse,
     UpdateProductService
-} from '../../../app_gestion_empresarial/src/application/update.product.service';
-import {UpdateBrandRequest, UpdateBrandResponse, UpdateBrandService} from '../../../app_gestion_empresarial/src/application/update.brand.service';
+} from '../../src/application/update.product.service';
+import {UpdateBrandRequest, UpdateBrandResponse, UpdateBrandService} from '../../src/application/update.brand.service';
 import {
     UpdateCategoryRequest,
     UpdateCategoryResponse,
     UpdateCategoryService
-} from '../../../app_gestion_empresarial/src/application/update.category.service';
+} from '../../src/application/update.category.service';
 import {
     UpdateProviderRequest,
     UpdateProviderResponse,
     UpdateProviderService
-} from '../../../app_gestion_empresarial/src/application/update.provider.service';
+} from '../../src/application/update.provider.service';
 import {
     RegisterClientRequest,
     RegisterClientResponse,
     RegisterClientService
-} from '../../../app_gestion_empresarial/src/application/register.client.service';
+} from '../../src/application/register.client.service';
 import {
     SearchClientRequest,
     SearchClientResponse,
     SearchClientService
-} from '../../../app_gestion_empresarial/src/application/search.client.service';
-import {RegisterUserRequest, RegisterUserService} from '../../../app_gestion_empresarial/src/application/register.user.service';
-import {SearchUserRequest, SearchUserResponse, SearchUserService} from '../../../app_gestion_empresarial/src/application/search.user.service';
-import {User} from '../../../app_gestion_empresarial/src/domain/entity/user';
-import {LoginRequest, LoginService} from '../../../app_gestion_empresarial/src/application/login.service';
+} from '../../src/application/search.client.service';
+import {RegisterUserRequest, RegisterUserService} from '../../src/application/register.user.service';
+import {SearchUserRequest, SearchUserResponse, SearchUserService} from '../../src/application/search.user.service';
+import {User} from '../../src/domain/entity/user';
+import {LoginRequest, LoginService} from '../../src/application/login.service';
 
 
 describe('Application tests', () => {
