@@ -13,8 +13,7 @@ pipeline {
         stage('Build Frontend') {
           steps {
             echo 'Building front...'
-            bat 'cd src/presentation/'
-            bat 'npm install'
+            bat 'cd src/presentation/ & npm install'
           }
         }
 
