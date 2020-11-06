@@ -3,45 +3,36 @@ version: 2.1
 orbs:
   heroku: circleci/heroku@0.0.10
 workflows:
-  heroku_deploy:
+  build-test-and-approval-deploy:
     jobs:
-      - heroku/deploy-via-git
+      - build:
+          working_directory: ~/repo
+          docker:
+            - image: circleci/node:10.16.3
+          steps:
+            - checkout
+            - run:
+                name: Update NPM
+                command: "sudo npm install -g npm@5"
+            - restore_cache:
+                key: dependency-cache-{{ checksum "package-lock.json" }}
+            - run:
+                name: Install Dependencies
+                command: npm install & cd/src/presentation & npm install
+            - save_cache:
+                key: dependency-cache-{{ checksum "package-lock.json" }}
+                paths:
+                  - ./node_modules
+                  - ./src/presentation/node_modules
+      - tests:
+          - requires:
+              - build
+          - run:
+              name: Run tests
+              command: npm run test
 
-jobs:
-  build-back:
-    working_directory: ~/repo
-    docker:
-      - image: circleci/node:10.16.3
-    steps:
-      - checkout
-      - run:
-          name: Update NPM
-          command: "sudo npm install -g npm@5"
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
-      - run:
-          name: Install Dependencies
-          command: npm install
-      - save_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
-          paths:
-            - ./node_modules
-      - run:
-          name: Run tests
-          command: npm run test
+      - deploy:
+          - requires:
+              - tests
+          - heroku/deploy-via-git
 
-  build-front:
-    working_directory: ~/repo
-    docker:
-      - image: circleci/node:8-browsers
-    steps:
-      - checkout
-      - restore_cache:
-          key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
-      - run: cd src/presentation/ & npm install
-      - save_cache:
-          key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
-          paths:
-            - "src/presentation/node_modules"
-      - run: xvfb-run -a npm run test -- --single-run --no-progress --browser=ChromeNoSandbox
-      - run: xvfb-run -a npm run e2e -- --no-progress --config=protractor-ci.conf.js

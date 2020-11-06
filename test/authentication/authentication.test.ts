@@ -1,5 +1,4 @@
-import {Token} from "../../src/infrastructure/authentication/token";
-
+import { Token } from '../../src/infrastructure/authentication/token';
 
 describe('authentication test', () => {
 
