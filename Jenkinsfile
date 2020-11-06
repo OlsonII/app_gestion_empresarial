@@ -3,14 +3,14 @@ pipeline {
   stages {
     stage('Build') {
       parallel {
-        stage('Build Front') {
+        stage('Build Backend') {
           steps {
             echo 'Building Backend..'
             bat 'npm install'
           }
         }
 
-        stage('Build Back') {
+        stage('Build Frontend') {
           steps {
             echo 'Building front...'
             bat 'cd src/presentation/'

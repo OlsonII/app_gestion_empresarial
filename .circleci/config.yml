@@ -3,36 +3,30 @@ version: 2.1
 orbs:
   heroku: circleci/heroku@0.0.10
 workflows:
-  build-test-and-approval-deploy:
+  heroku_deploy:
     jobs:
-      - build:
-          working_directory: ~/repo
-          docker:
-            - image: circleci/node:10.16.3
-          steps:
-            - checkout
-            - run:
-                name: Update NPM
-                command: "sudo npm install -g npm@5"
-            - restore_cache:
-                key: dependency-cache-{{ checksum "package-lock.json" }}
-            - run:
-                name: Install Dependencies
-                command: npm install & cd/src/presentation & npm install
-            - save_cache:
-                key: dependency-cache-{{ checksum "package-lock.json" }}
-                paths:
-                  - ./node_modules
-                  - ./src/presentation/node_modules
-      - tests:
-          - requires:
-              - build
-          - run:
-              name: Run tests
-              command: npm run test
+      - heroku/deploy-via-git
 
-      - deploy:
-          - requires:
-              - tests
-          - heroku/deploy-via-git
-
+jobs:
+  build:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - checkout
+      - run:
+          name: Update NPM
+          command: "sudo npm install -g npm@5"
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install Dependencies
+          command: npm install & cd src/presentation/ & npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
+            - ./src/presentation/node_modules
+      - run:
+          name: Run tests
+          command: npm run test
