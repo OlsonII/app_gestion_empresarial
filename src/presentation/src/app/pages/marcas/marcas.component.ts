@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Brand} from '../../models/brand.model';
+import {BrandList} from '../../models/ObjetoLista';
 import {BrandService}from '../../services/brand.service';
 import {ToastrService} from 'ngx-toastr';
 
@@ -12,7 +13,7 @@ import {ToastrService} from 'ngx-toastr';
 export class MarcasComponent implements OnInit {
 
   searchValue:string;
-  alg;
+  brandList: BrandList;
   closeResult = '';
   brands: Brand[] = [];
   brand: Brand;
@@ -28,31 +29,29 @@ export class MarcasComponent implements OnInit {
 
   ngOnInit(): void {
     this.brand = new Brand();
-    this.brandService.get().subscribe(data => {
-        if (data != null) {
-          this.brands = data.brands;
+    this.getBrands();
+  }
+
+  getBrands(){
+    this.brandService.get().subscribe(
+      res=>{
+        if(res!=null){
+          this.brands = res.brands;
         }
       }
     );
   }
 
-  open(content,brand:Brand) {
-    this.brand = brand;
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
+  open(brand: Brand,opcion :string) {
+    if( opcion === 'create'){
+      this.brand = new Brand();
     }
+    if (opcion === 'modify'){
+      this.brand = brand;
+    }
+    const modalRef = this.modalService.open(ModalsComponent);
+    modalRef.componentInstance.brand = this.brand;
+    modalRef.componentInstance.option= opcion;
   }
 
   modifyBrand() {

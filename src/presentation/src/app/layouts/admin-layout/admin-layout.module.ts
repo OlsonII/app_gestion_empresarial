@@ -32,6 +32,7 @@ import { SearchProviderPipe} from '../../pages/pipes/search-provider.pipe';
 import { SearchCategoryPipe} from '../../pages/pipes/search-category.pipe';
 import { SearchUserPipe} from '../../pages/pipes/search-user.pipe';
 import { SearchBrandPipe} from '../../pages/pipes/search-brand.pipe';
+import { ModalsComponent } from '../../pages/modals/modals.component';
 
 @NgModule({
   imports: [
@@ -67,7 +68,8 @@ import { SearchBrandPipe} from '../../pages/pipes/search-brand.pipe';
     SearchProviderPipe,
     SearchCategoryPipe,
     SearchUserPipe,
-    SearchBrandPipe
+    SearchBrandPipe,
+    ModalsComponent,
   ]
 })
 export class AdminLayoutModule {}

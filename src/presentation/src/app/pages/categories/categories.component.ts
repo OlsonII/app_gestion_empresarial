@@ -26,39 +26,36 @@ export class CategoriesComponent implements OnInit {
 
   ngOnInit(): void {
     this.category = new Category();
+    this.getCategories();
+  }
+
+  getCategories(){
     this.categoryService.get().subscribe(
-        res=>{
-          if (res != null){
-            this.categories=res.categories
-          }
+      res=>{
+        if (res != null){
+          this.categories=res.categories
         }
-      )
+      }
+    )
   }
 
-  open(content,categ:Category){
-    this.category=categ
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
+  open(category: Category,opcion :string) {
+    if( opcion === 'create'){
+      this.category = new Brand();
     }
-  }
+    if (opcion === 'modify'){
+      this.category = category;
+    }
+    const modalRef = this.modalService.open(ModalCategoryComponent);
+    modalRef.componentInstance.category = this.category;
+    modalRef.componentInstance.option= opcion;
 
   modifyCategory() {
     this.categoryService.put(this.category).subscribe(p => {
       if (p != null) {
         this.showNotification('Aviso', p.message , 'bottom', 'right')
       }
+  }
 
     });
   }

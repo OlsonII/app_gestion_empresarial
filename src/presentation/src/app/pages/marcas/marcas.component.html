@@ -1,54 +1,4 @@
 <div class=" content">
-  <div class="row">
-    <ng-template #contentmarca let-modal>
-      <div class="card" style="margin-bottom: 0px">
-        <div class=" card-header"><h4 class=" title">Modificar Brand</h4>
-          <p class=" category">
-            Los datos marcados con (<a class="text-primary">*</a>) son de carácter obligatorio
-          </p>
-        </div>
-        <div class="modal-header">
-          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class=" card-body">
-          <form>
-            <div class=" row">
-              <div class=" col-md-5 pr-md-4">
-                <div class=" form-group">
-                  <label> Referencia <a class="text-primary">*</a></label>
-                  <input
-                    class=" form-control"
-                    placeholder="Referencia"
-                    type="text"
-                    name="reference"
-                    [(ngModel)]="brand.reference"
-                  />
-                </div>
-              </div>
-              <div class=" col-md-5 pl-md-4">
-                <div class=" form-group">
-                  <label> Nombre <a class="text-primary">*</a> </label>
-                  <input
-                    class=" form-control"
-                    placeholder="Ingrese"
-                    type="text"
-                    name="name"
-                    [(ngModel)]="brand.name"
-                  />
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-lg btn-outline-primary" (click)="modal.close('Save click');modifyBrand()">Modificar</button>
-        </div>
-      </div>
-    </ng-template>
-  </div>
   <div class=" row">
     <div class="col-md-12 ">
       <div class=" card">
@@ -65,12 +15,12 @@
               />
             </div>
           </h4>
-          <button class="btn btn-fill btn-danger" >Crear</button>
+          <button class="btn btn-fill btn-danger" (click)="open(brand,'create')" >Crear</button>
         </div>
         <div class=" card card-plain">
           <div class=" card-body">
             <div class="table-full-width table-responsive">
-              <table class=" table" id="">
+              <table (mouseover)="getBrands()" class=" table" id="">
                 <thead class=" text-primary">
                 <tr>
                   <th>Referencia</th>
@@ -83,7 +33,7 @@
                   <td>{{brand.reference}}</td>
                   <td>{{brand.name}}</td>
                   <td>
-                    <button class=" btn btn-link" container="body" ngbtooltip="Edit Task" placement="left" type="button" (click)="open(contentmarca,brand)" >
+                    <button class=" btn btn-link" container="body" ngbtooltip="Edit Task" placement="left" type="button" (click)="open(brand,'modify')" >
                       <i class=" tim-icons icon-pencil"></i>
                     </button>
                   </td>

@@ -1,7 +1,7 @@
 <div *ngIf="option == 'modify'">
 
   <div class="modal-header">
-    <h4 class="modal-title">Modificar Brand</h4>
+    <h4 class="modal-title">Modificar Categoria</h4>
     <p class=" category">
       Los datos marcados con (<a class="text-primary">*</a>) son de carácter obligatorio
     </p>
@@ -20,7 +20,7 @@
               placeholder="Referencia"
               type="text"
               name="reference"
-              [(ngModel)]="brand.reference"
+              [(ngModel)]="category.reference"
             />
           </div>
         </div>
@@ -33,7 +33,7 @@
               placeholder="Ingrese"
               type="text"
               name="name"
-              [(ngModel)]="brand.name"
+              [(ngModel)]="category.name"
             />
           </div>
         </div>
@@ -41,7 +41,7 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-lg btn-outline-primary" (click)="close();modifyBrand()">Modificar</button>
+    <button type="button" class="btn btn-lg btn-outline-primary" (click)="close();modifyCategory()">Modificar</button>
   </div>
 
 </div>
@@ -50,7 +50,7 @@
 <div *ngIf="option == 'create'">
 
   <div class="modal-header">
-    <h4 class="modal-title">Crear Brand</h4>
+    <h4 class="modal-title">Crear Categoría</h4>
     <p class=" category">
       Los datos marcados con (<a class="text-primary">*</a>) son de carácter obligatorio
     </p>
@@ -69,7 +69,7 @@
               placeholder="Referencia"
               type="text"
               name="reference"
-              [(ngModel)]="brand.reference"
+              [(ngModel)]="category.reference"
             />
           </div>
         </div>
@@ -81,7 +81,7 @@
               placeholder="Ingrese"
               type="text"
               name="name"
-              [(ngModel)]="brand.name"
+              [(ngModel)]="category.name"
             />
           </div>
         </div>
@@ -89,15 +89,7 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-lg btn-outline-primary" (click)="close();addBrand()">Crear</button>
+    <button type="button" class="btn btn-lg btn-outline-primary" (click)="close();addCategory()">Crear</button>
   </div>
 
 </div>
-
-
-
-
-
-
-
-
