@@ -92,6 +92,19 @@ export class RegistrarProductoComponent implements OnInit {
 
 
   addProduct(){
+    this.submitted = true;
+    if (this.form.invalid) {
+      return;
+    }
+    const formData = this.form.value
+    this.product.name = formData.nameProduct;
+    this.product.reference = formData.reference;
+    this.product.description = formData.description;
+    this.product.category.reference = formData.categoryProduct;
+    this.product.brand.reference = formData.brandProduct;
+    this.product.cost = formData.cost;
+    this.product.price = formData.price;
+    this.product.quantity = formData.quantity;
     this.productService.post(this.product).subscribe(p => {
       this.showNotification('Registro', p.message,'bottom', 'right');
       this.location.back();

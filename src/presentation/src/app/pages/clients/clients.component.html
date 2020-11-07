@@ -8,7 +8,7 @@
           </p>
         </div>
         <div class=" card-body">
-          <form>
+          <form [formGroup]="form" (ngSubmit)="add()">
             <div class=" row">
               <div class=" col-md-5 pr-md-4">
                 <div class=" form-group">
@@ -17,9 +17,12 @@
                     class=" form-control"
                     placeholder="Num identificacion"
                     type="text"
-                    name="identificacion"
-                    [(ngModel)]="client.identification"
+                    formControlName="identification"
+                    [ngClass]="{ 'is-invalid': submitted && f.identification.errors }"
                   />
+                  <div *ngIf="submitted && f.identification.errors" class="invalid-feedback">
+                    <div *ngIf="f.identification.errors.required">La identificacion del cliente es requerido</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -31,20 +34,25 @@
                     class=" form-control"
                     placeholder="nombres"
                     type="text"
-                    name="name"
-                    [(ngModel)]="client.name"
+                    formControlName="name"
+                    [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
                   />
+                  <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                    <div *ngIf="f.name.errors.required">El nombre del cliente es requerido</div>
+                  </div>
                 </div>
-
                 <div class=" form-group">
                   <label> Teléfono <a class="text-primary">*</a></label>
                   <input
                     class=" form-control"
                     placeholder="Telefono"
                     type="text"
-                    name="telephone"
-                    [(ngModel)]="client.telephone"
+                    formControlName="telephone"
+                    [ngClass]="{ 'is-invalid': submitted && f.telephone.errors }"
                   />
+                  <div *ngIf="submitted && f.telephone.errors" class="invalid-feedback">
+                    <div *ngIf="f.telephone.errors.required">El telefono del cliente es requerido</div>
+                  </div>
                 </div>
               </div>
 
@@ -56,9 +64,12 @@
                     class=" form-control"
                     placeholder="Direccion"
                     type="text"
-                    name="street"
-                    [(ngModel)]="client.street"
+                    formControlName="street"
+                    [ngClass]="{ 'is-invalid': submitted && f.street.errors }"
                   />
+                  <div *ngIf="submitted && f.street.errors" class="invalid-feedback">
+                    <div *ngIf="f.street.errors.required">La direccion del cliente es requerida</div>
+                  </div>
                 </div>
 
                 <div class=" form-group">
@@ -67,19 +78,22 @@
                     class=" form-control"
                     placeholder="Digite correo"
                     type="text"
-                    name="email"
-                    [(ngModel)]="client.email"
+                    formControlName="email"
+                    [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
                   />
+                  <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                    <div *ngIf="f.email.errors.required">El email del usuario es requerido</div>
+                  </div>
                 </div>
               </div>
 
             </div>
-
+            <div class=" card-footer">
+              <button class=" btn btn-fill btn-danger"  type="submit">Guardar</button>
+            </div>
           </form>
         </div>
-        <div class=" card-footer">
-          <button class=" btn btn-fill btn-danger" (click)="add()" type="submit">Guardar</button>
-        </div>
+
       </div>
     </div>
   </div>
