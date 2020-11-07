@@ -217,7 +217,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
       }
     }
 
-    console.log(titlee);
     for (const item of this.SecondRoutes) {
       if (titlee.includes(item.path)) {
         return item.title;
