@@ -74,7 +74,7 @@ export class ProvidersComponent implements OnInit {
     this.provider.telephone = formData.telephone;
     this.providerService.post(this.provider).subscribe(p => {
       if (p != null) {
-        this.showNotification('Agregado','Provider agregado','bottom','right');
+        this.showNotification('Agregado', p.message,'bottom','right');
       }else{
        console.log(p);
       }
