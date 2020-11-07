@@ -89,7 +89,7 @@ export class ProductsInAndOutComponent implements OnInit {
         prodIn.inputQuantity = formData.quantity;
         prodIn.productReference = formData.productReference;
         this.InOutService.postInput(prodIn).subscribe(r=>{
-          this.showNotification('Registrado Movimiento', 'Producto: '+ this.product.name +' actualizado con exito','bottom', 'right')
+          this.showNotification('Registro Movimiento', r.message,'bottom', 'right')
           this.location.back();
         });
       }else if(this.out){
@@ -99,7 +99,7 @@ export class ProductsInAndOutComponent implements OnInit {
           prodOut.outputQuantity = formData.quantity
           prodOut.productReference = formData.productReference;
           this.InOutService.postOutput(prodOut).subscribe(r=>{
-            this.showNotification('Registrado Movimiento', 'Producto: '+ this.product.name +' actualizado con exito','bottom', 'right')
+            this.showNotification('Registro Movimiento', r.message,'bottom', 'right')
             this.location.back();
           });
         }

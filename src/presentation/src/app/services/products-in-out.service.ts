@@ -4,6 +4,7 @@ import {HandleHttpErrorService} from './@base/handle-http-error.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
+import { RegisterInputOutputResponse} from '../models/responses.model';
 import { JwtAuthService } from './auth/jwt-auth.service';
 
 @Injectable({
@@ -20,20 +21,20 @@ export class ProductsInOutService {
     this.baseUrl = baseUrl;
   }
 
-  postInput(productInput:ProductInput): Observable<ProductInput>{
+  postInput(productInput:ProductInput): Observable<RegisterInputOutputResponse>{
 
     const user =this.loginService.getUser();
     const token = this.loginService.getJwtToken();
 
     productInput.token = token;
     productInput.userIdentification = user;
-    return this.http.post<ProductInput>(this.baseUrl+'/product/input',productInput).pipe(
+    return this.http.post<RegisterInputOutputResponse>(this.baseUrl+'/product/input',productInput).pipe(
       tap(_=>this.handleHttpErrorService.log('datos enviados')),
-      catchError(this.handleHttpErrorService.handleError<ProductInput>('Registrar ingreso de producto',null))
+      catchError(this.handleHttpErrorService.handleError<RegisterInputOutputResponse>('Registrar ingreso de producto',null))
     );
   }
 
-  postOutput(productOutput:ProductOutput): Observable<ProductOutput>{
+  postOutput(productOutput:ProductOutput): Observable<RegisterInputOutputResponse>{
 
     const user =this.loginService.getUser();
     const token = this.loginService.getJwtToken();
@@ -41,10 +42,9 @@ export class ProductsInOutService {
     productOutput.token = token;
     productOutput.userIdentification = user;
 
-    const auth = user + ' '+token;
-    return this.http.post<ProductOutput>(this.baseUrl+'/product/output',productOutput).pipe(
+    return this.http.post<RegisterInputOutputResponse>(this.baseUrl+'/product/output',productOutput).pipe(
       tap(_=>this.handleHttpErrorService.log('datos enviados')),
-      catchError(this.handleHttpErrorService.handleError<ProductOutput>('Registrar salida producto',null))
+      catchError(this.handleHttpErrorService.handleError<RegisterInputOutputResponse>('Registrar salida producto',null))
     );
   }
 

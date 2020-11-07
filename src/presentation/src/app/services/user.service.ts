@@ -4,7 +4,7 @@ import {HandleHttpErrorService} from './@base/handle-http-error.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
-import {UserList } from '../Models/ObjetoLista';
+import { SearchUserResponse, DefaultResponse } from '../models/responses.model';
 import { JwtAuthService } from './auth/jwt-auth.service';
 
 @Injectable({
@@ -21,41 +21,41 @@ export class UserService {
     this.baseUrl =  baseUrl;
   }
 
-  get(): Observable<UserList>{
+  get(): Observable<SearchUserResponse>{
 
     const userId =this.loginService.getUser();
     const token = this.loginService.getJwtToken();
 
     const auth = userId + ' '+token;
-    return this.http.get<UserList>(this.baseUrl+'/user',
+    return this.http.get<SearchUserResponse>(this.baseUrl+'/user',
     {headers:{['authorization']:auth}}).pipe(
       tap(_=>this.handleHttpErrorService.log('datos enviados')),
-      catchError(this.handleHttpErrorService.handleError<UserList>('Consulta usuario',null))
+      catchError(this.handleHttpErrorService.handleError<SearchUserResponse>('Consulta usuario',null))
     );
   }
 
-  post(user:User): Observable<User>{
+  post(user:User): Observable<DefaultResponse>{
 
     const userId =this.loginService.getUser();
     const token = this.loginService.getJwtToken();
     user.userIdentification = userId;
     user.token = token;
 
-    return this.http.post<User>(this.baseUrl+'/user',user).pipe(
+    return this.http.post<DefaultResponse>(this.baseUrl+'/user',user).pipe(
       tap(_=>this.handleHttpErrorService.log('datos enviados')),
-      catchError(this.handleHttpErrorService.handleError<User>('Registrar usuario',null))
+      catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Registrar usuario',null))
     );
   }
-  put(user: User): Observable<any> {
+  put(user: User): Observable<DefaultResponse> {
 
     const userId =this.loginService.getUser();
     const token = this.loginService.getJwtToken();
     user.userIdentification = userId;
     user.token = token;
 
-    return this.http.put<User>(this.baseUrl+'/user',user).pipe(
+    return this.http.put<DefaultResponse>(this.baseUrl+'/user',user).pipe(
       tap(_=>this.handleHttpErrorService.log('datos enviados')),
-      catchError(this.handleHttpErrorService.handleError<User>('Modificar usuario',null))
+      catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Modificar usuario',null))
     );
   }
 }

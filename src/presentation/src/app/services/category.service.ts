@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {HandleHttpErrorService} from './@base/handle-http-error.service';
 import {Observable} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
-import { CategoryList } from '../Models/ObjetoLista';
+import { SearchCategoryResponse, DefaultResponse } from '../models/responses.model';
 import { Category} from '../models/category.model';
 import { JwtAuthService } from './auth/jwt-auth.service';
 
@@ -21,44 +21,49 @@ export class CategoryService {
     this.baseUrl =  baseUrl;
   }
 
-  get(): Observable<CategoryList>{
+  get(): Observable<SearchCategoryResponse>{
 
     const user =this.loginService.getUser();
     const token = this.loginService.getJwtToken();
 
     const auth = user + ' '+token;
-    return this.http.get<CategoryList>(this.baseUrl+'/category',
+    return this.http.get<SearchCategoryResponse>(this.baseUrl+'/category',
     {headers:{['authorization']:auth}}).pipe(
       tap(_=>this.handleHttpErrorService.log('datos enviados')),
-      catchError(this.handleHttpErrorService.handleError<CategoryList>('Consulta marca',null))
+      catchError(this.handleHttpErrorService.handleError<SearchCategoryResponse>('Consulta marca',null))
     );
   }
 
-  post(category:Category): Observable<Category>{
+  post(category:Category): Observable<DefaultResponse>{
 
     const user =this.loginService.getUser();
     const token = this.loginService.getJwtToken();
     category.userIdentification = user;
     category.token = token;
 
-    return this.http.post<Category>(this.baseUrl+'/category',category).pipe(
+    return this.http.post<DefaultResponse>(this.baseUrl+'/category',category).pipe(
       tap(_=>this.handleHttpErrorService.log('datos enviados')),
-      catchError(this.handleHttpErrorService.handleError<Category>('Registrar marca',null))
+      catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Registrar marca',null))
     );
   }
-  put(category: Category): Observable<any> {
+  put(category: Category): Observable<DefaultResponse> {
 
     const user =this.loginService.getUser();
     const token = this.loginService.getJwtToken();
     category.userIdentification = user;
     category.token = token;
 
-    return this.http.put<Category>(this.baseUrl+'/category',category).pipe(
+    return this.http.put<DefaultResponse>(this.baseUrl+'/category',category).pipe(
       tap(_=>this.handleHttpErrorService.log('datos enviados')),
-      catchError(this.handleHttpErrorService.handleError<Category>('Modificar marca',null))
+      catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Modificar marca',null))
     );
   }
 }
+
+export class RegisterCategoryResponse{
+  constructor(public readonly message: string) {}
+}
+
 export class CategoryInterface{
   name: string;
   reference: string;
