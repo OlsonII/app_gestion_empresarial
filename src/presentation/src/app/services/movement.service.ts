@@ -4,7 +4,7 @@ import {HandleHttpErrorService} from './@base/handle-http-error.service';
 import {Observable} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import { JwtAuthService } from './auth/jwt-auth.service';
-import {MovementList} from '../models/ObjetoLista';
+import { SearchMovementsResponse} from '../models/responses.model';
 
 
 @Injectable({
@@ -21,18 +21,16 @@ export class MovementService {
     this.baseUrl =  baseUrl;
   }
 
-  get(): Observable<MovementList>{
+  get(): Observable<SearchMovementsResponse>{
 
     const user =this.loginService.getUser();
     const token = this.loginService.getJwtToken();
 
-    // console.log(MovementList);
-
     const auth = user + ' '+token;
-    return this.http.get<MovementList>(this.baseUrl+'/product/find/transactions',
+    return this.http.get<SearchMovementsResponse>(this.baseUrl+'/product/find/transactions',
       {headers:{['authorization']:auth}}).pipe(
       tap(_=>this.handleHttpErrorService.log('datos enviados')),
-      catchError(this.handleHttpErrorService.handleError<MovementList>('Consulta movimiento',null))
+      catchError(this.handleHttpErrorService.handleError<SearchMovementsResponse>('Consulta movimiento',null))
     );
   }
 

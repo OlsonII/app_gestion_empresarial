@@ -11,7 +11,7 @@ export class ConsultarProductoComponent implements OnInit {
 
 
   productos:Product[] =[];
-  searchValue:string = '';
+  searchValue = '';
 
   constructor(private productService:ProductService) { }
 
@@ -24,6 +24,8 @@ export class ConsultarProductoComponent implements OnInit {
       res=>{
         if(res!=null){
           this.productos = res.products;
+        }else{
+          console.log(res.message)
         }
       }
     )

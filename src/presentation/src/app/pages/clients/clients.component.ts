@@ -38,20 +38,21 @@ export class ClientsComponent implements OnInit {
     this.clientService.get().subscribe(
       res=>{
         if(res!=null){
-          this.clients = res.clients;
+          if(res.clients!=null){
+            this.clients = res.clients;
+          }else{
+            this.showNotification('Registro',res.message,'bottom','right');
+          }
+
         }
       }
     );
   }
 
   add() {
-    console.log(this.client)
     this.clientService.post(this.client).subscribe(p => {
       if (p != null) {
-        console.log(p);
-        this.showNotification('Agregado','Cliente agregado','bottom','right');
-      }else{
-        console.log(p);
+        this.showNotification('Registro',p.message,'bottom','right');
       }
       this.getClients();
     });

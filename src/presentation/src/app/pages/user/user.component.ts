@@ -47,10 +47,9 @@ export class UserComponent implements OnInit {
   add() {
     this.userService.post(this.user).subscribe(p => {
       if (p != null) {
-        this.showNotification('Agregado','Usuario agregado','bottom','right');
-      }else{
-        console.log(p);
+        this.showNotification('Registro',p.message,'bottom','right');
       }
+
       this.getUsers();
     });
   }

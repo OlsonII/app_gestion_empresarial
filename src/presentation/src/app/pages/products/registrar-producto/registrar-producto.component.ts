@@ -92,21 +92,8 @@ export class RegistrarProductoComponent implements OnInit {
 
 
   addProduct(){
-    this.submitted = true;
-    if (this.form.invalid) {
-      return;
-    }
-    const formData = this.form.value
-    this.product.name = formData.nameProduct;
-    this.product.reference = formData.reference;
-    this.product.description = formData.description;
-    this.product.category.reference = formData.categoryProduct;
-    this.product.brand.reference = formData.brandProduct;
-    this.product.cost = formData.cost;
-    this.product.price = formData.price;
-    this.product.quantity = formData.quantity;
     this.productService.post(this.product).subscribe(p => {
-      this.showNotification('Agregado', 'Producto: '+ this.product.name +' creado con exito!','bottom', 'right');
+      this.showNotification('Registro', p.message,'bottom', 'right');
       this.location.back();
     });
   }
@@ -116,9 +103,8 @@ export class RegistrarProductoComponent implements OnInit {
     this.brand.userIdentification = this.userId;
     this.brandService.post(this.brand).subscribe(p => {
       if (p != null) {
-        this.brand = p;
+        this.showNotification('Registro', p.message,'bottom', 'right')
       }
-      this.showNotification('Agregado', 'Marca: '+ this.brand.name +' creada con exito!','bottom', 'right')
       this.getBrands();
     });
   }
@@ -136,9 +122,8 @@ export class RegistrarProductoComponent implements OnInit {
   addCategory() {
     this.categoryService.post(this.category).subscribe(p => {
       if (p != null) {
-        this.category = p;
+        this.showNotification('Registro', p.message,'bottom', 'right')
       }
-      this.showNotification('Agregado', 'categoria: '+ this.category.name +' creada con exito!','bottom', 'right')
       this.getCategories();
     });
   }

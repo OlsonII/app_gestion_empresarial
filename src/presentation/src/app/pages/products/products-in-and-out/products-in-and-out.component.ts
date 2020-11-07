@@ -18,8 +18,8 @@ export class ProductsInAndOutComponent implements OnInit {
 
 
   product:Product= new Product();
-  Entrada:boolean=true;
-  Salida:boolean=false;
+  Entrada=true;
+  Salida=false;
   razon:string;
   cantidad:number;
   productRefence:string;
@@ -70,22 +70,22 @@ export class ProductsInAndOutComponent implements OnInit {
   registrarMovimiento(){
     if(this.cantidad>0){
       if(this.Entrada){
-        let prodIn:ProductInput = new ProductInput();
+        const prodIn:ProductInput = new ProductInput();
         prodIn.description = this.razon;
         prodIn.inputQuantity = this.cantidad;
         prodIn.productReference = this.product.reference;
         this.InOutService.postInput(prodIn).subscribe(r=>{
-          this.showNotification('Registrado Movimiento', 'Producto: '+ this.product.name +' actualizado con exito','bottom', 'right')
+          this.showNotification('Registro Movimiento', r.message,'bottom', 'right')
           this.location.back();
         });
       }else if(this.Salida){
         if(this.product.quantity>=this.cantidad){
-          let prodOut:ProductOutput = new ProductOutput;
+          const prodOut:ProductOutput = new ProductOutput;
           prodOut.description = this.razon;
           prodOut.outputQuantity = this.cantidad;
           prodOut.productReference = this.product.reference;
           this.InOutService.postOutput(prodOut).subscribe(r=>{
-            this.showNotification('Registrado Movimiento', 'Producto: '+ this.product.name +' actualizado con exito','bottom', 'right')
+            this.showNotification('Registro Movimiento', r.message,'bottom', 'right')
             this.location.back();
           });
         }
