@@ -13,8 +13,8 @@ export class RegisterProviderService{
             if(request.token == user.token){
 
                 let newProvider: Provider;
-                const searchedCategory = await this._unitOfWork.providerRepository.findProvider(request.identification);
-                if(searchedCategory == undefined){
+                const searchedProvider = await this._unitOfWork.providerRepository.findProvider(request.identification);
+                if(searchedProvider == undefined){
                     newProvider = new Provider();
                     newProvider.identification = request.identification;
                     newProvider.name = request.name;
