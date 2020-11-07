@@ -6,8 +6,9 @@ import { Product} from '../../../models/product.model';
 import { Location} from '@angular/common';
 import { ProductService} from '../../../services/product.service';
 import { ToastrService } from 'ngx-toastr';
-import {Category} from "../../../models/category.model";
-import {Brand} from "../../../models/brand.model";
+import {Category} from '../../../models/category.model';
+import {Brand} from '../../../models/brand.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-products-in-and-out',
@@ -18,20 +19,25 @@ export class ProductsInAndOutComponent implements OnInit {
 
 
   product:Product= new Product();
-  Entrada=true;
-  Salida=false;
-  razon:string;
-  cantidad:number;
-  productRefence:string;
+  in=true;
+  out=false;
   staticAlertClosed=false;
+  form: FormGroup;
+  submitted = false;
+
   constructor(private InOutService:ProductsInOutService,
     private route: ActivatedRoute,
     private toastr: ToastrService,
     private productService:ProductService,
-    private location:Location) { }
+    private location:Location, private formBuilder: FormBuilder
+  ) { }
 
   ngOnInit(): void {
-
+    this.form = this.formBuilder.group({
+      productReference: ['', Validators.required],
+      quantity: ['', Validators.required],
+      description: ['', Validators.required]
+    });
 
     this.product.category= new Category();
     this.product.brand=new Brand();
@@ -39,19 +45,22 @@ export class ProductsInAndOutComponent implements OnInit {
 
   }
 
+  get f() { return this.form.controls; }
+
+
   getParam(){
     if(this.route.snapshot.paramMap.get('id')){
-    this.productRefence = this.route.snapshot.paramMap.get('id').toString();
-    this.getProduct();
+      this.form.controls.productReference.setValue(this.route.snapshot.paramMap.get('id').toString());
+      this.getProduct();
     }
   }
   switch(){
-    if(this.Entrada){
-      this.Entrada=false;
-      this.Salida = true;
+    if(this.in){
+      this.in = false;
+      this.out = true;
     }else{
-      this.Entrada=true;
-      this.Salida=false;
+      this.in = true;
+      this.out = false;
     }
   }
 
@@ -59,7 +68,7 @@ export class ProductsInAndOutComponent implements OnInit {
     this.productService.get().subscribe(res=>{
 
       res.products.forEach(prod => {
-        if(prod.reference == this.productRefence){
+        if(prod.reference === this.form.value.productReference){
           this.product = prod;
         }
       });
@@ -68,22 +77,27 @@ export class ProductsInAndOutComponent implements OnInit {
   }
 
   registrarMovimiento(){
-    if(this.cantidad>0){
-      if(this.Entrada){
+    this.submitted = true;
+    if (this.form.invalid) {
+      return;
+    }
+    const formData = this.form.value
+    if(formData.quantity>0){
+      if(this.in){
         const prodIn:ProductInput = new ProductInput();
-        prodIn.description = this.razon;
-        prodIn.inputQuantity = this.cantidad;
-        prodIn.productReference = this.product.reference;
+        prodIn.description = formData.description;
+        prodIn.inputQuantity = formData.quantity;
+        prodIn.productReference = formData.productReference;
         this.InOutService.postInput(prodIn).subscribe(r=>{
           this.showNotification('Registro Movimiento', r.message,'bottom', 'right')
           this.location.back();
         });
-      }else if(this.Salida){
-        if(this.product.quantity>=this.cantidad){
-          const prodOut:ProductOutput = new ProductOutput;
-          prodOut.description = this.razon;
-          prodOut.outputQuantity = this.cantidad;
-          prodOut.productReference = this.product.reference;
+      }else if(this.out){
+        if(this.product.quantity>=formData.quantity){
+          const prodOut:ProductOutput = new ProductOutput();
+          prodOut.description = formData.description;
+          prodOut.outputQuantity = formData.quantity
+          prodOut.productReference = formData.productReference;
           this.InOutService.postOutput(prodOut).subscribe(r=>{
             this.showNotification('Registro Movimiento', r.message,'bottom', 'right')
             this.location.back();
