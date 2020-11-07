@@ -10,7 +10,7 @@
         </div>
 
         <div class=" card-body">
-          <form>
+          <form [formGroup]="form" (ngSubmit)="registrarMovimiento()">
             <div class=" row">
               <div class=" col-md-5 pl-md-3">
                 <div class=" form-group">
@@ -20,12 +20,15 @@
                       class=" form-control"
                       placeholder="Ingrese referencia"
                       type="text"
-                      name="productReference"
-                      [(ngModel)]="productRefence"
+                      formControlName="productReference"
+                      [ngClass]="{ 'is-invalid': submitted && f.productReference.errors }"
                     />
                     <button class=" btn custom" (click)="getProduct()" >
                       <i class=" tim-icons icon-zoom-split"> </i>
                     </button>
+                    <div *ngIf="submitted && f.productReference.errors" class="invalid-feedback">
+                      <div *ngIf="f.productReference.errors.required">La referencia del producto es requerida</div>
+                    </div>
                   </div>
                 </div>
 
@@ -46,9 +49,12 @@
                       placeholder="Cantidad"
                       type="number"
                       value="0"
-                      name="cantidadMov"
-                      [(ngModel)]="cantidad"
+                      formControlName="quantity"
+                      [ngClass]="{ 'is-invalid': submitted && f.quantity.errors }"
                     />
+                  <div *ngIf="submitted && f.quantity.errors" class="invalid-feedback">
+                    <div *ngIf="f.quantity.errors.required">La cantidad del producto es requerida</div>
+                  </div>
                 </div>
 
                 <ngb-alert [type]="'danger'" *ngIf="staticAlertClosed" [dismissible]="false">
@@ -63,10 +69,10 @@
 
                 <div class="typography-line">
                   <div>
-                    <input type="checkbox"  (change)="switch()" [checked]="Entrada" /><span class="text-info ml-1">Entrada</span>
+                    <input type="checkbox"  (change)="switch()" [checked]="in" /><span class="text-info ml-1">Entrada</span>
                   </div>
                   <div>
-                    <input type="checkbox"  (change)="switch()" [checked]="Salida" /><span class="text-info ml-1">Salida</span>
+                    <input type="checkbox"  (change)="switch()" [checked]="out" /><span class="text-info ml-1">Salida</span>
 
                   </div>
                 </div>
@@ -77,19 +83,21 @@
                     cols="80"
                     placeholder="ingrese aqui su razon"
                     rows="4"
-                    name="RazonTxt"
-                    [(ngModel)]="razon"
+                    formControlName="description"
+                    [ngClass]="{ 'is-invalid': submitted && f.description.errors }"
                   ></textarea>
+                  <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                    <div *ngIf="f.description.errors.required">La razon del movimiento es requerida</div>
+                  </div>
                 </div>
               </div>
             </div>
-
-
+            <div class=" card-footer">
+              <button class=" btn btn-fill btn-danger" type="submit">Registrar Movimiento</button>
+            </div>
           </form>
         </div>
-        <div class=" card-footer">
-          <button class=" btn btn-fill btn-danger" (click)="registrarMovimiento()" type="submit">Registrar Movimiento</button>
-        </div>
+
       </div>
     </div>
 
