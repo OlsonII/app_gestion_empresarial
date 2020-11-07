@@ -1,180 +1,140 @@
-
 <div class=" content">
-  <div class="row">
-    <ng-template #content2 let-modal>
-      <div class="card" style="margin-bottom: 0px">
-        <div class=" card-header"><h4 class=" title">Registrar Category</h4>
-          <p class=" category">
-            Los datos marcados con (<a class="text-primary">*</a>) son de carácter obligatorio
-          </p>
-        </div>
-        <div class="modal-header">
-          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <div class="row">
+        <ng-template #content2 let-modal>
+            <div class="card" style="margin-bottom: 0px">
+                <div class=" card-header">
+                    <h4 class=" title">Registrar Category</h4>
+                    <p class=" category">
+                        Los datos marcados con (<a class="text-primary">*</a>) son de carácter obligatorio
+                    </p>
+                </div>
+                <div class="modal-header">
+                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
           </button>
-        </div>
-        <div class=" card-body">
-          <form>
-            <div class=" row">
-              <div class=" col-md-5 pr-md-4">
-                <div class=" form-group">
-                  <label> Referencia <a class="text-primary">*</a></label>
-                  <input
-                    class=" form-control"
-                    placeholder="Referencia"
-                    type="text"
-                    name="reference"
-                    [(ngModel)]="category.reference"
-                  />
                 </div>
-              </div>
-              <div class=" col-md-5 pl-md-4">
-                <div class=" form-group">
-                  <label> Nombre <a class="text-primary">*</a> </label>
-                  <input
-                    class=" form-control"
-                    placeholder="Ingrese"
-                    type="text"
-                    name="name"
-                    [(ngModel)]="category.name"
-                  />
+                <div class=" card-body">
+                    <form>
+                        <div class=" row">
+                            <div class=" col-md-5 pr-md-4">
+                                <div class=" form-group">
+                                    <label> Referencia <a class="text-primary">*</a></label>
+                                    <input class=" form-control" placeholder="Referencia" type="text" name="reference" [(ngModel)]="category.reference" />
+                                </div>
+                            </div>
+                            <div class=" col-md-5 pl-md-4">
+                                <div class=" form-group">
+                                    <label> Nombre <a class="text-primary">*</a> </label>
+                                    <input class=" form-control" placeholder="Ingrese" type="text" name="name" [(ngModel)]="category.name" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-              </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-lg btn-outline-primary" (click)="modal.close('Save click');addCategory()">Registrar</button>
+                </div>
             </div>
-          </form>
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-lg btn-outline-primary" (click)="modal.close('Save click');addCategory()">Registrar</button>
-        </div>
-      </div>
-    </ng-template>
-  </div>
+        </ng-template>
+    </div>
 
 
-  <ngb-alert [type]="'danger'" *ngIf="staticAlertClosed" [dismissible]="false">
-    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close" (click)="staticAlertClosed = true">
+    <ngb-alert [type]="'danger'" *ngIf="staticAlertClosed" [dismissible]="false">
+        <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close" (click)="staticAlertClosed = true">
       <i class="tim-icons icon-simple-remove"></i>
     </button>
-    <span>
+        <span>
       <b> Danger </b> Texto
     </span>
-  </ngb-alert>
+    </ngb-alert>
 
 
-  <div class=" row">
-    <div class=" col-md-12 ">
-      <div class=" card">
-        <div class=" card-header"><h4 class=" title">Registro de productos</h4>
-          <p class=" category">
-            Los datos marcados con (<a class="text-primary">*</a>) son de carácter obligatorio
-          </p>
-        </div>
-
-        <div class=" card-body">
-          <form>
-            <div class=" row">
-              <div class=" col-md-6 pr-md-1">
-                <div class=" form-group">
-                  <label> Nombre <a class="text-primary">*</a></label>
-                  <input
-                    class=" form-control"
-                    placeholder="Product"
-                    type="text"
-                    value="Nuevo producto"
-                    name="name"
-                    [(ngModel)]="product.name"
-                  />
+    <div class=" row">
+        <div class=" col-md-12 ">
+            <div class=" card">
+                <div class=" card-header">
+                    <h4 class=" title">Registro de productos</h4>
+                    <p class=" category">
+                        Los datos marcados con (<a class="text-primary">*</a>) son de carácter obligatorio
+                    </p>
                 </div>
-              </div>
-            </div>
-            <div class=" row">
-              <div class=" col-md-5 pr-md-4">
-                <div class=" form-group">
-                  <label> Referencia <a class="text-primary">*</a></label>
-                  <input
-                    class=" form-control"
-                    placeholder="Referencia"
-                    type="text"
-                    value="ej: RKJW123"
-                    name="reference"
-                    [(ngModel)]="product.reference"
-                  />
-                </div>
-              </div>
-              <div class=" col-md-5 pl-md-4">
-                <div class=" form-group">
-                  <label> Cantidad </label>
-                  <input
-                    class=" form-control"
-                    placeholder="Cantidad"
-                    type="number"
-                    value="3"
-                    name="quantity"
-                    [(ngModel)]="product.quantity"
-                  />
-                </div>
-              </div>
-            </div>
 
-            <div class=" row ">
-              <div class=" col-md-5 pl-md-3">
-                <div class=" form-group">
-                  <label> Marcas <a class="text-primary">*</a></label>
-                  <div class="input-group">
-                    <select class="custom-select" name="miselect"  [(ngModel)]="product.brand.reference">
+                <div class=" card-body">
+                    <form [formGroup]="form" (ngSubmit)="addProduct()">
+                        <div class=" row">
+                            <div class=" col-md-6 pr-md-1">
+                                <div class=" form-group">
+                                    <label> Nombre <a class="text-primary">*</a></label>
+                                    <input class=" form-control" placeholder="Product" type="text" formControlName="nameProduct" [ngClass]="{ 'is-invalid': submitted && f.nameProduct.errors }" />
+                                    <div *ngIf="submitted && f.nameProduct.errors" class="invalid-feedback">
+                                        <div *ngIf="f.nameProduct.errors.required">El nombre del producto es requerido</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" row">
+                            <div class=" col-md-5 pr-md-4">
+                                <div class=" form-group">
+                                    <label> Referencia <a class="text-primary">*</a></label>
+                                    <input class=" form-control" placeholder="Referencia" type="text" value="ej: RKJW123" formControlName="reference" [ngClass]="{ 'is-invalid': submitted && f.reference.errors }" />
+                                    <div *ngIf="submitted && f.reference.errors" class="invalid-feedback">
+                                        <div *ngIf="f.reference.errors.required">La referencia del producto es requerida</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" col-md-5 pl-md-4">
+                                <div class=" form-group">
+                                    <label> Cantidad </label>
+                                    <input class=" form-control" placeholder="Cantidad" type="number" value="3" formControlName="quantity" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class=" row ">
+                            <div class=" col-md-5 pl-md-3">
+                                <div class=" form-group">
+                                    <label> Marcas <a class="text-primary">*</a></label>
+                                    <div class="input-group">
+                                        <select class="custom-select" formControlName="brandProduct" [ngClass]="{ 'is-invalid': submitted && f.brandProduct.errors }">
                       <option [value]="brand.reference" *ngFor="let brand of brands">{{brand.reference + " " + brand.name}}</option>
-                      </select>
-                    <button  class=" btn custom" (mouseover)="getBrands()" (click)="open()" >
+                    </select>
+                                        <button class=" btn custom" (mouseover)="getBrands()" (click)="open()">
                       <i class=" tim-icons icon-simple-add"> </i>
                     </button>
-                  </div>
+                                        <div *ngIf="submitted && f.brandProduct.errors" class="invalid-feedback">
+                                            <div *ngIf="f.brandProduct.errors.required">La marca del producto es requerida</div>
+                                        </div>
+                                    </div>
 
-                </div>
-              </div>
-              <div class=" col-md-2 pl-md-4 pr-md-1">
-                <div class=" form-group">
-                  <label> Precio </label>
-
-                    <input
-                      class=" form-control money-input "
-                      placeholder="Precio"
-                      type="number"
-                      value="100"
-                      name="price"
-                      [(ngModel)]="product.price"
-                    />
-                </div>
-              </div>
-              <div class=" col-md-2 pl-md-4 pr-md-0">
-                <div class=" form-group">
-                  <label> Costo </label>
-                  <input
-                    class=" form-control money-input"
-                    placeholder="Costo"
-                    type="number"
-                    value="100"
-                    name="cost"
-                    [(ngModel)]="product.cost"
-                  />
-                </div>
-              </div>
-            </div>
+                                </div>
+                            </div>
+                            <div class=" col-md-2 pl-md-4 pr-md-1">
+                                <div class=" form-group">
+                                    <label> Precio </label>
+                                    <input class=" form-control money-input " placeholder="Precio" type="number" value="100" formControlName="price" [ngClass]="{ 'is-invalid': submitted && f.price.errors }" />
+                                    <div *ngIf="submitted && f.price.errors" class="invalid-feedback">
+                                        <div *ngIf="f.price.errors.required">El precio del producto es requerido</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" col-md-2 pl-md-4 pr-md-0">
+                                <div class=" form-group">
+                                    <label> Costo </label>
+                                    <input class=" form-control money-input" placeholder="Costo" type="number" value="100" formControlName="cost" [ngClass]="{ 'is-invalid': submitted && f.cost.errors }" />
+                                    <div *ngIf="submitted && f.cost.errors" class="invalid-feedback">
+                                        <div *ngIf="f.cost.errors.required">El costo del producto es requerido</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
 
-            <div class=" row">
-              <div class=" col-md-5">
-                <div class=" form-group">
-                  <label> Descripción </label>
-                  <textarea
-                    class=" form-control"
-                    cols="80"
-                    placeholder="Aqui va la descripción"
-                    rows="4"
-                    value="Descripcion"
-                    name="description"
-                    [(ngModel)]="product.description"
-                  >Descripción del producto
+                        <div class=" row">
+                            <div class=" col-md-5">
+                                <div class=" form-group">
+                                    <label> Descripción </label>
+                                    <textarea class=" form-control" cols="80" placeholder="Aqui va la descripción" rows="4" value="Descripcion" formControlName="description">Descripción del producto
                   </textarea
                   >
                 </div>
@@ -183,33 +143,31 @@
                 <div class=" form-group">
                   <label> Categoría <a class="text-primary">*</a></label>
                   <div class="input-group">
-                    <select class="custom-select" name="miselect2" [(ngModel)]="product.category.reference">
+                    <select class="custom-select" formControlName="categoryProduct" [ngClass]="{ 'is-invalid': submitted && f.categoryProduct.errors }">
                       <option [value]="category.reference" *ngFor="let category of categories">{{category.reference + " " + category.name}}</option>
-                      </select>
-                      <button (mouseover)="getCategories()"  class=" btn custom" (click)="openModalCategory()" >
-                        <i class=" tim-icons icon-simple-add"> </i>
-                      </button>
+                    </select>
+                    <button  class=" btn custom"  (click)="openModalCategory()" (mouseover)="getCategories()">
+                      <i class=" tim-icons icon-simple-add"> </i>
+                    </button>
+                    <div *ngIf="submitted && f.categoryProduct.errors" class="invalid-feedback">
+                      <div *ngIf="f.categoryProduct.errors.required">La categoria del producto es requerida</div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-
+            <div class=" card-footer">
+              <button class=" btn btn-fill btn-danger" type="submit">Guardar</button>
+            </div>
           </form>
-        <div class=" card-footer">
-          <button class=" btn btn-fill btn-danger" type="submit" (click)="addProduct()">Guardar</button>
+
+
         </div>
-
-
-
-
       </div>
+
     </div>
 
+
+
   </div>
-
-
-
 </div>
-</div>
-
-

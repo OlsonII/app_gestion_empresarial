@@ -54,7 +54,8 @@ export class ModifyClientComponent implements OnInit {
 
   UpdateClient(){
     this.clientService.put(this.client).subscribe(res=>{
-      this.showNotification('Modificado', 'Cliente: '+ this.client.name +' modificado con exito!','bottom', 'right');
+
+      this.showNotification('Modificación', res.message,'bottom', 'right');
       this.location.back();
     });
   }
