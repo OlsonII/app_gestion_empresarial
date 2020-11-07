@@ -202,6 +202,7 @@
                   />
                   <div *ngIf="submitted && f.price.errors" class="invalid-feedback">
                     <div *ngIf="f.price.errors.required">El precio del producto es requerido</div>
+                    <div *ngIf="f.price.errors.min">El precio del producto no puede ser menor a 0</div>
                   </div>
                 </div>
               </div>
@@ -218,6 +219,7 @@
                   />
                   <div *ngIf="submitted && f.cost.errors" class="invalid-feedback">
                     <div *ngIf="f.cost.errors.required">El costo del producto es requerido</div>
+                    <div *ngIf="f.cost.errors.min">El costo del producto no puede ser menor a 0</div>
                   </div>
                 </div>
               </div>

@@ -14,7 +14,7 @@ export class RegisterInputOutputResponse{
   constructor(public readonly message: string, public readonly newQuantity?: number) {}
 }
 
-//GET responses
+// GET responses
 export class SearchClientResponse{
   constructor(public readonly clients?: Client[], public readonly client?: Client, public readonly message?: string) {}
 }
