@@ -62,56 +62,6 @@
   </ngb-alert>
 
 
-  <div class="row">
-    <ng-template #content let-modal>
-      <div class="card" style="margin-bottom: 0px">
-        <div class=" card-header"><h4 class=" title">Registrar Brand</h4>
-          <p class=" category">
-            Los datos marcados con (<a class="text-primary">*</a>) son de carácter obligatorio
-          </p>
-        </div>
-        <div class="modal-header">
-          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class=" card-body">
-            <form>
-              <div class=" row">
-                <div class=" col-md-5 pr-md-4">
-                  <div class=" form-group">
-                    <label> Referencia <a class="text-primary">*</a></label>
-                    <input
-                      class=" form-control"
-                      placeholder="Referencia"
-                      type="text"
-                      name="reference"
-                      [(ngModel)]="brand.reference"
-                    />
-                  </div>
-                </div>
-                <div class=" col-md-5 pl-md-4">
-                  <div class=" form-group">
-                    <label> Nombre <a class="text-primary">*</a> </label>
-                    <input
-                      class=" form-control"
-                      placeholder="Ingrese"
-                      type="text"
-                      name="name"
-                      [(ngModel)]="brand.name"
-                    />
-                  </div>
-                </div>
-              </div>
-            </form>
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-lg btn-outline-primary" (click)="modal.close('Save click');addBrand()">Registrar</button>
-        </div>
-      </div>
-    </ng-template>
-  </div>
   <div class=" row">
     <div class=" col-md-12 ">
       <div class=" card">
@@ -172,12 +122,12 @@
                 <div class=" form-group">
                   <label> Marcas <a class="text-primary">*</a></label>
                   <div class="input-group">
-                    <select class="custom-select" name="miselect" [(ngModel)]="product.brand.reference">
+                    <select class="custom-select" name="miselect"  [(ngModel)]="product.brand.reference">
                       <option [value]="brand.reference" *ngFor="let brand of brands">{{brand.reference + " " + brand.name}}</option>
                       </select>
-                      <button  class=" btn custom" (click)="open(content)" >
-                        <i class=" tim-icons icon-simple-add"> </i>
-                      </button>
+                    <button  class=" btn custom" (mouseover)="getBrands()" (click)="open()" >
+                      <i class=" tim-icons icon-simple-add"> </i>
+                    </button>
                   </div>
 
                 </div>
@@ -236,7 +186,7 @@
                     <select class="custom-select" name="miselect2" [(ngModel)]="product.category.reference">
                       <option [value]="category.reference" *ngFor="let category of categories">{{category.reference + " " + category.name}}</option>
                       </select>
-                      <button  class=" btn custom"  (click)="open(content2)">
+                      <button (mouseover)="getCategories()"  class=" btn custom" (click)="openModalCategory()" >
                         <i class=" tim-icons icon-simple-add"> </i>
                       </button>
                   </div>

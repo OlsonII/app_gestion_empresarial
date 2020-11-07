@@ -1,32 +1,31 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Brand } from '../../models/brand.model';
-import { BrandService } from '../../services/brand.service';
+import { Category } from '../../models/category.model';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { JwtAuthService } from '../../services/auth/jwt-auth.service';
+import { CategoryService } from '../../services/category.service';
 
 @Component({
-  selector: 'app-modal-content',
-  templateUrl: './modals.component.html'
+  selector: 'app-modal-category',
+  templateUrl: './modal-category.component.html',
+  styleUrls: ['./modal-category.component.scss']
 })
-export class ModalsComponent implements OnInit{
-  @Input() brand:Brand;
+export class ModalCategoryComponent implements OnInit {
+
+  @Input() category:Category;
   @Input() option:string;
   token;
   userId;
 
   constructor(public activeModal: NgbActiveModal,
-              private brandService: BrandService,
+              private categoryService: CategoryService,
               private toastr: ToastrService,
-              private auth:JwtAuthService,
-              ) {
-  }
+              private auth:JwtAuthService,) { }
 
   ngOnInit(): void {
     this.token = this.auth.getJwtToken();
     this.userId = this.auth.getUser();
   }
-
 
   dismiss(){
     this.activeModal.dismiss('Cross click');
@@ -36,12 +35,12 @@ export class ModalsComponent implements OnInit{
     this.activeModal.close('Close click');
   }
 
-  modifyBrand() {
-    const namee = this.brand.name;
-    console.log(this.brand);
-    this.brandService.put(this.brand).subscribe(p => {
+  modifyCategory() {
+    const namee = this.category.name;
+    console.log(this.category);
+    this.categoryService.put(this.category).subscribe(p => {
       if (p != null) {
-        this.brand = p;
+        this.category = p;
         console.log('Encontro'+p);
       }
       this.showNotification('Modificado', 'Marca: ' + namee + ' modificada con exito!', 'bottom', 'right')
@@ -49,14 +48,15 @@ export class ModalsComponent implements OnInit{
     });
   }
 
-  addBrand() {
-    this.brand.token = this.token;
-    this.brand.userIdentification = this.userId;
-    this.brandService.post(this.brand).subscribe(p => {
+  addCategory() {
+    const namee = this.category.name;
+    this.category.token = this.token;
+    this.category.userIdentification = this.userId;
+    this.categoryService.post(this.category).subscribe(p => {
       if (p != null) {
-        this.brand = p;
+        this.category = p;
       }
-      this.showNotification('Agregado', 'Marca: '+ this.brand.name +' creada con exito!','bottom', 'right')
+      this.showNotification('Agregado', 'Marca: '+ namee +' creada con exito!','bottom', 'right')
     });
 
   }
@@ -70,8 +70,5 @@ export class ModalsComponent implements OnInit{
       positionClass: 'toast-' + from + '-' + align
     });
   }
+
 }
-
-
-
-

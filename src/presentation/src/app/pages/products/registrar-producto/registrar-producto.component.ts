@@ -10,7 +10,9 @@ import {Product} from '../../../models/product.model';
 import { ToastrService } from 'ngx-toastr';
 import {ProviderService} from '../../../services/provider.service';
 import {JwtAuthService} from '../../../services/auth/jwt-auth.service';
-import {ProductService} from "../../../services/product.service";
+import {ProductService} from '../../../services/product.service';
+import { ModalsComponent } from '../../modals/modals.component';
+import { ModalCategoryComponent } from '../../modal-category/modal-category.component';
 
 
 @Component({
@@ -43,7 +45,6 @@ export class RegistrarProductoComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-      this.brand = new Brand();
       this.product = new Product();
       this.category = new Category();
       this.product.brand = new Brand();
@@ -55,24 +56,29 @@ export class RegistrarProductoComponent implements OnInit {
       this.userId = this.auth.getUser();
     }
 
-  open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+  open() {
+    const modalRef = this.modalService.open(ModalsComponent);
+    this.brand = new Brand();
+    modalRef.componentInstance.option= 'create';
+    modalRef.componentInstance.brand= this.brand;
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
+  openModalCategory(){
+    const modalRef = this.modalService.open(ModalCategoryComponent);
+    this.brand = new Brand();
+    modalRef.componentInstance.option= 'create';
+    modalRef.componentInstance.category= this.category;
   }
 
+  getBrands(){
+    this.brandService.get().subscribe(
+      res=>{
+        if(res!=null){
+           this.brands = res.brands;
+        }
+      }
+    )
+  }
 
   addProduct(){
     console.log(this.product);
@@ -82,27 +88,8 @@ export class RegistrarProductoComponent implements OnInit {
     });
   }
 
-  addBrand() {
-    this.brand.token=this.token;
-    this.brand.userIdentification = this.userId;
-    this.brandService.post(this.brand).subscribe(p => {
-      if (p != null) {
-        this.brand = p;
-      }
-      this.showNotification('Agregado', 'Marca: '+ this.brand.name +' creada con exito!','bottom', 'right')
-      this.getBrands();
-    });
-  }
 
-  getBrands(){
-    this.brandService.get().subscribe(
-      res=>{
-        if(res!=null){
-          this.brands = res.brands;
-        }
-      }
-    )
-  }
+
 
   addCategory() {
     this.categoryService.post(this.category).subscribe(p => {

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Brand} from '../../models/brand.model';
 import {BrandList} from '../../models/ObjetoLista';
 import {BrandService}from '../../services/brand.service';
-import {ToastrService} from 'ngx-toastr';
+import { ModalsComponent } from '../modals/modals.component';
+
 
 @Component({
   selector: 'app-marcas',
@@ -13,7 +14,6 @@ import {ToastrService} from 'ngx-toastr';
 export class MarcasComponent implements OnInit {
 
   searchValue:string;
-  alg: object;
   brandList: BrandList;
   closeResult = '';
   brands: Brand[] = [];
@@ -21,61 +21,40 @@ export class MarcasComponent implements OnInit {
   reference:string;
   name:string;
 
+
   constructor(
     private brandService: BrandService,
     private modalService: NgbModal,
-    private toastr: ToastrService
   ) {
   }
 
   ngOnInit(): void {
     this.brand = new Brand();
-    this.brandService.get().subscribe(data => {
-        if (data != null) {
-          this.brands = data.brands;
+    this.getBrands();
+  }
+
+  getBrands(){
+    this.brandService.get().subscribe(
+      res=>{
+        if(res!=null){
+          this.brands = res.brands;
         }
       }
-    );
+    )
   }
 
-  open(content,brand:Brand) {
-    this.brand = brand;
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
+  open(brand: Brand,opcion :string) {
+    if( opcion === 'create'){
+      this.brand = new Brand();
     }
+    if (opcion === 'modify'){
+      this.brand = brand;
+    }
+    const modalRef = this.modalService.open(ModalsComponent);
+    modalRef.componentInstance.brand = this.brand;
+    modalRef.componentInstance.option= opcion;
+
+    this.getBrands();
   }
 
-  modifyBrand() {
-    console.log(this.brand);
-    this.brandService.put(this.brand).subscribe(p => {
-      if (p != null) {
-        this.brand = p;
-        console.log('Encontro'+p);
-      }
-      this.showNotification('Modificado', 'Marca: ' + this.brand.name + ' modificado con exito!', 'bottom', 'right')
-
-    });
-  }
-
-  showNotification(titulo, mensaje, from, align) {
-    this.toastr.info('<span class="tim-icons icon-check-2" [data-notify]="icon"></span>' + mensaje, titulo, {
-      disableTimeOut: true,
-      closeButton: true,
-      enableHtml: true,
-      toastClass: 'alert alert-success alert-with-icon',
-      positionClass: 'toast-' + from + '-' + align
-    });
-  }
 }

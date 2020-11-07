@@ -17,6 +17,7 @@ import {UserRoleGuard} from './guards/user-role.guard';
 import {AuthGuard} from './guards/auth.guard';
 import { MovementComponent } from './pages/movement/movement.component';
 import {environment} from "../environments/environment";
+import { ModalCategoryComponent } from './pages/modal-category/modal-category.component';
 
 @NgModule({
   imports: [
@@ -29,7 +30,7 @@ import {environment} from "../environments/environment";
     AppRoutingModule,
     ToastrModule.forRoot(),
   ],
-  declarations: [AppComponent, AdminLayoutComponent, AuthLayoutComponent, MovementComponent],
+  declarations: [AppComponent, AdminLayoutComponent, AuthLayoutComponent, MovementComponent, ModalCategoryComponent],
   providers: [ProviderService,JwtAuthService,AuthGuard,UserRoleGuard,{provide:'BASE_URL',useValue:environment.BASE_URL}],
   bootstrap: [AppComponent]
 })
