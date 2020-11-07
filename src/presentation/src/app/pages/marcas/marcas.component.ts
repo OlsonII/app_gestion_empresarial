@@ -56,7 +56,6 @@ export class MarcasComponent implements OnInit {
   }
 
   modifyBrand() {
-    console.log(this.brand);
     this.brandService.put(this.brand).subscribe(p => {
       if (p != null) {
         this.showNotification('Modificado', p.message, 'bottom', 'right')

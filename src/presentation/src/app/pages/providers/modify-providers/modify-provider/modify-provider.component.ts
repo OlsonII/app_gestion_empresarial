@@ -42,7 +42,6 @@ export class ModifyProviderComponent implements OnInit {
   }
 
   modifyProvider(){
-    console.log(this.provider);
     this.providerService.put(this.provider).subscribe(p => {
 
       this.showNotification('Modificación', p.message,'bottom', 'right')

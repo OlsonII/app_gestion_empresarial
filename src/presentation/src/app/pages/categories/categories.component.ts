@@ -55,7 +55,6 @@ export class CategoriesComponent implements OnInit {
   }
 
   modifyCategory() {
-    console.log(this.category);
     this.categoryService.put(this.category).subscribe(p => {
       if (p != null) {
         this.showNotification('Aviso', p.message , 'bottom', 'right')

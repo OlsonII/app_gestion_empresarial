@@ -86,10 +86,8 @@ export class ModifyProductComponent implements OnInit {
   modifyProduct(){
     this.productService.put(this.product).subscribe(p => {
       if (p != null) {
-        console.log('ahi te va');
-        console.log(p);
+      this.showNotification('Modificación', p.message,'bottom', 'right')
       }
-      this.showNotification('Modificado', 'Producto: '+ this.product.name +' creado con exito!','bottom', 'right')
       this.location.back();
     });
   }

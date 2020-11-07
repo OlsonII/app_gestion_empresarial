@@ -50,7 +50,6 @@ export class ClientsComponent implements OnInit {
   }
 
   add() {
-    console.log(this.client)
     this.clientService.post(this.client).subscribe(p => {
       if (p != null) {
         this.showNotification('Registro',p.message,'bottom','right');
