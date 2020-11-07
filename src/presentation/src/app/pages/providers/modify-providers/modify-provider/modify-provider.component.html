@@ -18,7 +18,7 @@
                     class=" form-control"
                     placeholder="Digite cedula"
                     type="text"
-                    disabled=""
+                    [disabled]="isNotAdmin"
                     name="identification"
                     [(ngModel)]="provider.identification"
                   >
@@ -32,7 +32,7 @@
                     placeholder="Nombre"
                     type="text"
                     name="name"
-                    disabled=""
+                    [disabled]="isNotAdmin"
                     [(ngModel)]="provider.name"
                   />
                 </div>

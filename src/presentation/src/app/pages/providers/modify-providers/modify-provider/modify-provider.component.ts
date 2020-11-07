@@ -4,6 +4,7 @@ import {Location} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {ProviderService} from '../../../../services/provider.service';
+import {JwtAuthService} from '../../../../services/auth/jwt-auth.service';
 
 @Component({
   selector: 'app-modify-provider',
@@ -15,17 +16,19 @@ export class ModifyProviderComponent implements OnInit {
   provider: Provider;
   providers: Provider[];
   staticAlertClosed=false;
-
+  isNotAdmin = true;
 
   constructor(
     private route: ActivatedRoute,
     private toastr: ToastrService,
     private providerService:ProviderService,
-    private location:Location
+    private location:Location,
+    private authService:JwtAuthService
   ) { }
 
   ngOnInit(): void {
     this.provider = new Provider();
+    this.getRole();
     this.getProvider();
   }
 
@@ -58,6 +61,15 @@ export class ModifyProviderComponent implements OnInit {
       positionClass: 'toast-' + from + '-' +  align
     });
 
+  }
+
+  getRole(){
+    const role = this.authService.getRole();
+    if(role == 'Administrador'){
+      this.isNotAdmin = false;
+    }else{
+      this.isNotAdmin = true;
+    }
   }
 
 }

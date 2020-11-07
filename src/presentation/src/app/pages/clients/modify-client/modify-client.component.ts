@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import {Location} from '@angular/common';
 import {Client} from "../../../models/client.model";
 import {ClientService} from "../../../services/client.service";
+import {JwtAuthService} from '../../../services/auth/jwt-auth.service';
 
 @Component({
   selector: 'app-modify-client',
@@ -13,16 +14,19 @@ import {ClientService} from "../../../services/client.service";
 export class ModifyClientComponent implements OnInit {
 
   client:Client;
+  isNotAdmin=true;
 
   constructor(private route: ActivatedRoute,
     private location: Location,
     private toastr:ToastrService,
     private clientService:ClientService,
+    private authService:JwtAuthService
   ) { }
 
   ngOnInit(): void {
     this.client = new Client();
     this.getClient();
+    this.getRole();
   }
 
   showNotification(titulo, mensaje,from, align){
@@ -58,6 +62,15 @@ export class ModifyClientComponent implements OnInit {
       this.showNotification('Modificación', res.message,'bottom', 'right');
       this.location.back();
     });
+  }
+
+  getRole(){
+    const role = this.authService.getRole();
+    if(role == 'Administrador'){
+      this.isNotAdmin = false;
+    }else{
+      this.isNotAdmin = true;
+    }
   }
 
 

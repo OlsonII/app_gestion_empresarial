@@ -133,8 +133,8 @@
                     type="text"
                     value="Nuevo producto"
                     name="name"
-                    disabled
-                    [ngModel]="product.name"
+                    [disabled]="isNotAdmin"
+                    [(ngModel)]="product.name"
                   />
                 </div>
               </div>
@@ -149,8 +149,8 @@
                     type="text"
                     value="ej: RKJW123"
                     name="reference"
-                    disabled
-                    [ngModel]="product.reference"
+                    [disabled]="isNotAdmin"
+                    [(ngModel)]="product.reference"
                   />
                 </div>
               </div>
@@ -163,8 +163,8 @@
                     type="number"
                     value="3"
                     name="quantity"
-                    disabled
-                    [ngModel]="product.quantity"
+                    [disabled]="isNotAdmin"
+                    [(ngModel)]="product.quantity"
                   />
                 </div>
               </div>

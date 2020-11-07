@@ -18,7 +18,7 @@
                     placeholder="Num identificacion"
                     type="text"
                     name="identificacion"
-                    disabled=""
+                    [disabled]="isNotAdmin"
                     [(ngModel)]="client.identification"
                   />
                 </div>
@@ -33,7 +33,7 @@
                     placeholder="nombres"
                     type="text"
                     name="name"
-                    disabled=""
+                    [disabled]="isNotAdmin"
                     [(ngModel)]="client.name"
                   />
                 </div>

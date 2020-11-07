@@ -11,6 +11,7 @@ import {Product} from '../../../models/product.model';
 import { ToastrService } from 'ngx-toastr';
 import {ProviderService} from '../../../services/provider.service';
 import {ProductService} from "../../../services/product.service";
+import {JwtAuthService} from '../../../services/auth/jwt-auth.service';
 
 @Component({
   selector: 'app-modify-product',
@@ -25,6 +26,7 @@ export class ModifyProductComponent implements OnInit {
   categories: Category[]= [];
   providers: Provider[];
   product: Product;
+  isNotAdmin = true;
 
   staticAlertClosed=false;
 
@@ -37,7 +39,8 @@ export class ModifyProductComponent implements OnInit {
     private categoryService:CategoryService,
     private brandService:BrandService,
     private providerService:ProviderService,
-    private productService:ProductService
+    private productService:ProductService,
+    private authService:JwtAuthService
     ) { }
 
     ngOnInit(): void {
@@ -46,7 +49,7 @@ export class ModifyProductComponent implements OnInit {
       this.product.brand = new Brand();
       this.product.category = new Category();
       this.category = new Category();
-
+      this.getRole();
       this.getProduct();
       this.getBrands();
       this.getCategories();
@@ -151,5 +154,12 @@ export class ModifyProductComponent implements OnInit {
 
   }
 
-
+  getRole(){
+    const role = this.authService.getRole();
+    if(role == 'Administrador'){
+      this.isNotAdmin = false;
+    }else{
+      this.isNotAdmin = true;
+    }
+  }
 }
