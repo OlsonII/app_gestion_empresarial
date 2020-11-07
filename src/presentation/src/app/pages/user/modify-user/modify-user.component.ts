@@ -52,7 +52,7 @@ export class ModifyUserComponent implements OnInit {
 
   updateUser(){
     this.userService.put(this.user).subscribe(res=>{
-      this.showNotification('Modificado', 'Usuario: '+ this.user.name +' modificado con exito!','bottom', 'right');
+      this.showNotification('Modificación', res.message,'bottom', 'right');
       this.location.back();
     })
 

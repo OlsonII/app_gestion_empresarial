@@ -58,10 +58,8 @@ export class CategoriesComponent implements OnInit {
     console.log(this.category);
     this.categoryService.put(this.category).subscribe(p => {
       if (p != null) {
-        this.category = p;
-        console.log('Encontro'+p);
+        this.showNotification('Aviso', p.message , 'bottom', 'right')
       }
-      this.showNotification('Modificado', 'Categoría: ' + this.category.name + ' modificado con exito!', 'bottom', 'right')
 
     });
   }

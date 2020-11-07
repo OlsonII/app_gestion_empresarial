@@ -97,9 +97,8 @@ export class ModifyProductComponent implements OnInit {
   addBrand() {
     this.brandService.post(this.brand).subscribe(p => {
       if (p != null) {
-        this.brand = p;
+        this.showNotification('Aviso', p.message,'bottom', 'right')
       }
-      this.showNotification('Agregado', 'Marca: '+ this.brand.name +' creada con exito!','bottom', 'right')
       this.getBrands();
     });
   }
@@ -117,9 +116,8 @@ export class ModifyProductComponent implements OnInit {
   addCategory() {
     this.categoryService.post(this.category).subscribe(p => {
       if (p != null) {
-        this.category = p;
+        this.showNotification('Aviso', p.message,'bottom', 'right')
       }
-      this.showNotification('Agregado', 'categoria: '+ this.category.name +' creada con exito!','bottom', 'right')
       this.getCategories();
     });
   }

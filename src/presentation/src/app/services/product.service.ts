@@ -3,8 +3,8 @@ import {Product} from '../models/product.model';
 import {HandleHttpErrorService} from './@base/handle-http-error.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import { SearchProductResponse, DefaultResponse} from '../models/responses.model';
 import {catchError, tap} from 'rxjs/operators';
-import { ProductList } from '../models/ObjetoLista';
 import {JwtAuthService} from './auth/jwt-auth.service';
 
 @Injectable({
@@ -21,39 +21,40 @@ export class ProductService {
     this.baseUrl = baseUrl;
   }
 
-  get(): Observable<ProductList>{
+  get(): Observable<SearchProductResponse>{
 
     const user =this.loginService.getUser();
     const token = this.loginService.getJwtToken();
 
     const auth = user + ' '+token;
 
-    return this.http.get<ProductList>(this.baseUrl+'/product',
+    return this.http.get<SearchProductResponse>(this.baseUrl+'/product',
     {headers:{['authorization']:auth}}).pipe(
       tap(_=>this.handleHttpErrorService.log('datos enviados')),
-      catchError(this.handleHttpErrorService.handleError<ProductList>('Consulta productos',null))
+      catchError(this.handleHttpErrorService.handleError<SearchProductResponse>('Consulta productos',null))
     );
   }
 
-  post(Prod:Product): any{
+  post(Prod:Product): Observable<DefaultResponse>{
 
     const user =this.loginService.getUser();
     const token = this.loginService.getJwtToken();
     const producto = new ProductInterface(Prod,user,token);
 
-    return this.http.post<Product>(this.baseUrl+'/product',producto).pipe(
+    return this.http.post<DefaultResponse>(this.baseUrl+'/product',producto).pipe(
       tap(_=>this.handleHttpErrorService.log('datos enviados')),
-      catchError(this.handleHttpErrorService.handleError<Product>('Registrar productos',null))
+      catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Registrar productos',null))
     );
   }
 
-  put (Prod: Product): Observable<any> {
+  put (Prod: Product): Observable<DefaultResponse> {
     const user =this.loginService.getUser();
     const token = this.loginService.getJwtToken();
     const producto = new ProductInterfaceUpdate(Prod,user,token);
-    return this.http.put<Product>(this.baseUrl+'/product',producto).pipe(
+
+    return this.http.put<DefaultResponse>(this.baseUrl+'/product',producto).pipe(
       tap(_=>this.handleHttpErrorService.log('datos enviados')),
-      catchError(this.handleHttpErrorService.handleError<Product>('Registrar proveedor',null))
+      catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Registrar proveedor',null))
     );
   }
 
@@ -90,7 +91,6 @@ export class ProductInterface{
   description:string;
   quantity:number;
   price:number;
-
   token:string;
   userIdentification:string;
 

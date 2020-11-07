@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Brand} from '../../models/brand.model';
-import {BrandList} from '../../models/ObjetoLista';
 import {BrandService}from '../../services/brand.service';
 import {ToastrService} from 'ngx-toastr';
 
@@ -13,8 +12,7 @@ import {ToastrService} from 'ngx-toastr';
 export class MarcasComponent implements OnInit {
 
   searchValue:string;
-  alg: object;
-  brandList: BrandList;
+  alg;
   closeResult = '';
   brands: Brand[] = [];
   brand: Brand;
@@ -61,10 +59,9 @@ export class MarcasComponent implements OnInit {
     console.log(this.brand);
     this.brandService.put(this.brand).subscribe(p => {
       if (p != null) {
-        this.brand = p;
-        console.log('Encontro'+p);
+        this.showNotification('Modificado', p.message, 'bottom', 'right')
+
       }
-      this.showNotification('Modificado', 'Marca: ' + this.brand.name + ' modificado con exito!', 'bottom', 'right')
 
     });
   }

@@ -3,7 +3,7 @@ import {HandleHttpErrorService} from './@base/handle-http-error.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
-import {ClientList} from '../models/ObjetoLista';
+import { SearchClientResponse, DefaultResponse} from '../models/responses.model';
 import {Client} from '../models/client.model';
 import { JwtAuthService } from './auth/jwt-auth.service';
 
@@ -21,41 +21,41 @@ export class ClientService {
     this.baseUrl =  baseUrl;
   }
 
-  get(): Observable<ClientList>{
+  get(): Observable<SearchClientResponse>{
 
     const user =this.loginService.getUser();
     const token = this.loginService.getJwtToken();
 
     const auth = user + ' '+token;
-    return this.http.get<ClientList>(this.baseUrl+'/client',
+    return this.http.get<SearchClientResponse>(this.baseUrl+'/client',
     {headers:{['authorization']:auth}}).pipe(
       tap(_=>this.handleHttpErrorService.log('datos enviados')),
-      catchError(this.handleHttpErrorService.handleError<ClientList>('Consulta cliente',null))
+      catchError(this.handleHttpErrorService.handleError<SearchClientResponse>('Consulta cliente',null))
     );
   }
 
-  post(client:Client): Observable<Client>{
+  post(client:Client): Observable<DefaultResponse>{
 
     const user =this.loginService.getUser();
     const token = this.loginService.getJwtToken();
     client.userIdentification = user;
     client.token = token;
 
-    return this.http.post<Client>(this.baseUrl+'/client',client).pipe(
+    return this.http.post<DefaultResponse>(this.baseUrl+'/client',client).pipe(
       tap(_=>this.handleHttpErrorService.log('datos enviados')),
-      catchError(this.handleHttpErrorService.handleError<Client>('Registrar cliente',null))
+      catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Registrar cliente',null))
     );
   }
-  put(client: Client): Observable<any> {
+  put(client: Client): Observable<DefaultResponse> {
 
     const user =this.loginService.getUser();
     const token = this.loginService.getJwtToken();
     client.userIdentification = user;
     client.token = token;
 
-    return this.http.put<Client>(this.baseUrl+'/client',client).pipe(
+    return this.http.put<DefaultResponse>(this.baseUrl+'/client',client).pipe(
       tap(_=>this.handleHttpErrorService.log('datos enviados')),
-      catchError(this.handleHttpErrorService.handleError<Client>('Modificar cliente',null))
+      catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Modificar cliente',null))
     );
   }
 }

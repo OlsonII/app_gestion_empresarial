@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Provider} from '../../../../models/provider.model';
+import {Location} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {ProviderService} from '../../../../services/provider.service';
@@ -16,7 +17,11 @@ export class ModifyProviderComponent implements OnInit {
   staticAlertClosed=false;
 
 
-  constructor(private route: ActivatedRoute,private toastr: ToastrService,private providerService:ProviderService,
+  constructor(
+    private route: ActivatedRoute,
+    private toastr: ToastrService,
+    private providerService:ProviderService,
+    private location:Location
   ) { }
 
   ngOnInit(): void {
@@ -39,11 +44,9 @@ export class ModifyProviderComponent implements OnInit {
   modifyProvider(){
     console.log(this.provider);
     this.providerService.put(this.provider).subscribe(p => {
-      if (p != null) {
-        this.provider = p;
-      }
-      this.showNotification('Modificado', 'Proveedor: '+ this.provider.name +' modificado con exito!','bottom', 'right')
 
+      this.showNotification('Modificación', p.message,'bottom', 'right')
+      this.location.back();
     });
   }
 
