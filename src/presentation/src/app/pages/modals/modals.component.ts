@@ -38,13 +38,13 @@ export class ModalsComponent implements OnInit{
 
   modifyBrand() {
     const namee = this.brand.name;
+    this.brand.token = this.token;
+    this.brand.userIdentification = this.userId;
     console.log(this.brand);
     this.brandService.put(this.brand).subscribe(p => {
       if (p != null) {
-        this.brand = p;
-        console.log('Encontro'+p);
+        this.showNotification('Modificado', 'Marca: ' + namee + ' modificada con exito!', 'bottom', 'right')
       }
-      this.showNotification('Modificado', 'Marca: ' + namee + ' modificada con exito!', 'bottom', 'right')
 
     });
   }
@@ -54,9 +54,8 @@ export class ModalsComponent implements OnInit{
     this.brand.userIdentification = this.userId;
     this.brandService.post(this.brand).subscribe(p => {
       if (p != null) {
-        this.brand = p;
+        this.showNotification('Agregado', 'Marca: '+ this.brand.name +' creada con exito!','bottom', 'right')
       }
-      this.showNotification('Agregado', 'Marca: '+ this.brand.name +' creada con exito!','bottom', 'right')
     });
 
   }
