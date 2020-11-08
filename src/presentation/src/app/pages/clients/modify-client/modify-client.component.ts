@@ -38,6 +38,8 @@ export class ModifyClientComponent implements OnInit {
       email: ['', Validators.required],
     });
 
+
+
     this.client = new Client();
     this.getClient();
     this.getRole();
@@ -66,6 +68,11 @@ export class ModifyClientComponent implements OnInit {
           this.form.controls.telephone.setValue(client.telephone);
           this.form.controls.street.setValue(client.street);
           this.form.controls.email.setValue(client.email);
+
+          if(this.isNotAdmin){
+            this.form.controls.name.disable();
+            this.form.controls.identification.disable();
+          }
         }
       });
     }
