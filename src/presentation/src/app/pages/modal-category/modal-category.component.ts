@@ -40,10 +40,8 @@ export class ModalCategoryComponent implements OnInit {
     console.log(this.category);
     this.categoryService.put(this.category).subscribe(p => {
       if (p != null) {
-        this.category = p;
-        console.log('Encontro'+p);
+        this.showNotification('Modificado', 'Marca: ' + namee + ' modificada con exito!', 'bottom', 'right');
       }
-      this.showNotification('Modificado', 'Marca: ' + namee + ' modificada con exito!', 'bottom', 'right')
 
     });
   }
@@ -54,9 +52,8 @@ export class ModalCategoryComponent implements OnInit {
     this.category.userIdentification = this.userId;
     this.categoryService.post(this.category).subscribe(p => {
       if (p != null) {
-        this.category = p;
+        this.showNotification('Agregado', 'Marca: '+ namee +' creada con exito!','bottom', 'right')
       }
-      this.showNotification('Agregado', 'Marca: '+ namee +' creada con exito!','bottom', 'right')
     });
 
   }

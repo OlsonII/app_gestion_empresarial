@@ -13,7 +13,6 @@ import {ToastrService} from 'ngx-toastr';
 export class MarcasComponent implements OnInit {
 
   searchValue:string;
-  brandList: BrandList;
   closeResult = '';
   brands: Brand[] = [];
   brand: Brand;
