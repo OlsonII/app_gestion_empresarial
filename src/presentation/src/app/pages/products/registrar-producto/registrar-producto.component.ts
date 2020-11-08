@@ -63,8 +63,8 @@ export class RegistrarProductoComponent implements OnInit {
       reference: ['', Validators.required],
       brandProduct: ['', Validators.required],
       categoryProduct: ['', Validators.required],
-      cost: ['', Validators.required],
-      price: ['', Validators.required],
+      cost: ['',[Validators.required,Validators.min(0)]],
+      price: ['', [Validators.required,Validators.min(0)]],
       quantity: [0],
       description: [''],
     });
