@@ -10,6 +10,7 @@ import {Provider} from '../../../models/provider.model';
 import {Product} from '../../../models/product.model';
 import { ToastrService } from 'ngx-toastr';
 import {ProviderService} from '../../../services/provider.service';
+import {JwtAuthService} from '../../../services/auth/jwt-auth.service';
 import {ProductService} from '../../../services/product.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -26,6 +27,8 @@ export class ModifyProductComponent implements OnInit {
   categories: Category[]= [];
   providers: Provider[];
   product: Product;
+  isNotAdmin = true;
+
   form: FormGroup;
   submitted = false;
   staticAlertClosed=false;
@@ -40,6 +43,7 @@ export class ModifyProductComponent implements OnInit {
     private brandService:BrandService,
     private providerService:ProviderService,
     private productService:ProductService,
+    private authService:JwtAuthService,
     private formBuilder: FormBuilder
   ) { }
 
@@ -56,16 +60,19 @@ export class ModifyProductComponent implements OnInit {
       });
 
 
+
       this.brand = new Brand();
       this.product = new Product();
       this.product.brand = new Brand();
       this.product.category = new Category();
       this.category = new Category();
-
+      this.getRole();
       this.getProduct();
       this.getBrands();
       this.getCategories();
       this.getProviders();
+
+
     }
 
   get f() { return this.form.controls; }
@@ -90,7 +97,7 @@ export class ModifyProductComponent implements OnInit {
   }
 
   getProduct(){
-    this.form.controls.reference.setValue( this.route.snapshot.paramMap.get('id').toString());
+    this.form.controls.reference.setValue(this.route.snapshot.paramMap.get('id').toString());
     this.productService.get().subscribe(res=>{
       res.products.forEach(prod => {
         if(prod.reference === this.form.value.reference){
@@ -101,6 +108,13 @@ export class ModifyProductComponent implements OnInit {
           this.form.controls.quantity.setValue(prod.quantity);
           this.form.controls.description.setValue(prod.description);
           this.form.controls.categoryProduct.setValue(prod.category.reference);
+
+          if(this.isNotAdmin){
+            this.form.controls.nameProduct.disable();
+            this.form.controls.reference.disable();
+            this.form.controls.brandProduct.disable();
+            this.form.controls.quantity.disable();
+          }
         }
       });
     });
@@ -187,5 +201,12 @@ export class ModifyProductComponent implements OnInit {
 
   }
 
-
+  getRole(){
+    const role = this.authService.getRole();
+    if(role == 'Administrador'){
+      this.isNotAdmin = false;
+    }else{
+      this.isNotAdmin = true;
+    }
+  }
 }

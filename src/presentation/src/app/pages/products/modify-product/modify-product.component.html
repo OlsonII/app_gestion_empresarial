@@ -132,9 +132,13 @@
                     placeholder="Product"
                     type="text"
                     value="Nuevo producto"
+                    [disabled]="isNotAdmin"
                     formControlName="nameProduct"
-                    disabled
-                  />
+                    [ngClass]="{ 'is-invalid': submitted && f.nameProduct.errors }"
+                    />
+                    <div *ngIf="submitted && f.nameProduct.errors" class="invalid-feedback">
+                      <div *ngIf="f.nameProduct.errors.required">El nombre del producto es requerido</div>
+                    </div>
                 </div>
               </div>
             </div>
@@ -147,9 +151,13 @@
                     placeholder="Referencia"
                     type="text"
                     value="ej: RKJW123"
+                    [disabled]="isNotAdmin"
                     formControlName="reference"
-                    disabled
-                  />
+                    [ngClass]="{ 'is-invalid': submitted && f.reference.errors }"
+                    />
+                    <div *ngIf="submitted && f.reference.errors" class="invalid-feedback">
+                      <div *ngIf="f.reference.errors.required">La referencia del producto es requerida</div>
+                    </div>
                 </div>
               </div>
               <div class=" col-md-5 pl-md-4">
@@ -160,8 +168,8 @@
                     placeholder="Cantidad"
                     type="number"
                     value="3"
+                    [disabled]="isNotAdmin"
                     formControlName="quantity"
-                    disabled
                   />
                 </div>
               </div>
@@ -172,14 +180,14 @@
                 <div class=" form-group">
                   <label> Marca <a class="text-primary">*</a></label>
                   <div class="input-group">
-                    <select class="custom-select" formControlName="brandProduct" disabled>
+                    <select class="custom-select" formControlName="brandProduct" [disabled]="isNotAdmin">
                       <option  *ngFor="let br of brands" [value]="br.reference"
                       [selected]="br.reference === product.brand.reference"
                       >{{br.reference + " - " + br.name}}
 
                       </option>
                       </select>
-                      <button disabled class=" btn custom" (click)="open(content)" >
+                      <button [disabled]="isNotAdmin" class=" btn custom" (click)="open(content)" >
                         <i class=" tim-icons icon-simple-add"> </i>
                       </button>
 

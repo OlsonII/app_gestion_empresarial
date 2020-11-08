@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import {config} from '../config';
 import {UserRoleGuard} from './guards/user-role.guard';
 import {LoginComponent} from './components/login/login.component';
@@ -29,18 +28,6 @@ const routes: Routes = [
         path: '',
         loadChildren:
           './layouts/admin-layout/admin-layout.module#AdminLayoutModule'
-      }
-    ]
-  },
-  {
-    path: '',
-    canActivate:[UserRoleGuard],
-    data:{role: config.authRoles.inventory},
-    component: AuthLayoutComponent,
-    children: [
-      {
-        path: '',
-        loadChildren: './layouts/auth-layout/auth-layout.module#AuthLayoutModule'
       }
     ]
   },

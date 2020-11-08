@@ -4,6 +4,7 @@ import {Location} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {ProviderService} from '../../../../services/provider.service';
+import {JwtAuthService} from '../../../../services/auth/jwt-auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -16,6 +17,7 @@ export class ModifyProviderComponent implements OnInit {
   provider: Provider;
   providers: Provider[];
   staticAlertClosed=false;
+  isNotAdmin = true;
   form: FormGroup;
   submitted = false;
 
@@ -24,6 +26,7 @@ export class ModifyProviderComponent implements OnInit {
     private toastr: ToastrService,
     private providerService:ProviderService,
     private location:Location,
+    private authService:JwtAuthService,
     private formBuilder: FormBuilder
   ) { }
 
@@ -37,6 +40,7 @@ export class ModifyProviderComponent implements OnInit {
       address: [''],
     });
     this.provider = new Provider();
+    this.getRole();
     this.getProvider();
   }
 
@@ -52,6 +56,12 @@ export class ModifyProviderComponent implements OnInit {
           this.form.controls.company.setValue(prod.company);
           this.form.controls.email.setValue(prod.email);
           this.form.controls.address.setValue(prod.street);
+
+
+          if(this.isNotAdmin){
+            this.form.controls.name.disable();
+            this.form.controls.identification.disable();
+          }
         }
       });
     });
@@ -84,6 +94,15 @@ export class ModifyProviderComponent implements OnInit {
       positionClass: 'toast-' + from + '-' +  align
     });
 
+  }
+
+  getRole(){
+    const role = this.authService.getRole();
+    if(role == 'Administrador'){
+      this.isNotAdmin = false;
+    }else{
+      this.isNotAdmin = true;
+    }
   }
 
 }

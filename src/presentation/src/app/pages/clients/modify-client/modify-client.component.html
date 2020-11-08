@@ -17,9 +17,13 @@
                     class=" form-control"
                     placeholder="Num identificacion"
                     type="text"
+                    [disabled]="isNotAdmin"
                     formControlName="identification"
-                    disabled=""
+                    [ngClass]="{ 'is-invalid': submitted && f.identification.errors }"
                   />
+                  <div *ngIf="submitted && f.identification.errors" class="invalid-feedback">
+                    <div *ngIf="f.identification.errors.required">La identificacion del cliente es requerido</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -31,9 +35,13 @@
                     class=" form-control"
                     placeholder="nombres"
                     type="text"
+                    [disabled]="isNotAdmin"
                     formControlName="name"
-                    disabled=""
+                    [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
                   />
+                  <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                    <div *ngIf="f.name.errors.required">El nombre del cliente es requerido</div>
+                  </div>
                 </div>
 
                   <div class=" form-group">

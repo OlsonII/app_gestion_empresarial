@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import {Location} from '@angular/common';
-import {Client} from '../../../models/client.model';
-import {ClientService} from '../../../services/client.service';
+import {Client} from "../../../models/client.model";
+import {ClientService} from "../../../services/client.service";
+import {JwtAuthService} from '../../../services/auth/jwt-auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -14,6 +15,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class ModifyClientComponent implements OnInit {
 
   client:Client;
+  isNotAdmin=true;
   form: FormGroup;
   submitted = false;
   searchValue:string;
@@ -23,6 +25,7 @@ export class ModifyClientComponent implements OnInit {
     private location: Location,
     private toastr:ToastrService,
     private clientService:ClientService,
+    private authService:JwtAuthService,
     private formBuilder: FormBuilder
   ) { }
 
@@ -35,8 +38,11 @@ export class ModifyClientComponent implements OnInit {
       email: ['', Validators.required],
     });
 
+
+
     this.client = new Client();
     this.getClient();
+    this.getRole();
   }
 
   get f() { return this.form.controls; }
@@ -62,6 +68,11 @@ export class ModifyClientComponent implements OnInit {
           this.form.controls.telephone.setValue(client.telephone);
           this.form.controls.street.setValue(client.street);
           this.form.controls.email.setValue(client.email);
+
+          if(this.isNotAdmin){
+            this.form.controls.name.disable();
+            this.form.controls.identification.disable();
+          }
         }
       });
     }
@@ -85,6 +96,15 @@ export class ModifyClientComponent implements OnInit {
       this.showNotification('Modificación', res.message,'bottom', 'right');
       this.location.back();
     });
+  }
+
+  getRole(){
+    const role = this.authService.getRole();
+    if(role == 'Administrador'){
+      this.isNotAdmin = false;
+    }else{
+      this.isNotAdmin = true;
+    }
   }
 
 

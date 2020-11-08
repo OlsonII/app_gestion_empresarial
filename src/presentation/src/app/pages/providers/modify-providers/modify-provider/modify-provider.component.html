@@ -18,9 +18,13 @@
                     class=" form-control"
                     placeholder="Digite cedula"
                     type="text"
-                    disabled=""
+                    [disabled]="isNotAdmin"
                     formControlName="identification"
-                  >
+                    [ngClass]="{ 'is-invalid': submitted && f.identification.errors }"
+                    >
+                    <div *ngIf="submitted && f.identification.errors" class="invalid-feedback">
+                      <div *ngIf="f.identification.errors.required">La cedula del proveedor es requerida</div>
+                    </div>
                 </div>
               </div>
               <div class=" col-md-5 pr-md-4">
@@ -30,9 +34,13 @@
                     class=" form-control"
                     placeholder="Nombre"
                     type="text"
+                    [disabled]="isNotAdmin"
                     formControlName="name"
-                    disabled=""
-                  />
+                    [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+                    />
+                    <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                      <div *ngIf="f.name.errors.required">El nombre del proveedor es requerido</div>
+                    </div>
                 </div>
               </div>
             </div>
