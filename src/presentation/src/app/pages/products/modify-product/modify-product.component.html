@@ -122,7 +122,7 @@
         </div>
 
         <div class=" card-body">
-          <form>
+          <form [formGroup]="form" (ngSubmit)="modifyProduct()">
             <div class=" row">
               <div class=" col-md-6 pr-md-1">
                 <div class=" form-group">
@@ -135,6 +135,8 @@
                     name="name"
                     [disabled]="isNotAdmin"
                     [(ngModel)]="product.name"
+                    formControlName="nameProduct"
+                    disabled
                   />
                 </div>
               </div>
@@ -148,9 +150,9 @@
                     placeholder="Referencia"
                     type="text"
                     value="ej: RKJW123"
-                    name="reference"
                     [disabled]="isNotAdmin"
                     [(ngModel)]="product.reference"
+                    formControlName="reference"
                   />
                 </div>
               </div>
@@ -162,9 +164,9 @@
                     placeholder="Cantidad"
                     type="number"
                     value="3"
-                    name="quantity"
                     [disabled]="isNotAdmin"
                     [(ngModel)]="product.quantity"
+                    formControlName="quantity"
                   />
                 </div>
               </div>
@@ -175,14 +177,14 @@
                 <div class=" form-group">
                   <label> Marca <a class="text-primary">*</a></label>
                   <div class="input-group">
-                    <select class="custom-select" name="miselect" disabled [ngModel]="product.brand.reference">
+                    <select class="custom-select" formControlName="brandProduct" disabled>
                       <option  *ngFor="let br of brands" [value]="br.reference"
                       [selected]="br.reference === product.brand.reference"
                       >{{br.reference + " - " + br.name}}
 
                       </option>
                       </select>
-                      <button  class=" btn custom" (click)="open(content)" >
+                      <button disabled class=" btn custom" (click)="open(content)" >
                         <i class=" tim-icons icon-simple-add"> </i>
                       </button>
 
@@ -200,9 +202,13 @@
                       placeholder="Precio"
                       type="number"
                       value="100"
-                      name="price"
-                      [(ngModel)]="product.price"
+                      formControlName="price"
+                      [ngClass]="{ 'is-invalid': submitted && f.price.errors }"
                     />
+                    <div *ngIf="submitted && f.price.errors" class="invalid-feedback">
+                      <div *ngIf="f.price.errors.required">El precio del producto es requerido</div>
+                      <div *ngIf="f.price.errors.min">El precio del producto no puede ser menor a 0</div>
+                    </div>
                 </div>
               </div>
               <div class=" col-md-2 pl-md-4 pr-md-0">
@@ -213,9 +219,13 @@
                     placeholder="Costo"
                     type="number"
                     value="100"
-                    name="cost"
-                    [(ngModel)]="product.cost"
+                    formControlName="cost"
+                    [ngClass]="{ 'is-invalid': submitted && f.cost.errors }"
                   />
+                  <div *ngIf="submitted && f.cost.errors" class="invalid-feedback">
+                    <div *ngIf="f.cost.errors.required">El costo del producto es requerido</div>
+                    <div *ngIf="f.cost.errors.min">El costo del producto no puede ser menor a 0</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -231,8 +241,7 @@
                     placeholder="Aqui va la descripción"
                     rows="4"
                     value="Descripcion"
-                    name="description"
-                    [(ngModel)]="product.description"
+                    formControlName="description"
                   >Descripción del producto
                   </textarea
                   >
@@ -242,7 +251,7 @@
                 <div class=" form-group">
                   <label> Categoría <a class="text-primary">*</a></label>
                   <div class="input-group">
-                    <select class="custom-select" name="miselect2" type="text" [(ngModel)]="product.category.reference">
+                    <select class="custom-select" formControlName="categoryProduct" type="text" [ngClass]="{ 'is-invalid': submitted && f.categoryProduct.errors }">
                       <option [value]="category.reference"
                       *ngFor="let category of categories"
                       [selected]="category.reference === product.category.reference"
@@ -251,19 +260,18 @@
                       <button  class=" btn custom"  (click)="open(content2)">
                         <i class=" tim-icons icon-simple-add"> </i>
                       </button>
+                      <div *ngIf="submitted && f.categoryProduct.errors" class="invalid-feedback">
+                        <div *ngIf="f.categoryProduct.errors.required">La categoria del producto es requerida</div>
+                      </div>
                   </div>
                 </div>
 
               </div>
             </div>
-
+            <div class=" card-footer">
+              <button class=" btn btn-fill btn-danger" type="submit">Guardar cambios</button>
+            </div>
           </form>
-        <div class=" card-footer">
-          <button class=" btn btn-fill btn-danger" type="submit" (click)="modifyProduct()">Guardar cambios</button>
-        </div>
-
-
-
 
       </div>
     </div>
