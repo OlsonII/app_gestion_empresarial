@@ -4,6 +4,7 @@ import {Location} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {ProviderService} from '../../../../services/provider.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-modify-provider',
@@ -15,35 +16,60 @@ export class ModifyProviderComponent implements OnInit {
   provider: Provider;
   providers: Provider[];
   staticAlertClosed=false;
-
+  form: FormGroup;
+  submitted = false;
 
   constructor(
     private route: ActivatedRoute,
     private toastr: ToastrService,
     private providerService:ProviderService,
-    private location:Location
+    private location:Location,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      identification: ['', Validators.required],
+      name: ['', Validators.required],
+      telephone: ['', Validators.required],
+      company: ['', Validators.required],
+      email: [''],
+      address: [''],
+    });
     this.provider = new Provider();
     this.getProvider();
   }
 
-  getProvider(){
-    this.provider.identification = this.route.snapshot.paramMap.get('id').toString();
-    this.providerService.get().subscribe(res=>{
+  get f() { return this.form.controls; }
 
+  getProvider(){
+    this.form.controls.identification.setValue( this.route.snapshot.paramMap.get('id').toString());
+    this.providerService.get().subscribe(res=>{
       res.providers.forEach(prod => {
-        if(prod.identification === this.provider.identification){
-          this.provider = prod;
+        if(prod.identification === this.form.value.identification){
+          this.form.controls.name.setValue(prod.name);
+          this.form.controls.telephone.setValue(prod.telephone);
+          this.form.controls.company.setValue(prod.company);
+          this.form.controls.email.setValue(prod.email);
+          this.form.controls.address.setValue(prod.street);
         }
       });
     });
   }
 
   modifyProvider(){
+    this.submitted = true;
+    if (this.form.invalid) {
+      return;
+    }
+    const formData = this.form.value
+    this.provider.identification = formData.identification;
+    this.provider.name = formData.name;
+    this.provider.email = formData.email;
+    this.provider.company = formData.company;
+    this.provider.street = formData.address;
+    this.provider.telephone = formData.telephone;
     this.providerService.put(this.provider).subscribe(p => {
-
       this.showNotification('Modificación', p.message,'bottom', 'right')
       this.location.back();
     });
