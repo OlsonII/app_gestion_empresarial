@@ -14,7 +14,6 @@ import { ProviderService} from './services/provider.service';
 import {JwtAuthService} from './services/auth/jwt-auth.service';
 import {UserRoleGuard} from './guards/user-role.guard';
 import {AuthGuard} from './guards/auth.guard';
-import { MovementComponent } from './pages/movement/movement.component';
 import {environment} from "../environments/environment";
 
 @NgModule({
@@ -28,7 +27,7 @@ import {environment} from "../environments/environment";
     AppRoutingModule,
     ToastrModule.forRoot(),
   ],
-  declarations: [AppComponent, AdminLayoutComponent, AuthLayoutComponent],
+  declarations: [AppComponent, AdminLayoutComponent],
   providers: [ProviderService,JwtAuthService,AuthGuard,UserRoleGuard,{provide:'BASE_URL',useValue:environment.BASE_URL}],
   bootstrap: [AppComponent]
 })
