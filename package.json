@@ -1,6 +1,6 @@
 {
   "name": "app-gestion-empresarial",
-  "version": "0.19.13",
+  "version": "0.19.14",
   "description": "",
   "author": "OlsonLabs",
   "private": true,
@@ -13,7 +13,7 @@
     "lint:front": "cd src/presentation/ & ng lint",
     "e2e": "cd src/presentation/ & ng e2e",
     "install:clean": "cd src/presentation/ & rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
-    "build": "cd src/ & nest build",
+    "build": "nest build",
     "build:all": "concurrently \"cd src/ & nest build\" \"npm run build:front\"",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "node dist/main.js",

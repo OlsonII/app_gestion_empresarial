@@ -7,6 +7,7 @@ export class ProductTransactionOrm{
 
     @ObjectIdColumn()
     _id: ObjectID;
+    @Column({nullable: false})
     public inputQuantity: number;
     @Column({nullable: false})
     public outputQuantity: number;
