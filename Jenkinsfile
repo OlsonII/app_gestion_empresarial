@@ -24,6 +24,8 @@ pipeline {
 
     stage('Deploying'){
       steps{
+        echo 'login to firebase...'
+        bat 'firebase login'
         echo 'Deploying...'
         bat 'firebase deploy'
       }
