@@ -12,7 +12,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class ProvidersComponent implements OnInit {
   provider: Provider;
   searchValue:string;
-  providers: Provider[];
   staticAlertClosed=false;
   form: FormGroup;
   submitted = false;
@@ -25,8 +24,6 @@ export class ProvidersComponent implements OnInit {
 
   ngOnInit(): void {
     this.provider = new Provider();
-    this.getProviders();
-
     this.form = this.formBuilder.group({
       identification: ['', Validators.required],
       name: ['', Validators.required],
@@ -50,16 +47,6 @@ export class ProvidersComponent implements OnInit {
 
     }
 
-  getProviders(){
-    this.providerService.get().subscribe(
-      res=>{
-        if(res!=null){
-          this.providers = res.providers;
-        }
-      }
-    );
-  }
-
   add() {
     this.submitted = true;
     if (this.form.invalid) {
@@ -78,7 +65,6 @@ export class ProvidersComponent implements OnInit {
       }else{
        console.log(p);
       }
-      this.getProviders();
     });
   }
 

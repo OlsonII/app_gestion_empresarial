@@ -15,6 +15,10 @@ import {UserRoleGuard} from './guards/user-role.guard';
 import {AuthGuard} from './guards/auth.guard';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { environment } from '../environments/environment';
+import { ConsultProvidersComponent } from './pages/providers/consult-providers/consult-providers.component';
+import { AdminLayoutModule } from './layouts/admin-layout/admin-layout.module';
+import { ConsultUserComponent } from './pages/user/consult-user/consult-user.component';
+import { ConsultClientComponent } from './pages/clients/consult-client/consult-client.component';
 
 @NgModule({
   imports: [
@@ -26,8 +30,9 @@ import { environment } from '../environments/environment';
     RouterModule,
     AppRoutingModule,
     ToastrModule.forRoot(),
+    AdminLayoutModule,
   ],
-  declarations: [AppComponent, AdminLayoutComponent],
+  declarations: [AppComponent, AdminLayoutComponent, ConsultProvidersComponent, ConsultUserComponent, ConsultClientComponent],
   providers: [ProviderService,JwtAuthService,AuthGuard,UserRoleGuard,{provide:'BASE_URL',useValue:environment.BASE_URL}],
   bootstrap: [AppComponent]
 })

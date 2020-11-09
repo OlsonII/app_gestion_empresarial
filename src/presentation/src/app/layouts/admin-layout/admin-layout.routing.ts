@@ -20,7 +20,10 @@ import {UserRoleGuard} from '../../guards/user-role.guard';
 import {config} from '../../../config';
 import {ModifyUserComponent} from '../../pages/user/modify-user/modify-user.component';
 import {ModifyClientComponent} from '../../pages/clients/modify-client/modify-client.component';
-import {MovementComponent} from "../../pages/movement/movement.component";
+import {MovementComponent} from '../../pages/movement/movement.component';
+import {ConsultProvidersComponent} from '../../pages/providers/consult-providers/consult-providers.component';
+import { ConsultClientComponent } from '../../pages/clients/consult-client/consult-client.component';
+import { ConsultUserComponent } from '../../pages/user/consult-user/consult-user.component';
 
 export const AdminLayoutRoutes: Routes = [
   { path: 'products', component:ConsultarProductoComponent},
@@ -33,6 +36,12 @@ export const AdminLayoutRoutes: Routes = [
     data:{role: config.authRoles.admin},
     component: UserComponent
   },
+  {
+    path: 'consultUser',
+    canActivate:[UserRoleGuard],
+    data:{role: config.authRoles.admin},
+    component: ConsultUserComponent
+  },
   { path: 'tables', component: TablesComponent },
   { path: 'typography', component: TypographyComponent },
   { path: 'products', component:ConsultarProductoComponent},
@@ -42,6 +51,12 @@ export const AdminLayoutRoutes: Routes = [
     canActivate:[UserRoleGuard],
     data:{role: config.authRoles.admin},
     component:ProvidersComponent
+  },
+  {
+    path: 'consultProviders',
+    canActivate:[UserRoleGuard],
+    data:{role: config.authRoles.admin},
+    component:ConsultProvidersComponent
   },
   { path: 'productInOut', component:ProductsInAndOutComponent},
   { path: 'brands', component: MarcasComponent},
@@ -53,6 +68,12 @@ export const AdminLayoutRoutes: Routes = [
     canActivate:[UserRoleGuard],
     data:{role: config.authRoles.admin},
     component:ClientsComponent
+  },
+  {
+    path: 'consultClients',
+    canActivate:[UserRoleGuard],
+    data:{role: config.authRoles.admin},
+    component:ConsultClientComponent
   },
   { path: 'productDetail/:id',component:ProductDetailComponent},
   { path: 'productDetail/:id',component:ProductDetailComponent},
