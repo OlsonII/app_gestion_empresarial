@@ -24,6 +24,7 @@ export class RegisterProductOutputService{
                     transaction.product.removeProduct(request.outputQuantity);
                 }
                 transaction.date = new Date().getDate() + '-' + new Date().getMonth() + '-' + new Date().getFullYear();
+                transaction.user = await this._unitOfWork.userRepository.findUser(request.userIdentification);
                 this._unitOfWork.start();
                 const savedProduct = await this._unitOfWork.complete(async () =>  await this._unitOfWork.productRepository.save(transaction.product));
                 this._unitOfWork.start();

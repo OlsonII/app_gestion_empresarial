@@ -25,7 +25,7 @@ pipeline {
     stage('Deploying'){
       steps{
         echo 'Deploying...'
-        bat 'firebase deploy --token "05cmeR7BemU_QCgYIARAAGAUSNwF-L9IrTDdBhj5kShyXCN_USXMqlYzBn79LJhQSE0agrcAVFnZRfcXJCV19DlZNilnhCvExwV4"'
+        bat 'firebase deploy --token 1//05xe9JAHmVHBwCgYIARAAGAUSNwF-L9IrvM1yBolgfpYF5MRFEvEmcZncEUXjM0L304hpSJC4-maF6-L3x0RmjA3SmHGzuH0_T2s'
       }
     }
 
