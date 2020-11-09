@@ -1,7 +1,7 @@
 import { Brand } from './brand.model';
 import { Category } from './category.model';
 import { Client } from './client.model';
-import { Movement } from './movemet.model';
+import { Movement } from './movement.model';
 import { Product } from './product.model';
 import { Provider } from './provider.model';
 import { User } from './user.model';
