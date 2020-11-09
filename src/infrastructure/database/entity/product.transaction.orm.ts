@@ -17,5 +17,5 @@ export class ProductTransactionOrm{
     @Column({nullable: false})
     public date: string;
     @Column({nullable: false})
-    public partner: UserOrm;
+    public user: UserOrm;
 }
