@@ -13,15 +13,19 @@
                 <thead class=" text-primary">
                 <tr>
                   <th>Date</th>
-                  <th>OutputQuantity</th>
+                  <th>Quantity</th>
+                  <th>Type</th>
                   <th>Name</th>
+                  <th>Responsible</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr *ngFor="let movement of movements">
                   <td>{{movement.date}}</td>
-                  <td>{{movement.outputQuantity}}</td>
+                  <td>{{movement.quantity}}</td>
+                  <td>{{movement.type}}</td>
                   <td>{{movement.product.name}}</td>
+                  <td>{{movement.user.name}}</td>
                 </tr>
                 </tbody>
               </table>
