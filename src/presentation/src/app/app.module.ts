@@ -18,7 +18,7 @@ import { ConsultProvidersComponent } from './pages/providers/consult-providers/c
 import { AdminLayoutModule } from './layouts/admin-layout/admin-layout.module';
 import { ConsultUserComponent } from './pages/user/consult-user/consult-user.component';
 import { ConsultClientComponent } from './pages/clients/consult-client/consult-client.component';
-import {environment} from "../environments/environment";
+import {environment} from '../environments/environment';
 
 @NgModule({
   imports: [
