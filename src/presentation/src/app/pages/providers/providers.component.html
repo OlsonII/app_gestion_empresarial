@@ -53,8 +53,8 @@
                     formControlName="telephone"
                     [ngClass]="{ 'is-invalid': submitted && f.telephone.errors }"
                   />
-                  <div *ngIf="submitted && f.telephone.errors" class="invalid-feedback">
-                    <div *ngIf="f.telephone.errors.required">El telefono del proveedor es requerido</div>
+                  <div *ngIf="submitted && f.company.errors" class="invalid-feedback">
+                    <div *ngIf="f.company.errors.required">La empresa del proveedor es requerida</div>
                   </div>
                 </div>
               </div>

@@ -8,7 +8,7 @@
           </p>
         </div>
         <div class=" card-body">
-          <form>
+          <form [formGroup]="form" (ngSubmit)="updateUser()">
             <div class=" row">
               <div class=" col-md-5 pr-md-4">
                 <div class=" form-group">
@@ -17,9 +17,12 @@
                     class=" form-control"
                     placeholder="Num identificacion"
                     type="text"
-                    name="identification"
-                    [(ngModel)]="user.newIdentification"
+                    formControlName="identification"
+                    [ngClass]="{ 'is-invalid': submitted && f.identification.errors }"
                   />
+                  <div *ngIf="submitted && f.identification.errors" class="invalid-feedback">
+                    <div *ngIf="f.identification.errors.required">La identificacion del usuario es requerido</div>
+                  </div>
                 </div>
               </div>
               </div>
@@ -31,9 +34,12 @@
                     class=" form-control"
                     placeholder="nombres"
                     type="text"
-                    name="nombre"
-                    [(ngModel)]="user.name"
+                    formControlName="name"
+                    [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
                   />
+                  <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                    <div *ngIf="f.name.errors.required">El nombre del usuario es requerido</div>
+                  </div>
                 </div>
               </div>
 
@@ -47,9 +53,12 @@
                     placeholder="Direccion"
                     type="text"
                     value="calle 18b b, nr. 8 Bl 1, Sc 1, Ap 09"
-                    name="direccion"
-                    [(ngModel)]="user.street"
+                    formControlName="street"
+                    [ngClass]="{ 'is-invalid': submitted && f.street.errors }"
                   />
+                  <div *ngIf="submitted && f.street.errors" class="invalid-feedback">
+                    <div *ngIf="f.street.errors.required">La direccion del usuario es requerida</div>
+                  </div>
                 </div>
               </div>
               <div class=" col-md-5 pr-md-4">
@@ -59,9 +68,12 @@
                     class=" form-control"
                     placeholder="Telefono"
                     type="text"
-                    name="telefono"
-                    [(ngModel)]="user.telephone"
+                    formControlName="telephone"
+                    [ngClass]="{ 'is-invalid': submitted && f.telephone.errors }"
                   />
+                  <div *ngIf="submitted && f.telephone.errors" class="invalid-feedback">
+                    <div *ngIf="f.telephone.errors.required">El telefono del usuario es requerido</div>
+                  </div>
                 </div>
             </div>
             <div class=" row">
@@ -71,9 +83,12 @@
                 <div class=" form-group">
                   <label> Rol <a class="text-primary">*</a> </label>
                   <div class="input-group" >
-                    <select class="custom-select" name="miselect" [(ngModel)]="user.rol">
+                    <select class="custom-select" formControlName="rol" [ngClass]="{ 'is-invalid': submitted && f.rol.errors }">
                       <option [value]="rol" *ngFor="let rol of roles">{{rol}}</option>
                     </select>
+                    <div *ngIf="submitted && f.rol.errors" class="invalid-feedback">
+                      <div *ngIf="f.rol.errors.required">El rol del usuario es requerido</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -84,8 +99,7 @@
                     class=" form-control"
                     placeholder="Digite contraseña"
                     type="password"
-                    name="password"
-                    [(ngModel)]="user.password"
+                    formControlName="password"
                   />
                 </div>
               </div>
