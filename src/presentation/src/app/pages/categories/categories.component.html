@@ -1,56 +1,5 @@
 <div class=" content">
-  <div class="row">
-    <ng-template #contentcat let-modal>
-      <div class="card" style="margin-bottom: 0px">
-        <div class=" card-header"><h4 class=" title">Modificar Categoría</h4>
-          <p class=" category">
-            Los datos marcados con (<a class="text-primary">*</a>) son de carácter obligatorio
-          </p>
-        </div>
-        <div class="modal-header">
-          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class=" card-body">
-          <form>
-            <div class=" row">
-              <div class=" col-md-5 pr-md-4">
-                <div class=" form-group">
-                  <label> Referencia <a class="text-primary">*</a></label>
-                  <input
-                    class=" form-control"
-                    placeholder="Referencia"
-                    type="text"
-                    name="reference"
-                    [(ngModel)]="category.reference"
-                  />
-                </div>
-              </div>
-              <div class=" col-md-5 pl-md-4">
-                <div class=" form-group">
-                  <label> Nombre <a class="text-primary">*</a> </label>
-                  <input
-                    class=" form-control"
-                    placeholder="Ingrese"
-                    type="text"
-                    name="name"
-                    [(ngModel)]="category.name"
-                  />
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-lg btn-outline-primary" (click)="modal.close('Save click');modifyCategory()">Modificar</button>
-        </div>
-      </div>
-    </ng-template>
-  </div>
-
-  <div class=" row">
+<div class=" row">
     <div class="col-md-12 ">
       <div class=" card">
         <div class=" card-header">
@@ -66,12 +15,12 @@
               />
             </div>
           </h4>
-          <button class="btn btn-fill btn-danger" >Crear</button>
+          <button class="btn btn-fill btn-danger" (click)="open(category,'create')" >Crear</button>
         </div>
         <div class=" card card-plain">
           <div class=" card-body">
             <div class="table-full-width table-responsive">
-              <table class=" table" id="">
+              <table (mouseover)="getCategories()" class=" table" id="">
                 <thead class=" text-primary">
                 <tr>
                   <th>Referencia</th>
@@ -84,7 +33,7 @@
                   <td>{{categ.reference}}</td>
                   <td>{{categ.name}}</td>
                   <td>
-                    <button class=" btn btn-link" container="body" ngbtooltip="Edit Task" placement="left" type="button" (click)="open(contentcat,categ)" >
+                    <button class=" btn btn-link" container="body" ngbtooltip="Edit Task" placement="left" type="button" (click)="open(categ,'modify')" >
                       <i class=" tim-icons icon-pencil"></i>
                     </button>
                   </td>
@@ -97,5 +46,4 @@
       </div>
     </div>
   </div>
-</div>
 
