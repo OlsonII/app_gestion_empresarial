@@ -1,17 +1,31 @@
 pipeline {
   agent any
   stages {
-    stage('Build') {
+    stage('Installing') {
       steps {
         echo 'Installing Packages..'
         bat 'npm install'
       }
     }
 
-    stage('Test') {
+    stage('Building'){
+        steps{
+            echo 'Building projects...'
+            bat 'npm run build'
+        }
+    }
+
+    stage('Testing') {
       steps {
-        echo 'Testing..'
+        echo 'Testing...'
         bat 'npm run test'
+      }
+    }
+
+    stage('Deploying'){
+      steps{
+        echo 'Deploying...'
+        bat 'firebase deploy'
       }
     }
 
