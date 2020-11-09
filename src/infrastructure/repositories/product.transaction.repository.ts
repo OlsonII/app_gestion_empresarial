@@ -3,8 +3,6 @@ import {EntityRepository} from "typeorm";
 import {GenericRepository} from "../base/generic.repository";
 import {ProductTransactionOrm} from "../database/entity/product.transaction.orm";
 import {ProductTransaction} from "../../domain/entity/product.transaction.entity";
-import {Brand} from "../../domain/entity/brand.entity";
-import {Category} from "../../domain/entity/category.entity";
 import {Product} from "../../domain/entity/product.entity";
 
 @Injectable()
