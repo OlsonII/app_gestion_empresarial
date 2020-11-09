@@ -11,7 +11,7 @@ pipeline {
     stage('Building'){
         steps{
             echo 'Building projects...'
-            bat 'npm run build'
+            bat 'npm run build:all'
         }
     }
 
