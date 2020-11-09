@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { ComponentsModule } from './components/components.module';
@@ -13,8 +14,7 @@ import { ProviderService} from './services/provider.service';
 import {JwtAuthService} from './services/auth/jwt-auth.service';
 import {UserRoleGuard} from './guards/user-role.guard';
 import {AuthGuard} from './guards/auth.guard';
-import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { environment } from '../environments/environment';
+import {environment} from "../environments/environment";
 
 @NgModule({
   imports: [
