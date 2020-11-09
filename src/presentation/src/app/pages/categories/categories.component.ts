@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Category} from '../../models/category.model';
 import {CategoryService} from '../../services/category.service';
-import {ToastrService} from "ngx-toastr";
+import {ToastrService} from 'ngx-toastr';
+import { ModalCategoryComponent } from '../modal-category/modal-category.component';
 
 @Component({
   selector: 'app-categories',
@@ -40,27 +41,19 @@ export class CategoriesComponent implements OnInit {
   }
 
   open(category: Category,opcion :string) {
-    if( opcion === 'create'){
-      this.category = new Brand();
+    if (opcion === 'create') {
+      this.category = new Category();
     }
-    if (opcion === 'modify'){
+    if (opcion === 'modify') {
       this.category = category;
     }
     const modalRef = this.modalService.open(ModalCategoryComponent);
     modalRef.componentInstance.category = this.category;
-    modalRef.componentInstance.option= opcion;
-
-  modifyCategory() {
-    this.categoryService.put(this.category).subscribe(p => {
-      if (p != null) {
-        this.showNotification('Aviso', p.message , 'bottom', 'right')
-      }
+    modalRef.componentInstance.option = opcion;
   }
 
-    });
-  }
 
-  showNotification(titulo, mensaje, from, align) {
+  showNotification(titulo, mensaje, from, align){
     this.toastr.info('<span class="tim-icons icon-check-2" [data-notify]="icon"></span>' + mensaje, titulo, {
       disableTimeOut: true,
       closeButton: true,

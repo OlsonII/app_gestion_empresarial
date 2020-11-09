@@ -12,7 +12,6 @@ import {ProviderService} from '../../../services/provider.service';
 import {JwtAuthService} from '../../../services/auth/jwt-auth.service';
 import {ProductService} from '../../../services/product.service';
 import {FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {ProductService} from '../../../services/product.service';
 import { ModalsComponent } from '../../modals/modals.component';
 import { ModalCategoryComponent } from '../../modal-category/modal-category.component';
 
@@ -74,17 +73,7 @@ export class RegistrarProductoComponent implements OnInit {
   }
 
   get f() { return this.form.controls; }
-    ngOnInit(): void {
-      this.product = new Product();
-      this.category = new Category();
-      this.product.brand = new Brand();
-      this.product.category = new Category();
-      this.getBrands();
-      this.getCategories();
-      this.getProviders();
-      this.token = this.auth.getJwtToken();
-      this.userId = this.auth.getUser();
-    }
+
 
   open() {
     const modalRef = this.modalService.open(ModalsComponent);
@@ -98,6 +87,7 @@ export class RegistrarProductoComponent implements OnInit {
     this.brand = new Brand();
     modalRef.componentInstance.option= 'create';
     modalRef.componentInstance.category= this.category;
+  }
 
   addProduct(){
     this.submitted = true;
