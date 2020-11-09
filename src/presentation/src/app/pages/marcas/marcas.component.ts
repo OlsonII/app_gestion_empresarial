@@ -13,6 +13,7 @@ import { ModalsComponent } from '../modals/modals.component';
 export class MarcasComponent implements OnInit {
 
   searchValue:string;
+  alg;
   closeResult = '';
   brands: Brand[] = [];
   brand: Brand;

@@ -16,8 +16,7 @@ import {JwtAuthService} from './services/auth/jwt-auth.service';
 import {UserRoleGuard} from './guards/user-role.guard';
 import {AuthGuard} from './guards/auth.guard';
 import { MovementComponent } from './pages/movement/movement.component';
-import {environment} from '../environments/environment';
-import { ModalCategoryComponent } from './pages/modal-category/modal-category.component';
+import {environment} from "../environments/environment";
 
 @NgModule({
   imports: [
