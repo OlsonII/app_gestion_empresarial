@@ -28,7 +28,7 @@ export class ProductTransactionRepository extends GenericRepository<ProductTrans
         transaction.product.cost = orm.product.cost;
         transaction.product.price = orm.product.price;
         transaction.product.quantity = orm.product.quantity;
-        transaction.partner = orm.partner;
+        transaction.user = orm.user;
         return transaction;
     }
 
