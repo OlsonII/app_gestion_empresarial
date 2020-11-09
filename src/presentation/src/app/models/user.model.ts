@@ -5,6 +5,7 @@ export class User{
   street: string;
   rol: string;
   telephone: string;
+  email: string;
   password: string;
   token: string;
   userIdentification:string;

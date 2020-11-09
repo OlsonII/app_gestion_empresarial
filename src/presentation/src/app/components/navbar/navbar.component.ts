@@ -28,9 +28,38 @@ export class NavbarComponent implements OnInit, OnDestroy {
       title: 'Productos',
     },
     {
+      path: '/productsInOut',
+      title: 'Entradas y salidas',
+    },
+    {
       path: '/productInOut',
       title: 'Entradas y salidas',
     },
+    {
+      path: '/addProduct',
+      title: 'Registrar producto',
+    },
+    {
+      path: '/modifyProduct',
+      title: 'Modificación de producto',
+    },
+    {
+      path: '/modifyProvider',
+      title: 'Modificación de proveedor',
+    },
+    {
+      path: '/productDetail',
+      title: 'Detalles del producto',
+    },
+    {
+      path: '/modifyUser',
+      title: 'Modificación de usuario',
+    },
+    {
+      path: '/modifyClient',
+      title: 'Modificación de cliente',
+    },
+
   ];
 
 
@@ -189,7 +218,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     for (const item of this.SecondRoutes) {
-      if (item.path === titlee) {
+      if (titlee.includes(item.path)) {
         return item.title;
       }
     }

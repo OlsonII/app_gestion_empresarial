@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../pages/dashboard/dashboard.component';
 import { IconsComponent } from '../../pages/icons/icons.component';
-import { MapComponent } from '../../pages/map/map.component';
 import { NotificationsComponent } from '../../pages/notifications/notifications.component';
 import { UserComponent } from '../../pages/user/user.component';
 import { TablesComponent } from '../../pages/tables/tables.component';
@@ -32,6 +31,9 @@ import { SearchProviderPipe} from '../../pages/pipes/search-provider.pipe';
 import { SearchCategoryPipe} from '../../pages/pipes/search-category.pipe';
 import { SearchUserPipe} from '../../pages/pipes/search-user.pipe';
 import { SearchBrandPipe} from '../../pages/pipes/search-brand.pipe';
+import { ModalsComponent } from '../../pages/modals/modals.component';
+import { MovementComponent } from '../../pages/movement/movement.component';
+import { ModalCategoryComponent } from '../../pages/modal-category/modal-category.component';
 
 @NgModule({
   imports: [
@@ -49,7 +51,6 @@ import { SearchBrandPipe} from '../../pages/pipes/search-brand.pipe';
     IconsComponent,
     TypographyComponent,
     NotificationsComponent,
-    MapComponent,
     RegistrarProductoComponent,
     ConsultarProductoComponent,
     CategoriesComponent,
@@ -67,7 +68,10 @@ import { SearchBrandPipe} from '../../pages/pipes/search-brand.pipe';
     SearchProviderPipe,
     SearchCategoryPipe,
     SearchUserPipe,
-    SearchBrandPipe
+    SearchBrandPipe,
+    ModalsComponent,
+    MovementComponent,
+    ModalCategoryComponent
   ]
 })
 export class AdminLayoutModule {}
