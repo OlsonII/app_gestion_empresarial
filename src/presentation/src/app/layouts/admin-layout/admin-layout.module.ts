@@ -44,6 +44,11 @@ import { ModalCategoryComponent } from '../../pages/modal-category/modal-categor
     NgbModule,
     ReactiveFormsModule,
   ],
+  exports: [
+    SearchProviderPipe,
+    SearchUserPipe,
+    SearchClientPipe,
+  ],
   declarations: [
     DashboardComponent,
     UserComponent,
@@ -71,7 +76,7 @@ import { ModalCategoryComponent } from '../../pages/modal-category/modal-categor
     SearchBrandPipe,
     ModalsComponent,
     MovementComponent,
-    ModalCategoryComponent
-  ]
+    ModalCategoryComponent,
+  ],
 })
 export class AdminLayoutModule {}
