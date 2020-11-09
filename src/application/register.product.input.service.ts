@@ -16,6 +16,7 @@ export class RegisterProductInputService{
                 const transaction: ProductTransaction = new ProductTransaction();
                 transaction.inputQuantity = request.inputQuantity;
                 transaction.outputQuantity = 0;
+                transaction.description = request.description;
                 transaction.product = await this._unitOfWork.productRepository.findProduct(request.productReference);
                 transaction.product.insertProduct(request.inputQuantity);
                 transaction.date = new Date().getDate() + '-' + new Date().getMonth() + '-' + new Date().getFullYear();

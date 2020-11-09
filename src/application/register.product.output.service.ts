@@ -16,6 +16,7 @@ export class RegisterProductOutputService{
                 const transaction: ProductTransaction = new ProductTransaction();
                 transaction.inputQuantity = 0;
                 transaction.outputQuantity = request.outputQuantity;
+                transaction.description = request.description;
                 transaction.product = await this._unitOfWork.productRepository.findProduct(request.productReference);
                 if(transaction.product.quantity < transaction.outputQuantity){
                     transaction.outputQuantity = transaction.product.quantity;
