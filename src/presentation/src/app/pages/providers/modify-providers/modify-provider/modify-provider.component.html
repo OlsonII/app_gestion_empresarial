@@ -9,7 +9,7 @@
         </div>
 
         <div class=" card-body">
-          <form >
+          <form [formGroup]="form" (ngSubmit)="modifyProvider()">
             <div class=" row">
               <div class=" col-md-5 pr-md-4">
                 <div class=" form-group">
@@ -18,10 +18,13 @@
                     class=" form-control"
                     placeholder="Digite cedula"
                     type="text"
-                    disabled=""
-                    name="identification"
-                    [(ngModel)]="provider.identification"
-                  >
+                    [disabled]="isNotAdmin"
+                    formControlName="identification"
+                    [ngClass]="{ 'is-invalid': submitted && f.identification.errors }"
+                    >
+                    <div *ngIf="submitted && f.identification.errors" class="invalid-feedback">
+                      <div *ngIf="f.identification.errors.required">La cedula del proveedor es requerida</div>
+                    </div>
                 </div>
               </div>
               <div class=" col-md-5 pr-md-4">
@@ -31,10 +34,13 @@
                     class=" form-control"
                     placeholder="Nombre"
                     type="text"
-                    name="name"
-                    disabled=""
-                    [(ngModel)]="provider.name"
-                  />
+                    [disabled]="isNotAdmin"
+                    formControlName="name"
+                    [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+                    />
+                    <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                      <div *ngIf="f.name.errors.required">El nombre del proveedor es requerido</div>
+                    </div>
                 </div>
               </div>
             </div>
@@ -46,9 +52,12 @@
                     class=" form-control"
                     placeholder="Telefono"
                     type="tel"
-                    name="telephone"
-                    [(ngModel)]="provider.telephone"
+                    formControlName="telephone"
+                    [ngClass]="{ 'is-invalid': submitted && f.telephone.errors }"
                   />
+                  <div *ngIf="submitted && f.company.errors" class="invalid-feedback">
+                    <div *ngIf="f.company.errors.required">La empresa del proveedor es requerida</div>
+                  </div>
                 </div>
               </div>
               <div class=" col-md-5 pr-md-4">
@@ -58,9 +67,12 @@
                     class=" form-control"
                     placeholder="Empresa"
                     type="text"
-                    name="company"
-                    [(ngModel)]="provider.company"
+                    formControlName="company"
+                    [ngClass]="{ 'is-invalid': submitted && f.company.errors }"
                   />
+                  <div *ngIf="submitted && f.company.errors" class="invalid-feedback">
+                    <div *ngIf="f.company.errors.required">La empresa del proveedor es requerida</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -72,8 +84,7 @@
                     class=" form-control"
                     placeholder="Aqui va el correo"
                     type="email"
-                    name="email"
-                    [(ngModel)]="provider.email"
+                    formControlName="email"
                   >
                 </div>
               </div>
@@ -84,18 +95,17 @@
                     class=" form-control"
                     placeholder="Ingrese la direccion"
                     type="text"
-                    name="adress"
-                    [(ngModel)]="provider.street"
+                    formControlName="address"
                   >
                 </div>
               </div>
             </div>
-
+            <div class=" card-footer">
+              <button class=" btn btn-fill btn-danger" type="submit" >Guardar</button>
+            </div>
           </form>
         </div>
-        <div class=" card-footer">
-          <button class=" btn btn-fill btn-danger" type="submit" (click)="modifyProvider()">Guardar</button>
-        </div>
+
       </div>
     </div>
 

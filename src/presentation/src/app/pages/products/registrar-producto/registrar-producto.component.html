@@ -1,58 +1,6 @@
 
-<div class=" content">
-  <div class="row">
-    <ng-template #content2 let-modal>
-      <div class="card" style="margin-bottom: 0px">
-        <div class=" card-header"><h4 class=" title">Registrar Category</h4>
-          <p class=" category">
-            Los datos marcados con (<a class="text-primary">*</a>) son de carácter obligatorio
-          </p>
-        </div>
-        <div class="modal-header">
-          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class=" card-body">
-          <form>
-            <div class=" row">
-              <div class=" col-md-5 pr-md-4">
-                <div class=" form-group">
-                  <label> Referencia <a class="text-primary">*</a></label>
-                  <input
-                    class=" form-control"
-                    placeholder="Referencia"
-                    type="text"
-                    name="reference"
-                    [(ngModel)]="category.reference"
-                  />
-                </div>
-              </div>
-              <div class=" col-md-5 pl-md-4">
-                <div class=" form-group">
-                  <label> Nombre <a class="text-primary">*</a> </label>
-                  <input
-                    class=" form-control"
-                    placeholder="Ingrese"
-                    type="text"
-                    name="name"
-                    [(ngModel)]="category.name"
-                  />
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-lg btn-outline-primary" (click)="modal.close('Save click');addCategory()">Registrar</button>
-        </div>
-      </div>
-    </ng-template>
-  </div>
-
-
-  <ngb-alert [type]="'danger'" *ngIf="staticAlertClosed" [dismissible]="false">
+<div class="content">
+<ngb-alert [type]="'danger'" *ngIf="staticAlertClosed" [dismissible]="false">
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close" (click)="staticAlertClosed = true">
       <i class="tim-icons icon-simple-remove"></i>
     </button>
@@ -62,56 +10,6 @@
   </ngb-alert>
 
 
-  <div class="row">
-    <ng-template #content let-modal>
-      <div class="card" style="margin-bottom: 0px">
-        <div class=" card-header"><h4 class=" title">Registrar Brand</h4>
-          <p class=" category">
-            Los datos marcados con (<a class="text-primary">*</a>) son de carácter obligatorio
-          </p>
-        </div>
-        <div class="modal-header">
-          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class=" card-body">
-          <form>
-            <div class=" row">
-              <div class=" col-md-5 pr-md-4">
-                <div class=" form-group">
-                  <label> Referencia <a class="text-primary">*</a></label>
-                  <input
-                    class=" form-control"
-                    placeholder="Referencia"
-                    type="text"
-                    name="reference"
-                    [(ngModel)]="brand.reference"
-                  />
-                </div>
-              </div>
-              <div class=" col-md-5 pl-md-4">
-                <div class=" form-group">
-                  <label> Nombre <a class="text-primary">*</a> </label>
-                  <input
-                    class=" form-control"
-                    placeholder="Ingrese"
-                    type="text"
-                    name="name"
-                    [(ngModel)]="brand.name"
-                  />
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-lg btn-outline-primary" (click)="modal.close('Save click');addBrand()">Registrar</button>
-        </div>
-      </div>
-    </ng-template>
-  </div>
   <div class=" row">
     <div class=" col-md-12 ">
       <div class=" card">
@@ -179,8 +77,8 @@
                     <select class="custom-select" formControlName="brandProduct" [ngClass]="{ 'is-invalid': submitted && f.brandProduct.errors }">
                       <option [value]="brand.reference" *ngFor="let brand of brands">{{brand.reference + " " + brand.name}}</option>
                     </select>
-                    <button  class=" btn custom" (click)="open(content)" >
-                      <i class=" tim-icons icon-simple-add"> </i>
+                    <button  class=" btn custom" (mouseover)="getBrands()" (click)="open()">
+                      <i class="tim-icons icon-simple-add"> </i>
                     </button>
                     <div *ngIf="submitted && f.brandProduct.errors" class="invalid-feedback">
                       <div *ngIf="f.brandProduct.errors.required">La marca del producto es requerida</div>
@@ -202,6 +100,7 @@
                   />
                   <div *ngIf="submitted && f.price.errors" class="invalid-feedback">
                     <div *ngIf="f.price.errors.required">El precio del producto es requerido</div>
+                    <div *ngIf="f.price.errors.min">El precio del producto no puede ser menor a 0</div>
                   </div>
                 </div>
               </div>
@@ -218,6 +117,7 @@
                   />
                   <div *ngIf="submitted && f.cost.errors" class="invalid-feedback">
                     <div *ngIf="f.cost.errors.required">El costo del producto es requerido</div>
+                    <div *ngIf="f.cost.errors.min">El costo del producto no puede ser menor a 0</div>
                   </div>
                 </div>
               </div>
@@ -247,7 +147,7 @@
                     <select class="custom-select" formControlName="categoryProduct" [ngClass]="{ 'is-invalid': submitted && f.categoryProduct.errors }">
                       <option [value]="category.reference" *ngFor="let category of categories">{{category.reference + " " + category.name}}</option>
                     </select>
-                    <button  class=" btn custom"  (click)="open(content2)">
+                    <button  class=" btn custom"  (mouseover)="getCategories()" (click)="openModalCategory()">
                       <i class=" tim-icons icon-simple-add"> </i>
                     </button>
                     <div *ngIf="submitted && f.categoryProduct.errors" class="invalid-feedback">

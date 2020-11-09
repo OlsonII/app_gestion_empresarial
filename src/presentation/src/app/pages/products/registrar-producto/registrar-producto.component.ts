@@ -12,6 +12,8 @@ import {ProviderService} from '../../../services/provider.service';
 import {JwtAuthService} from '../../../services/auth/jwt-auth.service';
 import {ProductService} from '../../../services/product.service';
 import {FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ModalsComponent } from '../../modals/modals.component';
+import { ModalCategoryComponent } from '../../modal-category/modal-category.component';
 
 
 @Component({
@@ -63,8 +65,8 @@ export class RegistrarProductoComponent implements OnInit {
       reference: ['', Validators.required],
       brandProduct: ['', Validators.required],
       categoryProduct: ['', Validators.required],
-      cost: ['', Validators.required],
-      price: ['', Validators.required],
+      cost: ['',[Validators.required,Validators.min(0)]],
+      price: ['', [Validators.required,Validators.min(0)]],
       quantity: [0],
       description: [''],
     });
@@ -72,22 +74,19 @@ export class RegistrarProductoComponent implements OnInit {
 
   get f() { return this.form.controls; }
 
-  open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+
+  open() {
+    const modalRef = this.modalService.open(ModalsComponent);
+    this.brand = new Brand();
+    modalRef.componentInstance.option= 'create';
+    modalRef.componentInstance.brand= this.brand;
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
+  openModalCategory(){
+    const modalRef = this.modalService.open(ModalCategoryComponent);
+    this.brand = new Brand();
+    modalRef.componentInstance.option= 'create';
+    modalRef.componentInstance.category= this.category;
   }
 
 
@@ -126,7 +125,7 @@ export class RegistrarProductoComponent implements OnInit {
     this.brandService.get().subscribe(
       res=>{
         if(res!=null){
-          this.brands = res.brands;
+           this.brands = res.brands;
         }
       }
     )
@@ -137,6 +136,7 @@ export class RegistrarProductoComponent implements OnInit {
       if (p != null) {
         this.showNotification('Registro', p.message,'bottom', 'right')
       }
+      this.showNotification('Agregado', 'categoria: '+ this.category.name +' creada con exito!','bottom', 'right')
       this.getCategories();
     });
   }
