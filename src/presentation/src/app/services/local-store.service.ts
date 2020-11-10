@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -18,7 +17,7 @@ export class LocalStoreService {
   public getItem(key) {
     const value = this.ls.getItem(key)
     try {
-      return JSON.parse(value)
+      return  JSON.parse(value)
     } catch (e) {
       return null
     }

@@ -110,17 +110,6 @@ export class RegistrarProductoComponent implements OnInit {
     });
   }
 
-  addBrand() {
-    this.brand.token=this.token;
-    this.brand.userIdentification = this.userId;
-    this.brandService.post(this.brand).subscribe(p => {
-      if (p != null) {
-        this.showNotification('Registro', p.message,'bottom', 'right')
-      }
-      this.getBrands();
-    });
-  }
-
   getBrands(){
     this.brandService.get().subscribe(
       res=>{

@@ -29,7 +29,6 @@ export class CategoryService {
     const auth = user + ' '+token;
     return this.http.get<SearchCategoryResponse>(this.baseUrl+'/category',
     {headers:{['authorization']:auth}}).pipe(
-      tap(_=>this.handleHttpErrorService.log('datos enviados')),
       catchError(this.handleHttpErrorService.handleError<SearchCategoryResponse>('Consulta marca',null))
     );
   }
@@ -42,7 +41,6 @@ export class CategoryService {
     category.token = token;
 
     return this.http.post<DefaultResponse>(this.baseUrl+'/category',category).pipe(
-      tap(_=>this.handleHttpErrorService.log('datos enviados')),
       catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Registrar marca',null))
     );
   }
@@ -54,7 +52,6 @@ export class CategoryService {
     category.token = token;
 
     return this.http.put<DefaultResponse>(this.baseUrl+'/category',category).pipe(
-      tap(_=>this.handleHttpErrorService.log('datos enviados')),
       catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Modificar marca',null))
     );
   }

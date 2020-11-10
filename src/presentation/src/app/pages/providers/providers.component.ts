@@ -3,6 +3,7 @@ import {ProviderService} from '../../services/provider.service';
 import {Provider} from '../../models/provider.model';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-providers',
@@ -19,7 +20,8 @@ export class ProvidersComponent implements OnInit {
   constructor(
     private toastr: ToastrService,
     private providerService:ProviderService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -62,8 +64,7 @@ export class ProvidersComponent implements OnInit {
     this.providerService.post(this.provider).subscribe(p => {
       if (p != null) {
         this.showNotification('Agregado', p.message,'bottom','right');
-      }else{
-       console.log(p);
+        this.location.back();
       }
     });
   }
