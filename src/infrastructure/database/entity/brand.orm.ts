@@ -1,6 +1,6 @@
 import {Column, Entity, ObjectID, ObjectIdColumn} from "typeorm";
 
-@Entity('BRANDS')
+@Entity('CATEGORIES')
 export class BrandOrm{
     @ObjectIdColumn()
     _id: ObjectID;

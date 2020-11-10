@@ -17,7 +17,7 @@ export class UpdateCategoryService{
         if (searchedCategory != undefined){
           searchedCategory.name = request.name;
           this._unitOfWork.start();
-          const savedCategory = await this._unitOfWork.complete(async () => await this._unitOfWork.categoryRepository.save(searchedCategory));
+          const savedCategory = await this._unitOfWork.complete(async () => await this._unitOfWork.categoryRepository.updateCategory(searchedCategory));
           if(savedCategory != undefined){
             return new UpdateCategoryResponse('Categoria actualizada correctamente');
           }
