@@ -110,6 +110,7 @@ describe('Application tests', () => {
         user = response.user;
     });
 
+
     describe('brand test', () => {
 
         test('correct registry', async () => {
@@ -195,6 +196,12 @@ describe('Application tests', () => {
     });
 
     describe('category tests', () => {
+
+        beforeAll(async () => {
+            const categories = await unitOfWork.categoryRepository.findAllCategories();
+            if (categories.length > 0)
+                await unitOfWork.categoryRepository.clear();
+        })
 
         test('correct registry', async () => {
             const service: RegisterCategoryService = new RegisterCategoryService(unitOfWork);
@@ -464,18 +471,6 @@ describe('Application tests', () => {
         });
 
         test('duplicate registry', async () => {
-            await new RegisterProviderService(unitOfWork).execute(
-              new RegisterProviderRequest(
-                  user.identification,
-                  user.token,
-                'Company Example',
-                'sellerOne@email',
-                '1065',
-                'Name Example',
-                'Street example',
-                'phone example'
-              )
-            );
 
             await new RegisterBrandService(unitOfWork).execute(
               new RegisterBrandRequest(
@@ -628,18 +623,6 @@ describe('Application tests', () => {
     describe('product transaction test', () => {
 
         test('correct input', async () => {
-            await new RegisterProviderService(unitOfWork).execute(
-                new RegisterProviderRequest(
-                    user.identification,
-                    user.token,
-                    'Company Example',
-                    'sellerOne@email',
-                    '1065',
-                    'Name Example',
-                    'Street example',
-                    'phone example'
-                )
-            );
 
             await new RegisterBrandService(unitOfWork).execute(
                 new RegisterBrandRequest(
@@ -688,18 +671,6 @@ describe('Application tests', () => {
         });
 
         test('correct output', async () => {
-            await new RegisterProviderService(unitOfWork).execute(
-                new RegisterProviderRequest(
-                    user.identification,
-                    user.token,
-                    'Company Example',
-                    'sellerOne@email',
-                    '1065',
-                    'Name Example',
-                    'Street example',
-                    'phone example'
-                )
-            );
 
             await new RegisterBrandService(unitOfWork).execute(
                 new RegisterBrandRequest(

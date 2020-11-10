@@ -7,16 +7,16 @@ export class ProductTransactionOrm{
 
     @ObjectIdColumn()
     _id: ObjectID;
-    @Column({nullable: false})
+    @Column()
     public inputQuantity: number;
-    @Column({nullable: false})
+    @Column()
     public outputQuantity: number;
-    @Column({nullable: false})
+    @Column()
     public description: string;
-    @Column({nullable: false})
+    @Column()
     public product: ProductOrm;
-    @Column({nullable: false})
+    @Column()
     public date: string;
-    @Column({nullable: false})
+    @Column()
     public user: UserOrm;
 }
