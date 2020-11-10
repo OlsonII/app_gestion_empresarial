@@ -88,6 +88,7 @@ export class ProductsInAndOutComponent implements OnInit {
         prodIn.description = formData.description;
         prodIn.inputQuantity = formData.quantity;
         prodIn.productReference = formData.productReference;
+        console.log(prodIn);
         this.InOutService.postInput(prodIn).subscribe(r=>{
           this.showNotification('Registro Movimiento', r.message,'bottom', 'right')
           this.location.back();
