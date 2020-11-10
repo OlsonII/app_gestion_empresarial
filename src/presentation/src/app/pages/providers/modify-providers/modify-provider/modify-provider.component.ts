@@ -56,6 +56,12 @@ export class ModifyProviderComponent implements OnInit {
           this.form.controls.company.setValue(prod.company);
           this.form.controls.email.setValue(prod.email);
           this.form.controls.address.setValue(prod.street);
+
+
+          if(this.isNotAdmin){
+            this.form.controls.name.disable();
+            this.form.controls.identification.disable();
+          }
         }
       });
     });

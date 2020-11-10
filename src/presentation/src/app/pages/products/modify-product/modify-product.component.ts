@@ -60,6 +60,7 @@ export class ModifyProductComponent implements OnInit {
       });
 
 
+
       this.brand = new Brand();
       this.product = new Product();
       this.product.brand = new Brand();
@@ -70,6 +71,8 @@ export class ModifyProductComponent implements OnInit {
       this.getBrands();
       this.getCategories();
       this.getProviders();
+
+
     }
 
   get f() { return this.form.controls; }
@@ -94,7 +97,7 @@ export class ModifyProductComponent implements OnInit {
   }
 
   getProduct(){
-    this.form.controls.reference.setValue( this.route.snapshot.paramMap.get('id').toString());
+    this.form.controls.reference.setValue(this.route.snapshot.paramMap.get('id').toString());
     this.productService.get().subscribe(res=>{
       res.products.forEach(prod => {
         if(prod.reference === this.form.value.reference){
@@ -105,6 +108,13 @@ export class ModifyProductComponent implements OnInit {
           this.form.controls.quantity.setValue(prod.quantity);
           this.form.controls.description.setValue(prod.description);
           this.form.controls.categoryProduct.setValue(prod.category.reference);
+
+          if(this.isNotAdmin){
+            this.form.controls.nameProduct.disable();
+            this.form.controls.reference.disable();
+            this.form.controls.brandProduct.disable();
+            this.form.controls.quantity.disable();
+          }
         }
       });
     });
