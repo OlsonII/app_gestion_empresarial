@@ -3,8 +3,6 @@ import {EntityRepository} from "typeorm";
 import {GenericRepository} from "../base/generic.repository";
 import {ProductTransactionOrm} from "../database/entity/product.transaction.orm";
 import {ProductTransaction} from "../../domain/entity/product.transaction.entity";
-import {Brand} from "../../domain/entity/brand.entity";
-import {Category} from "../../domain/entity/category.entity";
 import {Product} from "../../domain/entity/product.entity";
 
 @Injectable()
@@ -28,7 +26,7 @@ export class ProductTransactionRepository extends GenericRepository<ProductTrans
         transaction.product.cost = orm.product.cost;
         transaction.product.price = orm.product.price;
         transaction.product.quantity = orm.product.quantity;
-        transaction.partner = orm.partner;
+        transaction.user = orm.user;
         return transaction;
     }
 

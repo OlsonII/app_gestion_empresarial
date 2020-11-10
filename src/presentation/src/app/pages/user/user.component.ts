@@ -13,7 +13,6 @@ export class UserComponent implements OnInit {
 
   roles: string[] = ['Administrador','Encargado de inventario','Vendedor'];
   user: User;
-  users: User[];
   staticAlertClosed=false;
   searchValue:string;
   form: FormGroup;
@@ -23,7 +22,6 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
     this.user = new User();
-    this.getUsers();
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
       identification: ['', Validators.required],
@@ -46,17 +44,6 @@ export class UserComponent implements OnInit {
     });
 
   }
-
-  getUsers(){
-    this.userService.get().subscribe(
-      res=>{
-        if(res!=null){
-          this.users = res.users;
-        }
-      }
-    );
-  }
-
   add() {
     this.submitted = true;
     if (this.form.invalid) {
@@ -73,8 +60,6 @@ export class UserComponent implements OnInit {
       if (p != null) {
         this.showNotification('Registro',p.message,'bottom','right');
       }
-
-      this.getUsers();
     });
   }
 

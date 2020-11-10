@@ -7,6 +7,7 @@ export class ProductTransactionOrm{
 
     @ObjectIdColumn()
     _id: ObjectID;
+    @Column({nullable: false})
     public inputQuantity: number;
     @Column({nullable: false})
     public outputQuantity: number;
@@ -17,5 +18,5 @@ export class ProductTransactionOrm{
     @Column({nullable: false})
     public date: string;
     @Column({nullable: false})
-    public partner: UserOrm;
+    public user: UserOrm;
 }

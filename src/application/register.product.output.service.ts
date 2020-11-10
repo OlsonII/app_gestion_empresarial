@@ -16,6 +16,7 @@ export class RegisterProductOutputService{
                 const transaction: ProductTransaction = new ProductTransaction();
                 transaction.inputQuantity = 0;
                 transaction.outputQuantity = request.outputQuantity;
+                transaction.description = request.description;
                 transaction.product = await this._unitOfWork.productRepository.findProduct(request.productReference);
                 if(transaction.product.quantity < transaction.outputQuantity){
                     transaction.outputQuantity = transaction.product.quantity;
@@ -24,6 +25,7 @@ export class RegisterProductOutputService{
                     transaction.product.removeProduct(request.outputQuantity);
                 }
                 transaction.date = new Date().getDate() + '-' + new Date().getMonth() + '-' + new Date().getFullYear();
+                transaction.user = await this._unitOfWork.userRepository.findUser(request.userIdentification);
                 this._unitOfWork.start();
                 const savedProduct = await this._unitOfWork.complete(async () =>  await this._unitOfWork.productRepository.save(transaction.product));
                 this._unitOfWork.start();

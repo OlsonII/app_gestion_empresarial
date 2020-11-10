@@ -14,4 +14,3 @@ export class ProductOutput{
   public token: string;
 
 }
-

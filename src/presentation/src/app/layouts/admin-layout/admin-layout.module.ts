@@ -31,6 +31,9 @@ import { SearchProviderPipe} from '../../pages/pipes/search-provider.pipe';
 import { SearchCategoryPipe} from '../../pages/pipes/search-category.pipe';
 import { SearchUserPipe} from '../../pages/pipes/search-user.pipe';
 import { SearchBrandPipe} from '../../pages/pipes/search-brand.pipe';
+import { ModalsComponent } from '../../pages/modals/modals.component';
+import { MovementComponent } from '../../pages/movement/movement.component';
+import { ModalCategoryComponent } from '../../pages/modal-category/modal-category.component';
 
 @NgModule({
   imports: [
@@ -40,6 +43,11 @@ import { SearchBrandPipe} from '../../pages/pipes/search-brand.pipe';
     HttpClientModule,
     NgbModule,
     ReactiveFormsModule,
+  ],
+  exports: [
+    SearchProviderPipe,
+    SearchUserPipe,
+    SearchClientPipe,
   ],
   declarations: [
     DashboardComponent,
@@ -65,7 +73,10 @@ import { SearchBrandPipe} from '../../pages/pipes/search-brand.pipe';
     SearchProviderPipe,
     SearchCategoryPipe,
     SearchUserPipe,
-    SearchBrandPipe
-  ]
+    SearchBrandPipe,
+    ModalsComponent,
+    MovementComponent,
+    ModalCategoryComponent,
+  ],
 })
 export class AdminLayoutModule {}

@@ -11,7 +11,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ClientsComponent implements OnInit {
   client:Client;
-  clients:Client[];
   form: FormGroup;
   submitted = false;
   searchValue:string;
@@ -23,7 +22,6 @@ export class ClientsComponent implements OnInit {
 
   ngOnInit(): void {
     this.client = new Client();
-    this.getClients();
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
       identification: ['', Validators.required],
@@ -46,21 +44,6 @@ export class ClientsComponent implements OnInit {
 
   }
 
-  getClients(){
-    this.clientService.get().subscribe(
-      res=>{
-        if(res!=null){
-          if(res.clients!=null){
-            this.clients = res.clients;
-          }else{
-            this.showNotification('Registro',res.message,'bottom','right');
-          }
-
-        }
-      }
-    );
-  }
-
   add() {
     this.submitted = true;
     if (this.form.invalid) {
@@ -76,7 +59,6 @@ export class ClientsComponent implements OnInit {
       if (p != null) {
         this.showNotification('Registro',p.message,'bottom','right');
       }
-      this.getClients();
     });
   }
 

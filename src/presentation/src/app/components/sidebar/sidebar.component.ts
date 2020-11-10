@@ -15,7 +15,7 @@ export const ROUTES: RouteInfo[] = [
     class: ''
   },
   {
-    path: '/providers',
+    path: '/consultProviders',
     title: 'Proveedores',
     icon: 'icon-bus-front-12',
     class: ''
@@ -33,13 +33,13 @@ export const ROUTES: RouteInfo[] = [
     class: ''
   },
   {
-    path: '/user',
+    path: '/consultUser',
     title: 'Usuarios',
     icon: 'tim-icons  icon-single-02',
     class: ''
   },
   {
-    path: '/clients',
+    path: '/consultClients',
     title: 'Clientes',
     icon: 'tim-icons  icon-single-02',
     class: '',

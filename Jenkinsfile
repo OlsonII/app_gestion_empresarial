@@ -1,17 +1,31 @@
 pipeline {
   agent any
   stages {
-    stage('Build') {
+    stage('Installing') {
       steps {
         echo 'Installing Packages..'
         bat 'npm install'
       }
     }
 
-    stage('Test') {
+    stage('Building'){
+        steps{
+            echo 'Building projects...'
+            bat 'npm run build:all'
+        }
+    }
+
+    stage('Testing') {
       steps {
-        echo 'Testing..'
+        echo 'Testing...'
         bat 'npm run test'
+      }
+    }
+
+    stage('Deploying'){
+      steps{
+        echo 'Deploying...'
+        bat 'firebase deploy --token 1//05xe9JAHmVHBwCgYIARAAGAUSNwF-L9IrvM1yBolgfpYF5MRFEvEmcZncEUXjM0L304hpSJC4-maF6-L3x0RmjA3SmHGzuH0_T2s'
       }
     }
 

@@ -10,6 +10,6 @@ export class ProductTransaction{
     public description: string;
     public product: Product;
     public date: string;
-    public partner: IPerson;
+    public user: IPerson;
 
 }
