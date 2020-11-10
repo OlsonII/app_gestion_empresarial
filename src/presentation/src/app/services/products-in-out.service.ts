@@ -31,7 +31,6 @@ export class ProductsInOutService {
 
     console.log(productInput);
     return this.http.post<RegisterInputOutputResponse>(this.baseUrl+'/product/input',productInput).pipe(
-      tap(_=>this.handleHttpErrorService.log('datos enviados')),
       catchError(this.handleHttpErrorService.handleError<RegisterInputOutputResponse>('Registrar ingreso de producto',null))
     );
   }
@@ -45,7 +44,6 @@ export class ProductsInOutService {
     productOutput.userIdentification = user;
 
     return this.http.post<RegisterInputOutputResponse>(this.baseUrl+'/product/output',productOutput).pipe(
-      tap(_=>this.handleHttpErrorService.log('datos enviados')),
       catchError(this.handleHttpErrorService.handleError<RegisterInputOutputResponse>('Registrar salida producto',null))
     );
   }

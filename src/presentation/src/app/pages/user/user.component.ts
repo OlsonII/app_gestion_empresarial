@@ -3,6 +3,8 @@ import {User} from '../../models/user.model';
 import {ToastrService} from 'ngx-toastr';
 import {UserService} from '../../services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Location} from '@angular/common';
+
 
 @Component({
   selector: 'app-user',
@@ -18,7 +20,7 @@ export class UserComponent implements OnInit {
   form: FormGroup;
   submitted = false;
 
-  constructor(private toastr: ToastrService, private userService:UserService, private formBuilder: FormBuilder) {}
+  constructor(private toastr: ToastrService, private userService:UserService, private formBuilder: FormBuilder, private location:Location) {}
 
   ngOnInit() {
     this.user = new User();
@@ -59,6 +61,7 @@ export class UserComponent implements OnInit {
     this.userService.post(this.user).subscribe(p => {
       if (p != null) {
         this.showNotification('Registro',p.message,'bottom','right');
+        this.location.back();
       }
     });
   }

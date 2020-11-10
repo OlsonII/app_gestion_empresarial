@@ -3,6 +3,7 @@ import {ToastrService} from 'ngx-toastr';
 import {ClientService} from '../../services/client.service';
 import {Client} from '../../models/client.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-clients',
@@ -17,7 +18,8 @@ export class ClientsComponent implements OnInit {
   constructor(
     private toastr:ToastrService,
     private clientService:ClientService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -58,6 +60,7 @@ export class ClientsComponent implements OnInit {
     this.clientService.post(this.client).subscribe(p => {
       if (p != null) {
         this.showNotification('Registro',p.message,'bottom','right');
+        this.location.back();
       }
     });
   }

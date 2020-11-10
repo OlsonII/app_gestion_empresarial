@@ -68,10 +68,9 @@ export class ModifyClientComponent implements OnInit {
           this.form.controls.telephone.setValue(client.telephone);
           this.form.controls.street.setValue(client.street);
           this.form.controls.email.setValue(client.email);
-
+          this.form.controls.identification.disable();
           if(this.isNotAdmin){
             this.form.controls.name.disable();
-            this.form.controls.identification.disable();
           }
         }
       });

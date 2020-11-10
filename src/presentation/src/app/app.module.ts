@@ -14,10 +14,7 @@ import { ProviderService} from './services/provider.service';
 import {JwtAuthService} from './services/auth/jwt-auth.service';
 import {UserRoleGuard} from './guards/user-role.guard';
 import {AuthGuard} from './guards/auth.guard';
-import { ConsultProvidersComponent } from './pages/providers/consult-providers/consult-providers.component';
 import { AdminLayoutModule } from './layouts/admin-layout/admin-layout.module';
-import { ConsultUserComponent } from './pages/user/consult-user/consult-user.component';
-import { ConsultClientComponent } from './pages/clients/consult-client/consult-client.component';
 import {environment} from '../environments/environment';
 
 @NgModule({
@@ -32,7 +29,7 @@ import {environment} from '../environments/environment';
     ToastrModule.forRoot(),
     AdminLayoutModule,
   ],
-  declarations: [AppComponent, AdminLayoutComponent, ConsultProvidersComponent, ConsultUserComponent, ConsultClientComponent],
+  declarations: [AppComponent, AdminLayoutComponent],
   providers: [ProviderService,JwtAuthService,AuthGuard,UserRoleGuard,{provide:'BASE_URL',useValue:environment.BASE_URL}],
   bootstrap: [AppComponent]
 })

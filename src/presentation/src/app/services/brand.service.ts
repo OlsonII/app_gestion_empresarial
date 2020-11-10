@@ -30,7 +30,6 @@ export class BrandService {
     const auth = user + ' '+token;
     return this.http.get<SearchBrandResponse>(this.baseUrl+'/brand',
     {headers:{['authorization']:auth}}).pipe(
-      tap(_=>this.handleHttpErrorService.log('datos enviados')),
       catchError(this.handleHttpErrorService.handleError<SearchBrandResponse>('Consulta marca',null))
     );
   }
@@ -43,7 +42,6 @@ export class BrandService {
     brand.token = token;
 
     return this.http.post<DefaultResponse>(this.baseUrl+'/brand',brand).pipe(
-      tap(_=>this.handleHttpErrorService.log('datos enviados')),
       catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Registrar marca',null))
     );
   }
@@ -55,7 +53,6 @@ export class BrandService {
     brand.token = token;
 
     return this.http.put<DefaultResponse>(this.baseUrl+'/brand',brand).pipe(
-      tap(_=>this.handleHttpErrorService.log('datos enviados')),
       catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Modificar marca',null))
     );
   }

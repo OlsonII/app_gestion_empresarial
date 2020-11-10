@@ -18,7 +18,6 @@ export class MovementComponent implements OnInit {
   ngOnInit(): void {
     this.movementService.get().subscribe(data =>{
       if (data != null){
-        console.log(data.movements);
         this.movements = data.movements;
         this.movements.forEach( (movement) => {
 

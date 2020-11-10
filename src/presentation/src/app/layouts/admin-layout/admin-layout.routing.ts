@@ -1,11 +1,6 @@
 import { Routes } from '@angular/router';
 
-import { DashboardComponent } from '../../pages/dashboard/dashboard.component';
-import { IconsComponent } from '../../pages/icons/icons.component';
-import { NotificationsComponent } from '../../pages/notifications/notifications.component';
-import { UserComponent } from '../../pages/user/user.component';
-import { TablesComponent } from '../../pages/tables/tables.component';
-import { TypographyComponent } from '../../pages/typography/typography.component';
+import {UserComponent } from '../../pages/user/user.component';
 import {ConsultarProductoComponent} from '../../pages/products/consultar-producto/consultar-producto.component';
 import {RegistrarProductoComponent} from '../../pages/products/registrar-producto/registrar-producto.component';
 import {ProvidersComponent} from '../../pages/providers/providers.component';
@@ -22,14 +17,11 @@ import {ModifyUserComponent} from '../../pages/user/modify-user/modify-user.comp
 import {ModifyClientComponent} from '../../pages/clients/modify-client/modify-client.component';
 import {MovementComponent} from '../../pages/movement/movement.component';
 import {ConsultProvidersComponent} from '../../pages/providers/consult-providers/consult-providers.component';
-import { ConsultClientComponent } from '../../pages/clients/consult-client/consult-client.component';
-import { ConsultUserComponent } from '../../pages/user/consult-user/consult-user.component';
+import {ConsultClientComponent } from '../../pages/clients/consult-client/consult-client.component';
+import {ConsultUserComponent } from '../../pages/user/consult-user/consult-user.component';
 
 export const AdminLayoutRoutes: Routes = [
   { path: 'products', component:ConsultarProductoComponent},
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'icons', component: IconsComponent },
-  { path: 'notifications', component: NotificationsComponent },
   {
     path: 'user',
     canActivate:[UserRoleGuard],
@@ -42,8 +34,6 @@ export const AdminLayoutRoutes: Routes = [
     data:{role: config.authRoles.admin},
     component: ConsultUserComponent
   },
-  { path: 'tables', component: TablesComponent },
-  { path: 'typography', component: TypographyComponent },
   { path: 'products', component:ConsultarProductoComponent},
   { path: 'addProduct', component:RegistrarProductoComponent},
   {
@@ -85,5 +75,4 @@ export const AdminLayoutRoutes: Routes = [
     data:{role: config.authRoles.admin},
     component:MovementComponent
   },
-  // { path: "rtl", component: RtlComponent }
 ];

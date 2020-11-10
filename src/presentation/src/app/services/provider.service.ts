@@ -29,7 +29,6 @@ export class ProviderService {
     const auth = user + ' '+token;
     return this.http.get<SearchProviderResponse>(this.baseUrl+'/provider',
     {headers:{['authorization']:auth}}).pipe(
-      tap(_=>this.handleHttpErrorService.log('datos enviados')),
       catchError(this.handleHttpErrorService.handleError<SearchProviderResponse>('Consulta marca',null))
     );
   }
@@ -42,7 +41,6 @@ export class ProviderService {
     provider.token = token;
 
     return this.http.post<DefaultResponse>(this.baseUrl+'/provider',provider).pipe(
-      tap(_=>this.handleHttpErrorService.log('datos enviados')),
       catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Registrar marca',null))
     );
   }
@@ -54,7 +52,6 @@ export class ProviderService {
     provider.token = token;
 
     return this.http.put<DefaultResponse>(this.baseUrl+'/provider',provider).pipe(
-      tap(_=>this.handleHttpErrorService.log('datos enviados')),
       catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Modificar marca',null))
     );
   }
