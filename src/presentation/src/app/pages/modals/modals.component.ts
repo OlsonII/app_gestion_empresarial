@@ -43,7 +43,10 @@ export class ModalsComponent implements OnInit{
     console.log(this.brand);
     this.brandService.put(this.brand).subscribe(p => {
       if (p != null) {
-        this.showNotification('Modificado', 'Marca: ' + namee + ' modificada con exito!', 'bottom', 'right')
+        this.showNotification('Modificacion', 'Marca: '+ p.message, 'bottom', 'right')
+      }
+      else{
+        this.showNotification('Error', 'Marca: '+ p.message,'bottom', 'right')
       }
 
     });
@@ -54,7 +57,10 @@ export class ModalsComponent implements OnInit{
     this.brand.userIdentification = this.userId;
     this.brandService.post(this.brand).subscribe(p => {
       if (p != null) {
-        this.showNotification('Agregado', 'Marca: '+ this.brand.name +' creada con exito!','bottom', 'right')
+        this.showNotification('Registro', 'Marca: '+ p.message,'bottom', 'right')
+      }
+      else {
+        this.showNotification('Error', 'Marca: '+ p.message,'bottom', 'right')
       }
     });
 

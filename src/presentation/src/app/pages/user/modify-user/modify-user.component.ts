@@ -65,7 +65,7 @@ export class ModifyUserComponent implements OnInit {
            this.form.controls.street.setValue(user.street);
            this.form.controls.rol.setValue(user.rol);
            this.form.controls.password.setValue(user.password);
-           this.form.controls.identification.disable();
+           // this.form.controls.identification.disable();
         }
       });
     }
