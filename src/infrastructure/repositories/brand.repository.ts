@@ -1,16 +1,16 @@
 import {Injectable} from "@nestjs/common";
 import {EntityRepository} from "typeorm";
-import {CategoryOrm} from "../database/entity/category.orm";
 import {GenericRepository} from "../base/generic.repository";
 import {Brand} from "../../domain/entity/brand.entity";
 import { ProductRepository } from './product.repository';
+import { BrandOrm } from '../database/entity/brand.orm';
 
 
 @Injectable()
-@EntityRepository(CategoryOrm)
-export class BrandRepository extends GenericRepository<CategoryOrm>{
+@EntityRepository(BrandOrm)
+export class BrandRepository extends GenericRepository<BrandOrm>{
 
-    mappedOrmToBrand(orm: CategoryOrm): Brand {
+    mappedOrmToBrand(orm: BrandOrm): Brand {
         const brand = new Brand();
         brand._id = orm._id;
         brand.reference = orm.reference;
@@ -30,7 +30,7 @@ export class BrandRepository extends GenericRepository<CategoryOrm>{
         return brands;
     }
 
-    async updateBrand(orm: CategoryOrm){
+    async updateBrand(orm: BrandOrm){
         await this.save(orm);
         const productRepository = new ProductRepository();
         const products = await productRepository.findAllProducts();
