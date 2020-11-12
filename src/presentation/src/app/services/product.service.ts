@@ -51,7 +51,7 @@ export class ProductService {
     const producto = new ProductInterfaceUpdate(Prod,user,token);
 
     return this.http.put<DefaultResponse>(this.baseUrl+'/product',producto).pipe(
-      catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Registrar proveedor',null))
+      catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Producto modificado',null))
     );
   }
 

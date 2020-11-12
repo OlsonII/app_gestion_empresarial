@@ -40,7 +40,10 @@ export class ModalCategoryComponent implements OnInit {
     console.log(this.category);
     this.categoryService.put(this.category).subscribe(p => {
       if (p != null) {
-        this.showNotification('Modificado', 'Marca: ' + namee + ' modificada con exito!', 'bottom', 'right');
+        this.showNotification('Modificacion', 'Categoria: '+ p.message, 'bottom', 'right');
+      }
+      else {
+        this.showNotification('Error', 'Categoria: '+ p.message, 'bottom', 'right');
       }
 
     });
@@ -52,7 +55,10 @@ export class ModalCategoryComponent implements OnInit {
     this.category.userIdentification = this.userId;
     this.categoryService.post(this.category).subscribe(p => {
       if (p != null) {
-        this.showNotification('Agregado', 'Marca: '+ namee +' creada con exito!','bottom', 'right')
+        this.showNotification('Registro', 'Categoria: '+ p.message,'bottom', 'right')
+      }
+      else{
+        this.showNotification('Error', 'Categoria: '+ p.message, 'bottom', 'right');
       }
     });
 

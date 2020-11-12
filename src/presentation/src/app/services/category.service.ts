@@ -29,7 +29,7 @@ export class CategoryService {
     const auth = user + ' '+token;
     return this.http.get<SearchCategoryResponse>(this.baseUrl+'/category',
     {headers:{['authorization']:auth}}).pipe(
-      catchError(this.handleHttpErrorService.handleError<SearchCategoryResponse>('Consulta marca',null))
+      catchError(this.handleHttpErrorService.handleError<SearchCategoryResponse>('Consulta categoria',null))
     );
   }
 
@@ -41,7 +41,7 @@ export class CategoryService {
     category.token = token;
 
     return this.http.post<DefaultResponse>(this.baseUrl+'/category',category).pipe(
-      catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Registrar marca',null))
+      catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Registrar categoria',null))
     );
   }
   put(category: Category): Observable<DefaultResponse> {
@@ -52,7 +52,7 @@ export class CategoryService {
     category.token = token;
 
     return this.http.put<DefaultResponse>(this.baseUrl+'/category',category).pipe(
-      catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Modificar marca',null))
+      catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Modificar categoria',null))
     );
   }
 }
