@@ -6,6 +6,7 @@ import {ClientOrm} from "../entity/client.orm";
 import {ProductTransactionOrm} from "../entity/product.transaction.orm";
 import {UserOrm} from "../entity/user.orm";
 import { CategoryOrm } from '../entity/category.orm';
+import { FinancialMovementOrm } from '../entity/financial.movement.orm';
 
 
 export const brandProviders = [
@@ -60,6 +61,14 @@ export const userProviders = [
     {
         provide: 'USER_REPOSITORY',
         useFactory: (connection: Connection) => connection.getRepository(UserOrm),
+        inject: ['DATABASE_CONNECTION'],
+    }
+];
+
+export const financialMovementProviders = [
+    {
+        provide: 'FINANCIAL_MOVEMENT_REPOSITORY',
+        useFactory: (connection: Connection) => connection.getRepository(FinancialMovementOrm),
         inject: ['DATABASE_CONNECTION'],
     }
 ];

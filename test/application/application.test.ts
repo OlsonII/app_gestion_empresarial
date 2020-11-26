@@ -76,6 +76,10 @@ import {RegisterUserRequest, RegisterUserService} from '../../src/application/re
 import {SearchUserRequest, SearchUserResponse, SearchUserService} from '../../src/application/search.user.service';
 import {User} from '../../src/domain/entity/user';
 import {LoginRequest, LoginService} from '../../src/application/login.service';
+import {
+    RegisterFinancialMovementRequest,
+    RegisterFinancialMovementService,
+} from '../../src/application/register.financial.movement.service';
 
 
 describe('Application tests', () => {
@@ -880,6 +884,38 @@ describe('Application tests', () => {
             expect(response.users.length).toBe(2);
         });
 
+    });
+
+    describe('financial movements tests', () => {
+        test('correct entry', async () => {
+            const service: RegisterFinancialMovementService = new RegisterFinancialMovementService(unitOfWork);
+            const response = await service.execute(
+              new RegisterFinancialMovementRequest(
+                '20/12/2020',
+                50000,
+                'reason example',
+                0,
+                user.identification,
+                user.token,
+              )
+            );
+            expect(response.message).toBe('Movimiento registrado con exito');
+        });
+
+        test('correct spending', async () => {
+            const service: RegisterFinancialMovementService = new RegisterFinancialMovementService(unitOfWork);
+            const response = await service.execute(
+              new RegisterFinancialMovementRequest(
+                '20/12/2020',
+                0,
+                'reason example',
+                5000,
+                user.identification,
+                user.token,
+              )
+            );
+            expect(response.message).toBe('Movimiento registrado con exito');
+        });
     });
 
     afterAll(() => {

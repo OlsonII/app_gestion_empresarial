@@ -21,6 +21,7 @@ import {LoginService} from "./login.service";
 import {UpdateUserService} from "./update.user.service";
 import {UpdateClientService} from "./update.client.service";
 import {SearchProductTransactionService} from "./search.product.transaction.service";
+import { RegisterFinancialMovementService } from './register.financial.movement.service';
 
 @Module({
     imports: [
@@ -33,6 +34,7 @@ import {SearchProductTransactionService} from "./search.product.transaction.serv
         RegisterProductOutputService,
         RegisterClientService,
         RegisterUserService,
+        RegisterFinancialMovementService,
         SearchBrandService,
         SearchCategoryService,
         SearchProviderService,
@@ -57,6 +59,7 @@ import {SearchProductTransactionService} from "./search.product.transaction.serv
         RegisterProductOutputService,
         RegisterClientService,
         RegisterUserService,
+        RegisterFinancialMovementService,
         SearchBrandService,
         SearchCategoryService,
         SearchProviderService,

@@ -28,8 +28,6 @@ export class RegisterClientService{
                     }
                 }
                 return new RegisterClientResponse('Este cliente ya se encuentra registrado');
-
-                return new RegisterBrandResponse('Hay un error al validar el usuario');
             }
             return new RegisterBrandResponse('Hay un error al validar el usuario');
         }catch (e) {
