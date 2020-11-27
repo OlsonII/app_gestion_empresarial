@@ -1,11 +1,11 @@
 import {Connection} from "typeorm";
 import {BrandOrm} from "../entity/brand.orm";
-import {CategoryOrm} from "../entity/category.orm";
 import {ProviderOrm} from "../entity/provider.orm";
 import {ProductOrm} from "../entity/product.orm";
 import {ClientOrm} from "../entity/client.orm";
 import {ProductTransactionOrm} from "../entity/product.transaction.orm";
 import {UserOrm} from "../entity/user.orm";
+import { CategoryOrm } from '../entity/category.orm';
 
 
 export const brandProviders = [

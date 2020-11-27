@@ -29,7 +29,6 @@ export class UserService {
     const auth = userId + ' '+token;
     return this.http.get<SearchUserResponse>(this.baseUrl+'/user',
     {headers:{['authorization']:auth}}).pipe(
-      tap(_=>this.handleHttpErrorService.log('datos enviados')),
       catchError(this.handleHttpErrorService.handleError<SearchUserResponse>('Consulta usuario',null))
     );
   }
@@ -42,7 +41,6 @@ export class UserService {
     user.token = token;
 
     return this.http.post<DefaultResponse>(this.baseUrl+'/user',user).pipe(
-      tap(_=>this.handleHttpErrorService.log('datos enviados')),
       catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Registrar usuario',null))
     );
   }
@@ -54,7 +52,6 @@ export class UserService {
     user.token = token;
 
     return this.http.put<DefaultResponse>(this.baseUrl+'/user',user).pipe(
-      tap(_=>this.handleHttpErrorService.log('datos enviados')),
       catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Modificar usuario',null))
     );
   }

@@ -1,8 +1,9 @@
 import {Injectable} from "@nestjs/common";
 import {EntityRepository} from "typeorm";
-import {BrandOrm} from "../database/entity/brand.orm";
 import {GenericRepository} from "../base/generic.repository";
 import {Brand} from "../../domain/entity/brand.entity";
+import { ProductRepository } from './product.repository';
+import { BrandOrm } from '../database/entity/brand.orm';
 
 
 @Injectable()
@@ -27,6 +28,18 @@ export class BrandRepository extends GenericRepository<BrandOrm>{
         const searchedBrands = await this.find();
         searchedBrands.forEach(orm => brands.push(this.mappedOrmToBrand(orm)));
         return brands;
+    }
+
+    async updateBrand(orm: BrandOrm){
+        await this.save(orm);
+        const productRepository = new ProductRepository();
+        const products = await productRepository.findAllProducts();
+        for (const p of products) {
+           if(p.brand._id == orm._id){
+               p.brand = orm;
+               await productRepository.save(p);
+           }
+        }
     }
 
 }

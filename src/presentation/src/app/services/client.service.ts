@@ -29,7 +29,6 @@ export class ClientService {
     const auth = user + ' '+token;
     return this.http.get<SearchClientResponse>(this.baseUrl+'/client',
     {headers:{['authorization']:auth}}).pipe(
-      tap(_=>this.handleHttpErrorService.log('datos enviados')),
       catchError(this.handleHttpErrorService.handleError<SearchClientResponse>('Consulta cliente',null))
     );
   }
@@ -42,7 +41,6 @@ export class ClientService {
     client.token = token;
 
     return this.http.post<DefaultResponse>(this.baseUrl+'/client',client).pipe(
-      tap(_=>this.handleHttpErrorService.log('datos enviados')),
       catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Registrar cliente',null))
     );
   }
@@ -54,7 +52,6 @@ export class ClientService {
     client.token = token;
 
     return this.http.put<DefaultResponse>(this.baseUrl+'/client',client).pipe(
-      tap(_=>this.handleHttpErrorService.log('datos enviados')),
       catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Modificar cliente',null))
     );
   }

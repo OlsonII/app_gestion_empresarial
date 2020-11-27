@@ -30,7 +30,6 @@ export class ProductService {
 
     return this.http.get<SearchProductResponse>(this.baseUrl+'/product',
     {headers:{['authorization']:auth}}).pipe(
-      tap(_=>this.handleHttpErrorService.log('datos enviados')),
       catchError(this.handleHttpErrorService.handleError<SearchProductResponse>('Consulta productos',null))
     );
   }
@@ -42,7 +41,6 @@ export class ProductService {
     const producto = new ProductInterface(Prod,user,token);
 
     return this.http.post<DefaultResponse>(this.baseUrl+'/product',producto).pipe(
-      tap(_=>this.handleHttpErrorService.log('datos enviados')),
       catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Registrar productos',null))
     );
   }
@@ -53,8 +51,7 @@ export class ProductService {
     const producto = new ProductInterfaceUpdate(Prod,user,token);
 
     return this.http.put<DefaultResponse>(this.baseUrl+'/product',producto).pipe(
-      tap(_=>this.handleHttpErrorService.log('datos enviados')),
-      catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Registrar proveedor',null))
+      catchError(this.handleHttpErrorService.handleError<DefaultResponse>('Producto modificado',null))
     );
   }
 

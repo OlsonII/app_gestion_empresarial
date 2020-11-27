@@ -1,6 +1,6 @@
 {
   "name": "app-gestion-empresarial",
-  "version": "0.19.15",
+  "version": "0.19.17",
   "description": "",
   "author": "OlsonLabs",
   "private": true,
@@ -49,6 +49,7 @@
     "chart.js": "2.8.0",
     "concurrently": "^5.3.0",
     "core-js": "3.6.4",
+    "crypto-js": "^4.0.0",
     "express": "^4.17.1",
     "file-saver": "^2.0.5",
     "firebase-admin": "^9.3.0",

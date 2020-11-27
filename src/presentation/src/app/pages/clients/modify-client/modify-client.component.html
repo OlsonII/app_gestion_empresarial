@@ -17,7 +17,6 @@
                     class=" form-control"
                     placeholder="Num identificacion"
                     type="text"
-                    [disabled]="isNotAdmin"
                     formControlName="identification"
                     [ngClass]="{ 'is-invalid': submitted && f.identification.errors }"
                   />
@@ -35,7 +34,6 @@
                     class=" form-control"
                     placeholder="nombres"
                     type="text"
-                    [disabled]="isNotAdmin"
                     formControlName="name"
                     [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
                   />

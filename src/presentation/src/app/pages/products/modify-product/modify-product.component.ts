@@ -108,6 +108,7 @@ export class ModifyProductComponent implements OnInit {
           this.form.controls.quantity.setValue(prod.quantity);
           this.form.controls.description.setValue(prod.description);
           this.form.controls.categoryProduct.setValue(prod.category.reference);
+          // this.form.controls.reference.disable();
 
           if(this.isNotAdmin){
             this.form.controls.nameProduct.disable();
@@ -126,6 +127,7 @@ export class ModifyProductComponent implements OnInit {
       return;
     }
     const formData = this.form.value
+    console.log(formData);
     this.product.name = formData.name;
     this.product.category.reference = formData.categoryProduct;
     this.product.reference = formData.reference;

@@ -29,7 +29,6 @@ export class MovementService {
     const auth = user + ' '+token;
     return this.http.get<SearchMovementsResponse>(this.baseUrl+'/product/find/transactions',
       {headers:{['authorization']:auth}}).pipe(
-      tap(_=>this.handleHttpErrorService.log('datos enviados')),
       catchError(this.handleHttpErrorService.handleError<SearchMovementsResponse>('Consulta movimiento',null))
     );
   }
