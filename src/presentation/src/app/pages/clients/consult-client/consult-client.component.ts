@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Client } from '../../../models/client.model';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ClientService } from '../../../services/client.service';
+import {ExportToExcelService} from '../../../services/exportToexcel.service';
 
 @Component({
   selector: 'app-consult-client',
@@ -16,6 +16,7 @@ export class ConsultClientComponent implements OnInit {
   constructor(
     private toastr:ToastrService,
     private clientService:ClientService,
+    private exportService:ExportToExcelService
   ) { }
 
   ngOnInit(): void {
@@ -32,6 +33,10 @@ export class ConsultClientComponent implements OnInit {
       positionClass: 'toast-' + from + '-' +  align
     });
 
+  }
+
+  exportToExcel(){
+    this.exportService.exportClients(this.clients,"Clientes");
   }
 
   getClients(){

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Provider } from '../../../models/provider.model';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
 import { ProviderService } from '../../../services/provider.service';
+import {ExportToExcelService} from '../../../services/exportToexcel.service';
 
 @Component({
   selector: 'app-consult-providers',
@@ -16,14 +15,17 @@ export class ConsultProvidersComponent implements OnInit {
   providers: Provider[];
 
   constructor(
-    private toastr: ToastrService,
     private providerService:ProviderService,
-    private formBuilder: FormBuilder
+    private exportService: ExportToExcelService
   ) { }
 
   ngOnInit(): void {
     this.provider = new Provider();
     this.getProviders();
+  }
+
+  exportToExcel(){
+    this.exportService.exportProviders(this.providers,"Proveedores");
   }
 
   getProviders(){
