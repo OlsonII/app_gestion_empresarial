@@ -74,12 +74,14 @@ import {
 } from '../../src/application/search.client.service';
 import {RegisterUserRequest, RegisterUserService} from '../../src/application/register.user.service';
 import {SearchUserRequest, SearchUserResponse, SearchUserService} from '../../src/application/search.user.service';
-import {User} from '../../src/domain/entity/user';
+import {User} from '../../src/domain/entity/user.entity';
 import {LoginRequest, LoginService} from '../../src/application/login.service';
 import {
     RegisterFinancialMovementRequest,
     RegisterFinancialMovementService,
 } from '../../src/application/register.financial.movement.service';
+import { RegisterSaleRequest, RegisterSaleService } from '../../src/application/register.sale.service';
+import { Product } from '../../src/domain/entity/product.entity';
 
 
 describe('Application tests', () => {
@@ -107,7 +109,7 @@ describe('Application tests', () => {
         u.telephone = 'phone example';
         u.password = '1067';
         u.rol = 'admin';
-
+        unitOfWork.start();
         await unitOfWork.complete(async () => await unitOfWork.userRepository.save(u));
 
         const response = await new LoginService(unitOfWork).execute(new LoginRequest('1086', '1067'));
@@ -721,6 +723,7 @@ describe('Application tests', () => {
 
             const response: RegisterProductOutputResponse = await new RegisterProductOutputService(unitOfWork).execute(
                 new RegisterProductOutputRequest(
+                  true,
                     user.identification,
                     user.token,
                     7,
@@ -891,7 +894,6 @@ describe('Application tests', () => {
             const service: RegisterFinancialMovementService = new RegisterFinancialMovementService(unitOfWork);
             const response = await service.execute(
               new RegisterFinancialMovementRequest(
-                '20/12/2020',
                 50000,
                 'reason example',
                 0,
@@ -906,7 +908,6 @@ describe('Application tests', () => {
             const service: RegisterFinancialMovementService = new RegisterFinancialMovementService(unitOfWork);
             const response = await service.execute(
               new RegisterFinancialMovementRequest(
-                '20/12/2020',
                 0,
                 'reason example',
                 5000,
@@ -915,6 +916,75 @@ describe('Application tests', () => {
               )
             );
             expect(response.message).toBe('Movimiento registrado con exito');
+        });
+    });
+
+    describe('sales tests', () => {
+        test('correct sale', async () => {
+
+            await new RegisterBrandService(unitOfWork).execute(
+              new RegisterBrandRequest(
+                user.identification,
+                user.token,
+                '1111',
+                'Example Brand'
+              )
+            );
+
+            await new RegisterCategoryService(unitOfWork).execute(
+              new RegisterCategoryRequest(
+                user.identification,
+                user.token,
+                '1111',
+                'Example Category'
+              )
+            );
+
+            await new RegisterProductService(unitOfWork).execute(
+              new RegisterProductRequest(
+                user.identification,
+                user.token,
+                '8563',
+                '1111',
+                '1111',
+                'Product Name Example',
+                5000,
+                'Description Example',
+                0,
+                7500
+              )
+            );
+
+            await new RegisterProductInputService(unitOfWork).execute(
+              new RegisterProductInputRequest(
+                user.identification,
+                user.token,
+                15,
+                '8563',
+                'Example input'
+              )
+            );
+
+            const product = new Product();
+            product.reference = '8563';
+            product.name = 'Product Name Example';
+            product.description = 'Description Example';
+            product.quantity = 4;
+            product.price = 7500;
+
+            const products = [
+                product
+            ]
+
+            const service: RegisterSaleService = new RegisterSaleService(unitOfWork);
+            const response = await service.execute(new RegisterSaleRequest(
+              user.identification,
+              user.token,
+              '1066',
+              products
+            ));
+
+            expect(response.value).toBe(7500*4);
         });
     });
 

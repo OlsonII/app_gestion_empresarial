@@ -1,5 +1,5 @@
 import {IUnitOfWork} from "../infrastructure/contracts/unitOfWork.interface";
-import {User} from "../domain/entity/user";
+import {User} from "../domain/entity/user.entity";
 import {Token} from "../infrastructure/authentication/token";
 
 export class LoginService {

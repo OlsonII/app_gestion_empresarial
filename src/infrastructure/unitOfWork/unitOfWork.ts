@@ -9,6 +9,7 @@ import {ProductTransactionRepository} from "../repositories/product.transaction.
 import {ClientRepository} from "../repositories/client.repository";
 import {UserRepository} from "../repositories/user.repository";
 import { FinancialMovementRepository } from '../repositories/financial.movement.repository';
+import { SaleRepository } from '../repositories/sale.repository';
 
 
 @Injectable()
@@ -25,6 +26,7 @@ export class UnitOfWork implements IUnitOfWork{
     public clientRepository: ClientRepository;
     public userRepository: UserRepository;
     public financialMovementRepository: FinancialMovementRepository;
+    public saleRepository: SaleRepository;
 
     constructor(@Inject('DATABASE_CONNECTION') private readonly asyncDatabaseConnection: Connection) {
         this.queryRunner = this.asyncDatabaseConnection.createQueryRunner();
@@ -37,6 +39,7 @@ export class UnitOfWork implements IUnitOfWork{
         this.clientRepository = this.asyncDatabaseConnection.getCustomRepository(ClientRepository);
         this.userRepository = this.asyncDatabaseConnection.getCustomRepository(UserRepository);
         this.financialMovementRepository = this.asyncDatabaseConnection.getCustomRepository(FinancialMovementRepository);
+        this.saleRepository = this.asyncDatabaseConnection.getCustomRepository(SaleRepository);
     }
 
     setTransactionManager(){

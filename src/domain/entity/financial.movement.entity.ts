@@ -1,5 +1,5 @@
 import { IFinancialMovement } from '../contracts/financial.movement.interface';
-import { User } from './user';
+import { User } from './user.entity';
 
 export class FinancialMovement implements IFinancialMovement{
   date: string;

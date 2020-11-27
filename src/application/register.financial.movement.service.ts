@@ -10,11 +10,12 @@ export class RegisterFinancialMovementService{
       const user = await this._unitOfWork.userRepository.findUser(request.userIdentification);
       if(request.userToken == user.token){
         const financialMovement = new FinancialMovement();
-        financialMovement.date = request.date;
+        financialMovement.date = new Date().getDate() + '-' + new Date().getMonth() + '-' + new Date().getFullYear();
         financialMovement.entry = request.entry;
         financialMovement.reason = request.reason;
         financialMovement.spending = request.spending;
         financialMovement.user = user;
+        this._unitOfWork.start();
         await this._unitOfWork.complete(async () => this._unitOfWork.financialMovementRepository.save(financialMovement));
         return new RegisterFinancialMovementResponse('200', 'Movimiento registrado con exito');
       }
@@ -28,7 +29,6 @@ export class RegisterFinancialMovementService{
 
 export class RegisterFinancialMovementRequest{
   constructor(
-    public date: string,
     public entry: number,
     public reason: string,
     public spending: number,

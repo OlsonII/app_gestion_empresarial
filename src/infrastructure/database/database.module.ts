@@ -3,7 +3,7 @@ import {
     brandProviders,
     categoryProviders, clientProviders, financialMovementProviders, productProviders,
     productTransactionProviders,
-    providerProviders, userProviders,
+    providerProviders, saleProviders, userProviders,
 } from './migrations/entities.provider';
 import {databaseProviders} from "./provider/database.provider";
 
@@ -18,7 +18,8 @@ import {databaseProviders} from "./provider/database.provider";
             ...productTransactionProviders,
             ...clientProviders,
             ...userProviders,
-            ...financialMovementProviders
+            ...financialMovementProviders,
+            ...saleProviders
         ],
         exports: [
             ...databaseProviders,
@@ -29,7 +30,8 @@ import {databaseProviders} from "./provider/database.provider";
             ...productTransactionProviders,
             ...clientProviders,
             ...userProviders,
-            ...financialMovementProviders
+            ...financialMovementProviders,
+            ...saleProviders
         ]
     }
 )

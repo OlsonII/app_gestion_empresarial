@@ -18,10 +18,13 @@ export class RegisterProductOutputService{
                 transaction.outputQuantity = request.outputQuantity;
                 transaction.description = request.description;
                 transaction.product = await this._unitOfWork.productRepository.findProduct(request.productReference);
-                if(transaction.product.quantity < transaction.outputQuantity){
+                if(request.allIfQuantityIsHigherOfStock && transaction.product.quantity < transaction.outputQuantity){
                     transaction.outputQuantity = transaction.product.quantity;
                     transaction.product.quantity = 0;
-                }else{
+                }else if(!request.allIfQuantityIsHigherOfStock && transaction.product.quantity < transaction.outputQuantity){
+                    return new RegisterBrandResponse('No hay stock disponible');
+                }
+                else{
                     transaction.product.removeProduct(request.outputQuantity);
                 }
                 transaction.date = new Date().getDate() + '-' + new Date().getMonth() + '-' + new Date().getFullYear();
@@ -45,6 +48,7 @@ export class RegisterProductOutputService{
 
 export class RegisterProductOutputRequest{
     constructor(
+        public allIfQuantityIsHigherOfStock: boolean,
         public userIdentification: string,
         public token: string,
         public outputQuantity: number,

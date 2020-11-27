@@ -7,6 +7,7 @@ import {ProductTransactionRepository} from "../repositories/product.transaction.
 import {ClientRepository} from "../repositories/client.repository";
 import {UserRepository} from "../repositories/user.repository";
 import { FinancialMovementRepository } from '../repositories/financial.movement.repository';
+import { SaleRepository } from '../repositories/sale.repository';
 
 
 export interface IUnitOfWork{
@@ -20,6 +21,7 @@ export interface IUnitOfWork{
     clientRepository: ClientRepository;
     userRepository: UserRepository;
     financialMovementRepository: FinancialMovementRepository;
+    saleRepository: SaleRepository;
 
     start(): void;
     complete(work: () => any): Promise<any>;
