@@ -9,14 +9,15 @@
             <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">
               <button class=" btn btn-fill btn-danger" [routerLink]="'/addProduct'" >Crear</button>
             </div>
-            <div class="col-lg-2  ">
+            <div class="col-lg-2 mr-4">
               <button class=" btn btn-fill btn-danger" [routerLink]="'/productInOut'" >Entradas y Salidas</button>
             </div>
-
-            <div class="col-lg-4">
-
+            <div class="col-lg-2 ml-4">
+              <button class=" btn btn-fill btn-danger btn-icono" (click)="exportToExcel()" ><span class="excel"></span></button>
             </div>
+
             <div class="col-lg-4">
+
                 <label> Búsqueda </label>
                 <input
                   class=" form-control"

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MovementService} from '../../services/movement.service';
 import { Movement } from '../../models/movement.model';
+import {ExportToExcelService} from '../../services/exportToexcel.service';
 
 @Component({
   selector: 'app-movement',
@@ -13,6 +14,7 @@ export class MovementComponent implements OnInit {
 
   constructor(
     private movementService: MovementService,
+    private exportService:ExportToExcelService
   ) { }
 
   ngOnInit(): void {
@@ -36,6 +38,9 @@ export class MovementComponent implements OnInit {
     });
   }
 
+  exportToExcel(){
+    this.exportService.exportMovements(this.movements,"Movimientos");
+  }
 
 
 }
