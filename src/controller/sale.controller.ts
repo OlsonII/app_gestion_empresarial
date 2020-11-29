@@ -1,5 +1,4 @@
-import { Controller, Post } from '@nestjs/common';
-import { Body } from '@nestjs/common/decorators/http/route-params.decorator';
+import { Controller, Post , Body} from '@nestjs/common';
 import { RegisterSaleRequest, RegisterSaleService } from '../application/register.sale.service';
 import { UnitOfWork } from '../infrastructure/unitOfWork/unitOfWork';
 
