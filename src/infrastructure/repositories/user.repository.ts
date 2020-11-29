@@ -2,7 +2,7 @@ import {Injectable} from "@nestjs/common";
 import {EntityRepository} from "typeorm";
 import {GenericRepository} from "../base/generic.repository";
 import {UserOrm} from "../database/entity/user.orm";
-import {User} from "../../domain/entity/user";
+import {User} from "../../domain/entity/user.entity";
 
 @Injectable()
 @EntityRepository(UserOrm)

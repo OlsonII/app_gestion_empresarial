@@ -1,5 +1,4 @@
 import {IUnitOfWork} from "../infrastructure/contracts/unitOfWork.interface";
-import {RegisterBrandResponse} from "./register.brand.service";
 
 export class UpdateProductService{
 
@@ -28,7 +27,7 @@ export class UpdateProductService{
                     return new UpdateProductResponse('Este producto no se encuentra registrado');
                 }
             }
-            return new RegisterBrandResponse('Hay un error al validar el usuario');
+            return new UpdateProductResponse('Hay un error al validar el usuario');
         }catch (e) {
             return new UpdateProductResponse('Se ha presentado un error al momento de actualizar este producto');
         }

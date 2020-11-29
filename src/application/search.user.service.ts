@@ -1,4 +1,4 @@
-import {User} from "../domain/entity/user";
+import {User} from "../domain/entity/user.entity";
 import {IUnitOfWork} from "../infrastructure/contracts/unitOfWork.interface";
 import {RegisterBrandResponse} from "./register.brand.service";
 
