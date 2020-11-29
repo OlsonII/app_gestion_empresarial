@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import {config} from '../config';
 import {UserRoleGuard} from './guards/user-role.guard';
+import {PointOfSaleComponent} from './pages/point-of-sale/point-of-sale.component';
 import {LoginComponent} from './components/login/login.component';
 import {AuthGuard} from './guards/auth.guard';
 
@@ -13,6 +14,10 @@ const routes: Routes = [
   {
     path:'login',
     component: LoginComponent
+  },
+  {
+    path:'sales',
+    component: PointOfSaleComponent
   },
   {
     path:'',

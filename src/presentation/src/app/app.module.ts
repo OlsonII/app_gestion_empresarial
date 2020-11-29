@@ -16,6 +16,8 @@ import {UserRoleGuard} from './guards/user-role.guard';
 import {AuthGuard} from './guards/auth.guard';
 import { AdminLayoutModule } from './layouts/admin-layout/admin-layout.module';
 import {environment} from '../environments/environment';
+import { PointOfSaleComponent } from './pages/point-of-sale/point-of-sale.component';
+import { SearchProductFacturaPipe} from './pages/pipes/search-product-factura.pipe';
 
 @NgModule({
   imports: [
@@ -29,7 +31,7 @@ import {environment} from '../environments/environment';
     ToastrModule.forRoot(),
     AdminLayoutModule,
   ],
-  declarations: [AppComponent, AdminLayoutComponent],
+  declarations: [AppComponent, AdminLayoutComponent, PointOfSaleComponent,SearchProductFacturaPipe],
   providers: [ProviderService,JwtAuthService,AuthGuard,UserRoleGuard,{provide:'BASE_URL',useValue:environment.BASE_URL}],
   bootstrap: [AppComponent]
 })
