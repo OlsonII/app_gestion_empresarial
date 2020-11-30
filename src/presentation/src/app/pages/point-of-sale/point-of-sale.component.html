@@ -1,3 +1,22 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Respuesta</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label>El cliente no se encuentra registrado</label>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click');dataClient()">Registrar</button>
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancelar</button>
+  </div>
+</ng-template>
 
 <div class="wrapper">
 
@@ -150,8 +169,96 @@
           </div>
         </div>
 
-    <!-- Lista de productos -->
+    <!-- Datos cliente -->
         <div class=" col-md-8">
+          <div class=" card">
+            <div class=" card-header"><h4 class=" title">Datos cliente</h4>
+            </div>
+            <div class=" card-body">
+              <form [formGroup]="form" (ngSubmit)="addClient()">
+                <div class=" row">
+                  <div class=" col-sm-4 pr-md-4">
+                    <div class=" form-group">
+                      <label> Cédula <a class="text-primary">*</a></label>
+                      <input
+                        class=" form-control"
+                        placeholder="Num identificacion"
+                        type="text"
+                        formControlName="identification"
+                        [ngClass]="{ 'is-invalid': submitted && f.identification.errors }"
+                        (keyup.enter)="getClient(content)"
+                      />
+                    </div>
+                    <div *ngIf="submitted && f.identification.errors" class="invalid-feedback">
+                      <div *ngIf="f.identification.errors.required">La identificacion del cliente es requerido</div>
+                    </div>
+                  </div>
+                  <div class=" col-md-4 pr-md-4">
+                    <div class=" form-group">
+                      <label> Nombre <a class="text-primary">*</a></label>
+                      <input
+                        class=" form-control"
+                        placeholder="Digite correo"
+                        type="text"
+                        formControlName="name"
+                        [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+                      />
+                      <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                        <div *ngIf="f.name.errors.required">El nombre del cliente es requerido</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class=" col-md-4 pr-md-4">
+                    <div class=" form-group">
+                      <label> Correo <a class="text-primary">*</a></label>
+                      <input
+                        class=" form-control"
+                        placeholder="Digite correo"
+                        type="text"
+                        formControlName="email"
+                        [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+                      />
+                      <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                        <div *ngIf="f.email.errors.required">El email del cliente es requerido</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="formClientValidate" class=" col-md-4 pr-md-4">
+                    <div class=" form-group">
+                      <label> Direccion <a class="text-primary">*</a></label>
+                      <input
+                        class=" form-control"
+                        placeholder="Digite correo"
+                        type="text"
+                        formControlName="street"
+                        [ngClass]="{ 'is-invalid': submitted && f.street.errors }"
+                      />
+                      <div *ngIf="submitted && f.street.errors" class="invalid-feedback">
+                        <div *ngIf="f.street.errors.required">La direccion del cliente es requerida</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="formClientValidate" class=" col-md-4 pr-md-4">
+                    <label> Teléfono <a class="text-primary">*</a></label>
+                    <input
+                      class=" form-control"
+                      placeholder="Telefono"
+                      type="text"
+                      formControlName="telephone"
+                      [ngClass]="{ 'is-invalid': submitted && f.telephone.errors }"
+                    />
+                    <div *ngIf="submitted && f.telephone.errors" class="invalid-feedback">
+                      <div *ngIf="f.telephone.errors.required">El telefono del cliente es requerido</div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="formClientValidate" class=" card-footer">
+                  <button class=" btn btn-fill btn-danger"  type="submit">Guardar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <!-- Lista de productos -->
           <div class=" card">
             <div class=" card-header">
               <h4 class=" title" >Lista de Productos</h4>
