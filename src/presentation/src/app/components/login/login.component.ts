@@ -1,3 +1,4 @@
+/* tslint:disable:triple-equals */
 import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -60,7 +61,12 @@ export class LoginComponent implements OnInit,OnDestroy {
       .subscribe(response => {
         if (response.user != null ){
           this.jwtAuth.setUserAndToken(response.user,response.user.rol);
-          this.router.navigateByUrl('/products');
+          if(response.user.rol == 'Vendedor'){
+            this.router.navigateByUrl('/sales');
+          }
+          else{
+            this.router.navigateByUrl('/products');
+          }
         }
         else{
           this.showNotification('Error', 'Usuario o contraseña incorrecta' ,'top', 'center')
