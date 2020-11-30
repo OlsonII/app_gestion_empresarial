@@ -1,0 +1,102 @@
+.main-panel-custom {
+  // &, &[data="red"]{
+  //   border-color: $danger;
+  // }
+
+  .content {
+    padding: 78px 30px 30px 30px;
+    min-height: calc(100vh - 70px);
+  }
+}
+
+.custom-products{
+  margin: 20px 20px 20px 20px;
+  max-height: 600px;
+  overflow-y: scroll;
+}
+
+.custom-factura{
+  margin: 10px 10px 10px 10px;
+  .custom-detail{
+    max-height: 350px;
+    min-height: 350px;
+  }
+}
+
+.custom-logo-header{
+  display: inline-block;
+  margin-left: 5px;
+  top: 12px;
+  img {
+    width: 50px;
+    height: 48px;
+    display: inline;
+  }
+}
+.logo-titulo{
+  display: inline-block;
+  padding-left: 10px;
+}
+
+.product-icon{
+  cursor: pointer;
+  padding: 10px;
+  margin: 10px
+}
+
+.card-factura{
+  background: #313350;
+    border: 0;
+    position: relative;
+    width: 100%;
+    margin-bottom: 10px;
+    box-shadow: 2px 1px 20px 0px rgba(0, 0, 0, 0.4);
+}
+
+.btn-cliente{
+  padding: 10px;
+  background-image: url(../../../assets/img/cliente.png);
+  background-repeat: no-repeat;
+  background-size: 50px;
+  background-position: 50% 20%;
+  background-color: #483d96;
+  line-height: 120px;
+  width:80px;
+  height: 80px;
+
+  &:hover,
+    &:focus,
+    &:active,
+    &.active,
+    &:active:focus,
+    &:active:hover,
+    &.active:focus,
+    &.active:hover{
+      background-color: #7D6EE9;
+      background-image: url(../../../assets/img/cliente.png) !important;
+    }
+}
+
+.btn-pagar{
+  padding: 10px;
+  background-image: url(../../../assets/img/payment.png);
+  background-repeat: no-repeat;
+  background-size: 50px;
+  background-position: 50% 20%;
+  background-color: #483d96;
+  line-height: 120px;
+  width:80px;
+  height: 80px;
+
+  &:hover,
+    &:focus,
+    &:active,
+    &.active,
+    &:active:focus,
+    &:active:hover,
+    &.active:focus,
+    &.active:hover{
+      background-color: #7D6EE9;
+      background-image: url(../../../assets/img/payment.png) !important;
+    }
+}

@@ -1,0 +1,205 @@
+
+<div class="wrapper">
+
+  <div class="main-panel-custom">
+
+    <!-- Navbar -->
+    <nav class=" navbar navbar-expand-lg navbar-absolute navbar-transparent">
+      <div class=" container-fluid">
+        <div class=" navbar-wrapper">
+              <div class="custom-logo-header">
+
+                <img src="./assets/img/futuroLogo.png"/>
+                <h4 class="logo-titulo">
+                  Inventory M
+                </h4>
+              </div>
+        </div>
+        <button
+          aria-label="Toggle navigation"
+          class=" navbar-toggler"
+          (click)="collapse()"
+          [attr.aria-expanded]="!isCollapsed"
+          aria-controls="collapseExample"
+          id="navigation"
+          type="button"
+        >
+          <span class=" navbar-toggler-bar navbar-kebab"> </span>
+          <span class=" navbar-toggler-bar navbar-kebab"> </span>
+          <span class=" navbar-toggler-bar navbar-kebab"> </span>
+        </button>
+        <div class=" navbar-collapse" [ngbCollapse]="isCollapsed" id="navigation">
+          <ul class=" navbar-nav ml-auto">
+            <li class=" search-bar input-group">
+
+            </li>
+            <li class=" nav-item" ngbDropdown>
+              <a
+                class=" nav-link"
+                data-toggle="dropdown"
+                href="javascript:void(0)"
+                ngbDropdownToggle
+              >
+              </a>
+            <li class=" nav-item" ngbDropdown>
+              <a
+                class=" nav-link"
+                data-toggle="dropdown"
+                href="javascript:void(0)"
+                ngbDropdownToggle
+              >
+                <div class=" photo">
+                  <img alt="Profile Photo" src="assets/img/anime3.png" />
+                </div>
+                <b class=" caret d-none d-lg-block d-xl-block"> </b>
+                <p class=" d-lg-none">Log out</p>
+              </a>
+              <ul class=" dropdown-navbar" ngbDropdownMenu>
+                <li class=" nav-link">
+                  <a class=" nav-item" href="javascript:void(0)" ngbDropdownItem>
+                    Perfil
+                  </a>
+                </li>
+                <li class=" dropdown-divider"></li>
+                <li class=" nav-link">
+                  <a class=" nav-item" href="javascript:void(0)" ngbDropdownItem (click)="jwtAuth.signout()">
+                    Cerrar Sesión
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class=" separator d-lg-none"></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <ng-template #content let-modal>
+      <div class=" modal-header">
+        <input
+          class=" form-control"
+          id="inlineFormInputGroup"
+          placeholder="SEARCH"
+          type="text"
+        />
+
+        <button
+          aria-label="Close"
+          class=" close"
+          data-dismiss="modal"
+          type="button"
+          (click)="modal.dismiss('Cross click')"
+        >
+          <i class=" tim-icons icon-simple-remove"> </i>
+        </button>
+      </div>
+
+    </ng-template>
+
+
+    <div class=" content">
+      <div class=" row">
+        <!-- Factura -->
+        <div class="col-md-4">
+          <div class="card">
+
+            <div class="card-body custom-factura">
+              <div class="row">
+                <div class="custom-detail table-responsive">
+                  <table class=" table" id="">
+
+                    <div class="card card-factura" *ngFor="let prod of productosFactura">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-md-8">
+                            <p><b>{{prod.name}}</b></p>
+                            <p>Cantidad: {{prod.quantity}}</p>
+                          </div>
+                          <div class="col-md-4">
+                            <h4>{{prod.price |currency}}</h4>
+                          </div>
+                        </div>
+
+
+                      </div>
+                    </div>
+                  </table>
+                </div>
+
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-7">
+                      <h2 >Total</h2>
+                    </div>
+                    <div class="col-md-5">
+                      <h4 >{{totalSale |currency}}</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="card">
+            <div class="card-body custom-factura">
+
+              <button class="btn  btn-cliente">Cliente</button>
+              <button class="btn  btn-pagar" (click)="registrarVenta()">Facturar</button>
+            </div>
+          </div>
+        </div>
+
+    <!-- Lista de productos -->
+        <div class=" col-md-8">
+          <div class=" card">
+            <div class=" card-header">
+              <h4 class=" title" >Lista de Productos</h4>
+              <div class="row">
+                <div class="col-lg-4">
+                    <label> Búsqueda </label>
+                    <input
+                      class=" form-control"
+                      placeholder="Nombre o referencia"
+                      type="text"
+                      name="busqueda"
+                      [(ngModel)]="searchValue"
+                    />
+                </div>
+              </div>
+            </div>
+
+            <div class=" card-body all-icons custom-products">
+              <div class=" row">
+                <div class=" font-icon-list col-lg-4 col-md-6 col-sm-6 col-xs-12 col-xs-12"
+                *ngFor="let prod of productos | searchProductFactura:searchValue">
+                  <div class=" font-icon-detail product-icon fillHeight" (click)="addProduct(prod)" >
+                    <div class="row" >
+                      <div class="col-md-4">
+                        <img src="./../../../../assets/img/caja.png" alt="image" class="img-producto">
+                      </div>
+
+                      <div class="col-md-8" style="float:left;">
+                        <span >
+                          <h5><b>{{prod.name}} [{{prod.reference}}]</b></h5>
+                          <h5>precio: {{prod.price |currency}}</h5>
+                          <h5>cantidad: {{prod.quantity}}</h5>
+                        </span>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+

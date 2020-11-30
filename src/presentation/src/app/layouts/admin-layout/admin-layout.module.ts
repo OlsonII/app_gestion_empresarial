@@ -9,7 +9,6 @@ import { UserComponent } from '../../pages/user/user.component';
 import { RegistrarProductoComponent } from '../../pages/products/registrar-producto/registrar-producto.component';
 import { ConsultarProductoComponent } from '../../pages/products/consultar-producto/consultar-producto.component';
 import { CategoriesComponent} from '../../pages/categories/categories.component'
-import { SearchProductPipe } from '../../pages/pipes/search-product.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProvidersComponent} from '../../pages/providers/providers.component';
 import { ProductsInAndOutComponent} from '../../pages/products/products-in-and-out/products-in-and-out.component';
@@ -25,6 +24,7 @@ import { SearchProviderPipe} from '../../pages/pipes/search-provider.pipe';
 import { SearchCategoryPipe} from '../../pages/pipes/search-category.pipe';
 import { SearchUserPipe} from '../../pages/pipes/search-user.pipe';
 import { SearchBrandPipe} from '../../pages/pipes/search-brand.pipe';
+import { SearchProductPipe} from '../../pages/pipes/search-product.pipe';
 import { ModalsComponent } from '../../pages/modals/modals.component';
 import { MovementComponent } from '../../pages/movement/movement.component';
 import { ModalCategoryComponent } from '../../pages/modal-category/modal-category.component';
@@ -51,8 +51,8 @@ import { ConsultProvidersComponent } from '../../pages/providers/consult-provide
     RegistrarProductoComponent,
     ConsultarProductoComponent,
     CategoriesComponent,
-    SearchProductPipe,
     ProvidersComponent,
+    SearchProductPipe,
     ProductsInAndOutComponent,
     MarcasComponent,
     ModifyProductComponent,
@@ -71,7 +71,7 @@ import { ConsultProvidersComponent } from '../../pages/providers/consult-provide
     ModalCategoryComponent,
     ConsultUserComponent,
     ConsultClientComponent,
-    ConsultProvidersComponent
+    ConsultProvidersComponent,
   ],
 })
 export class AdminLayoutModule {}
