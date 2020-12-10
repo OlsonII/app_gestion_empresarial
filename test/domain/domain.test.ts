@@ -30,7 +30,7 @@ describe('domain test', ()=>{
         product.removeProduct(5)
 
         expect(0).toBe(0);
-      })
+      });
     });
 
 });
