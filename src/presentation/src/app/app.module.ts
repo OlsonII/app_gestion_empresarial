@@ -1,13 +1,13 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { ComponentsModule } from './components/components.module';
 import { ProviderService} from './services/provider.service';
@@ -30,9 +30,10 @@ import { SearchProductFacturaPipe} from './pages/pipes/search-product-factura.pi
     AppRoutingModule,
     ToastrModule.forRoot(),
     AdminLayoutModule,
+    ReactiveFormsModule,
   ],
   declarations: [AppComponent, AdminLayoutComponent, PointOfSaleComponent,SearchProductFacturaPipe],
-  providers: [ProviderService,JwtAuthService,AuthGuard,UserRoleGuard,{provide:'BASE_URL',useValue:environment.BASE_URL}],
+  providers: [ProviderService,NgbActiveModal,JwtAuthService,AuthGuard,UserRoleGuard,{provide:'BASE_URL',useValue:environment.BASE_URL}],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

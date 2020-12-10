@@ -34,7 +34,6 @@ export const AdminLayoutRoutes: Routes = [
     data:{role: config.authRoles.admin},
     component: ConsultUserComponent
   },
-  { path: 'products', component:ConsultarProductoComponent},
   { path: 'addProduct', component:RegistrarProductoComponent},
   {
     path: 'providers',
